@@ -1,1 +1,2 @@
-jejak Bang
+import os
+print("jejak")
