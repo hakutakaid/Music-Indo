@@ -1,0 +1,13 @@
+git add .
+
+git commit -m "Pesan commit Anda di sini
+
+Co-authored-by: hakutakaid <hakutakaid@users.noreply.github.com>
+Co-authored-by: malikahmadfahru91 <malikahmadfahru91@users.noreply.github.com>
+Co-authored-by: Banimudin <Banimudin@users.noreply.github.com>
+Co-authored-by: Farudinopik <Farudinopik@users.noreply.github.com>
+Co-authored-by: samulaksez180182828 <samulaksez180182828@users.noreply.github.com>
+Co-authored-by: Ev4ness <Ev4ness@users.noreply.github.com>
+"
+
+git push
