@@ -59,6 +59,7 @@ If you want to say **thank you** or/and support active development of YukkiMusic
 <a href="https://github.com/NotReallyShikhar"> <img src="https://img.shields.io/badge/Shikhar-black?style=for-the-badge&logo=github" alt="Shikhar" /> </a>
 <a href="https://github.com/TheHamkerCat"> <img src="https://img.shields.io/badge/TheHamkerCat-black?style=for-the-badge&logo=github" alt="TheHamkerCat" /> </a>
 <a href="https://github.com/Pranav-Saraswat"> <img src="https://img.shields.io/badge/PranavSaraswat-black?style=for-the-badge&logo=github" alt="PranavSaraswat" /> </a>
+<a href="https://github.com/hakutakaid"> <img src="https://img.shields.io/badge/hakutakaid-black?style=for-the-badge&logo=github" alt="hakutakaid" /> </a>
 </p>
 
 - <b> _Special Thanks To [Team Yukki](https://github.com/TeamYukki) ғᴏʀ [YukkiMusicBot](https://github.com/TeamYukki/YukkiMusicBot)_ </b>
