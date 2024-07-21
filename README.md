@@ -1,8 +1,8 @@
 <img src="https://telegra.ph/file/c0e014ff34f34d1056627.png" align="right" width="200" height="200"/>
 
-# Yukki Music Bot <img src="https://img.shields.io/github/v/release/TeamYukki/YukkiMusicBot?color=black&logo=github&logoColor=black&style=social" alt="RELEASE">
+# Yukki Music Bot <img src="https://img.shields.io/github/v/release/TeamYukki/MusicIndoBot?color=black&logo=github&logoColor=black&style=social" alt="RELEASE">
 
-[Yukki Music Bot](https://github.com/TeamYukki/YukkiMusicBot) is a Powerful Telegram Music+Video Bot written in Python using Pyrogram and Py-Tgcalls by which you can stream songs, video and even live streams in your group calls via various sources.
+[Yukki Music Bot](https://github.com/TeamYukki/MusicIndoBot) is a Powerful Telegram Music+Video Bot written in Python using Pyrogram and Py-Tgcalls by which you can stream songs, video and even live streams in your group calls via various sources.
 
 * Youtube, Soundcloud, Apple Music, Spotify, Resso, Live Streams and Telegram Audios & Videos support.
 * Written from scratch, making it stable and less crashes with attractive thumbnails.
@@ -19,12 +19,12 @@
 
 ## 🖇 VPS Deployment
 - Get your [Necessary Variables](https://github.com/hakutakaid/Music-Indo.git/blob/master/sample.env)
-- clone repo : `git clone https://github.com/hakutakaid/Music-Indo.git && cd YukkiMusicFork`
+- clone repo : `git clone https://github.com/hakutakaid/Music-Indo.git && cd MusicIndoFork`
 - Setup by : `bash setup`
 - Install tmux to keep running your bot when you close the terminal by :
 `sudo apt install tmux && tmux`
 - Finally run the bot by :
-`python3 -m YukkiMusic`
+`python3 -m MusicIndo`
 - For getting out from tmux session : Press `Ctrl+b` and then `d`<br>
 
 
@@ -38,13 +38,13 @@ Reach out to the maintainer at one of the following places:
 - Contact  [Telegram profile](https://t.me/vivekkumar07089)
 - [Telegram Support](https://t.me/LogUbotX)
 
-If you want to say **thank you** or/and support active development of YukkiMusicBot:
+If you want to say **thank you** or/and support active development of MusicIndoBot:
 
-- Add a [GitHub Star](https://github.com/TeamYukki/YukkiMusicBot) to the project.
+- Add a [GitHub Star](https://github.com/TeamYukki/MusicIndoBot) to the project.
 - Fork the [Repo](https://github.com/hakutakaid/Music-Indo.git) :)
 - Write interesting articles about the project on [Dev.to](https://dev.to/), [Medium](https://medium.com/) or your personal blog.
 
-# Together, we can make **YukkiMusic** better!
+# Together, we can make **MusicIndo** better!
 
 # 📑 Acknowledgement / Credits
 
@@ -62,5 +62,5 @@ If you want to say **thank you** or/and support active development of YukkiMusic
 <a href="https://github.com/hakutakaid"> <img src="https://img.shields.io/badge/hakutakaid-black?style=for-the-badge&logo=github" alt="hakutakaid" /> </a>
 </p>
 
-- <b> _Special Thanks To [Team Yukki](https://github.com/TeamYukki) ғᴏʀ [YukkiMusicBot](https://github.com/TeamYukki/YukkiMusicBot)_ </b>
+- <b> _Special Thanks To [Team Yukki](https://github.com/TeamYukki) ғᴏʀ [MusicIndoBot](https://github.com/TeamYukki/MusicIndoBot)_ </b>
 
