@@ -1,9 +1,9 @@
 #
 # Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
 #
-# This file is part of < https://github.com/hakutakaid/YukkiMusicFork > project,
+# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/YukkiMusicFork/blob/master/LICENSE >
+# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
 #
 # All rights reserved.
 import re
@@ -91,7 +91,7 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 # For customized or modified Repository
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/hakutakaid/YukkiMusicFork",
+    "https://github.com/hakutakaid/Music-Indo.git",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 
@@ -132,7 +132,7 @@ TELEGRAM_DOWNLOAD_EDIT_SLEEP = int(getenv("TELEGRAM_EDIT_SLEEP", "5"))
 
 
 # Your Github Repo.. Will be shown on /start Command
-GITHUB_REPO = getenv("GITHUB_REPO", "https://github.com/hakutakaid/YukkiMusicFork")
+GITHUB_REPO = getenv("GITHUB_REPO", "https://github.com/hakutakaid/Music-Indo.git")
 
 
 # Spotify Client.. Get it from https://developer.spotify.com/dashboard
