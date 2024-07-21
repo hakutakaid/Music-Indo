@@ -29,6 +29,11 @@
         "value": "",
         "required": true
       },
+      "MUST_JOIN": {
+        "description": "Force Sub Without @",
+        "value": "",
+        "required": false
+      },
       "MONGO_DB_URI": {
         "description": "Get a mongodb url from https://cloud.mongodb.com . You can leave it blank if you want , bot will use Yukki's database for you.",
         "value": "",
