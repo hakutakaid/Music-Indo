@@ -595,7 +595,7 @@ async def maintenance_on():
 
 
 # Audio Video Limit
-from pytgcalls.types import AudioQuality, VideoQuality
+from pytgcalls.types import *
 
 
 AUDIO_FILE = os.path.join(config.TEMP_DB_FOLDER, "audio.json")
