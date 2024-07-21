@@ -66,7 +66,7 @@
       },
       "UPSTREAM_BRANCH": {
         "description": "Upstream Repo's Branch Name",
-        "value": "master",
+        "value": "haku",
         "required": true
       }
     },

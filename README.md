@@ -19,7 +19,7 @@
 
 ## 🖇 VPS Deployment
 - Get your [Necessary Variables](https://github.com/hakutakaid/Music-Indo.git/blob/master/sample.env)
-- clone repo : `git clone https://github.com/hakutakaid/Music-Indo.git && cd MusicIndoFork`
+- clone repo : `git clone https://github.com/hakutakaid/Music-Indo.git && cd Music-Indo`
 - Setup by : `bash setup`
 - Install tmux to keep running your bot when you close the terminal by :
 `sudo apt install tmux && tmux`
