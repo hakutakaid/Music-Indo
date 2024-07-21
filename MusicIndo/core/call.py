@@ -20,7 +20,7 @@ from pyrogram.errors import (
     FloodWait,
 )
 from pyrogram.types import InlineKeyboardMarkup
-from pytgcalls import *
+from pytgcalls import PyTgCalls, filters
 from pytgcalls.exceptions import *
 from pytgcalls.types import *
 from pytgcalls.types.stream import *
