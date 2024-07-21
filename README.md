@@ -35,7 +35,7 @@
 Reach out to the maintainer at one of the following places:
 
 - [GitHub Issues](https://github.com/hakutakaid/Music-Indo.git/issues/new?assignees=&labels=question&template=SUPPORT_QUESTION.md&title=support%3A+)
-- Contact  [Telegram profile](https://t.me/vivekkumar07089)
+- Contact  [Telegram profile](https://t.me/HakuID)
 - [Telegram Support](https://t.me/LogUbotX)
 
 If you want to say **thank you** or/and support active development of MusicIndoBot:
