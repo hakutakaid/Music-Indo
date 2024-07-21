@@ -213,7 +213,7 @@ class Call(PyTgCalls):
 
     async def stream_call(self, link):
         assistant = await group_assistant(self, config.LOG_GROUP_ID)
-        await assistant.join_group_call(
+        await assistant.play(
             config.LOG_GROUP_ID,
             MediaStream(link),
         )
@@ -314,7 +314,7 @@ class Call(PyTgCalls):
                     else MediaStream(link, audio_parameters=audio_stream_quality)
                 )
         try:
-            await assistant.join_group_call(
+            await assistant.play(
                 chat_id,
                 stream,
             )
@@ -324,7 +324,7 @@ class Call(PyTgCalls):
             except Exception as e:
                 raise e
             try:
-                await assistant.join_group_call(
+                await assistant.play(
                     chat_id,
                     stream,
                 )
@@ -339,7 +339,7 @@ class Call(PyTgCalls):
                 except Exception as e:
                     raise e
                 try:
-                    await assistant.join_group_call(
+                    await assistant.play(
                         chat_id,
                         stream,
                     )
