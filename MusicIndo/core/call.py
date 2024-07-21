@@ -668,11 +668,11 @@ class Call(PyTgCalls):
                 return
             await self.play(client, update.chat_id)
 
-        @self.one.on_update(filters.call_participant)
-        @self.two.on_update(filters.call_participant)
-        @self.three.on_update(filters.call_participant)
-        @self.four.on_update(filters.call_participant)
-        @self.five.on_update(filters.call_participant)
+        @self.one.on_update(filters.call_participant(GroupCallParticipant.Action.UPDATED))
+        @self.two.on_update(filters.call_participant(GroupCallParticipant.Action.UPDATED))
+        @self.three.on_update(filters.call_participant(GroupCallParticipant.Action.UPDATED))
+        @self.four.on_update(filters.call_participant(GroupCallParticipant.Action.UPDATED))
+        @self.five.on_update(filters.call_participant(GroupCallParticipant.Action.UPDATED))
         async def participants_change_handler(client, update: Update):
             if not isinstance(update, JoinedGroupCallParticipant) and not isinstance(
                 update, LeftGroupCallParticipant
