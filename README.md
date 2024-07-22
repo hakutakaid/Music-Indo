@@ -44,6 +44,10 @@ bash install_node.sh
 ```
 
 ```
+cp sample.env .env
+```
+## Kemudian Edit .env Menggunakan nano .env Kalau Udah Lanjut
+```
 screen -S Music
 ```
 
