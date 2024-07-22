@@ -18,15 +18,38 @@
 
 
 ## 🖇 VPS Deployment
-- Get your [Necessary Variables](https://github.com/hakutakaid/Music-Indo.git/blob/master/sample.env)
-- clone repo : `git clone https://github.com/hakutakaid/Music-Indo.git && cd Music-Indo`
-- Setup by : `bash setup`
-- Install tmux to keep running your bot when you close the terminal by :
-`sudo apt install tmux && tmux`
-- Finally run the bot by :
-`python3 -m MusicIndo`
-- For getting out from tmux session : Press `Ctrl+b` and then `d`<br>
+- Easy Deploy :
+```
+apt update
+```
 
+```
+apt upgrade
+```
+
+```
+apt install ffmpeg -y
+```
+
+```
+apt install python3-pip -y
+```
+
+```
+git clone -b cookie https://github.com/hakutakaid/Music-Indo.git && cd Music-Indo
+````
+
+```
+bash install_node.sh
+```
+
+```
+screen -S Music
+```
+
+```
+bash start
+```
 
 # Yukki Music Configs
  [Checkout Here For Config Vars](https://github.com/hakutakaid/Music-Indo.git/blob/master/config/README.md)
