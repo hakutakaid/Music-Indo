@@ -44,6 +44,10 @@ bash install_node.sh
 ```
 
 ```
+pip3 install -r requirements.txt
+```
+
+```
 cp sample.env .env
 ```
 ## Kemudian Edit .env Menggunakan nano .env Kalau Udah Lanjut
