@@ -23,7 +23,7 @@ from pytgcalls.__version__ import __version__ as pytgver
 import config
 from config import BANNED_USERS
 from strings import get_command
-from MusicIndo import YouTube, app
+from MusicIndo import Platform, app
 from MusicIndo.core.userbot import assistants
 from MusicIndo.misc import SUDOERS, pymongodb
 from MusicIndo.plugins import ALL_MODULES

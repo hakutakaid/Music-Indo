@@ -22,7 +22,7 @@ from config import (
     adminlist,
     SUPPORT_GROUP,
 )
-from MusicIndo import YouTube, app
+from MusicIndo import Platform, app
 from MusicIndo.core.call import Yukki
 from MusicIndo.misc import SUDOERS, db
 from MusicIndo.utils.database import (

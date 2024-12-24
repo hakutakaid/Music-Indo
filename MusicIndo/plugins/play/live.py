@@ -11,7 +11,7 @@
 from pyrogram import filters
 
 from config import BANNED_USERS
-from MusicIndo import YouTube, app
+from MusicIndo import Platform, app
 from MusicIndo.utils.channelplay import get_channeplayCB
 from MusicIndo.utils.decorators.language import languageCB
 from MusicIndo.utils.stream.stream import stream

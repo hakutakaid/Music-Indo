@@ -24,7 +24,7 @@ from pyrogram.types import (
 
 from config import BANNED_USERS, SONG_DOWNLOAD_DURATION, SONG_DOWNLOAD_DURATION_LIMIT
 from strings import get_command
-from MusicIndo import YouTube, app
+from MusicIndo import Platform, app
 from MusicIndo.utils.decorators.language import language, languageCB
 from MusicIndo.utils.formatters import convert_bytes
 from MusicIndo.utils.inline.song import song_markup

@@ -15,7 +15,7 @@ from pyrogram.types import InlineKeyboardMarkup, Message
 import config
 from config import BANNED_USERS
 from strings import get_command
-from MusicIndo import YouTube, app
+from MusicIndo import Platform, app
 from MusicIndo.core.call import Yukki
 from MusicIndo.misc import db
 from MusicIndo.utils.database import get_loop

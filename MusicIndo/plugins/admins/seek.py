@@ -12,7 +12,7 @@ from pyrogram.types import Message
 
 from config import BANNED_USERS
 from strings import get_command
-from MusicIndo import YouTube, app
+from MusicIndo import Platform, app
 from MusicIndo.core.call import Yukki
 from MusicIndo.misc import db
 from MusicIndo.utils import AdminRightsCheck, seconds_to_min

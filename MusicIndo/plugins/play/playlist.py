@@ -676,7 +676,7 @@ async def add_playlist(client, message: Message, _):
         except Exception as e:
             return await message.reply_text(str(e))
     else:
-        from MusicIndo import YouTube
+        from MusicIndo import Platform
 
         # Add a specific song by name
         query = " ".join(message.command[1:])
@@ -783,7 +783,7 @@ async def del_plist(client, CallbackQuery, _):
 @app.on_callback_query(filters.regex("recover_playlist") & ~BANNED_USERS)
 @languageCB
 async def add_playlist(client, CallbackQuery, _):
-    from MusicIndo import YouTube
+    from MusicIndo import Platform
 
     callback_data = CallbackQuery.data.strip()
     videoid = callback_data.split(None, 1)[1]
@@ -854,7 +854,7 @@ async def del_plist(client, CallbackQuery, _):
 @languageCB
 async def add_playlist(client, CallbackQuery, _):
     try:
-        from MusicIndo import YouTube
+        from MusicIndo import Platform
     except ImportError as e:
         print(f"ERROR {e}")
         return
@@ -905,7 +905,7 @@ async def add_playlist(client, CallbackQuery, _):
 @languageCB
 async def add_playlist(client, CallbackQuery, _):
     try:
-        from MusicIndo import YouTube
+        from MusicIndo import Platform
     except ImportError as e:
         print(f"ERROR {e}")
         return
