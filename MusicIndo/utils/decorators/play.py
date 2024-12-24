@@ -1,28 +1,22 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
-import asyncio
 
-from pyrogram.enums import ChatMemberStatus
-from pyrogram.errors import (
-    ChatAdminRequired,
-    InviteRequestSent,
-    UserAlreadyParticipant,
-    UserNotParticipant,
-)
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+from pyrogram.errors import ChannelPrivate
+
 from config import PLAYLIST_IMG_URL, PRIVATE_BOT_MODE, MUST_JOIN
-from config import SUPPORT_GROUP as SUPPORT_CHAT
 from config import adminlist
 from strings import get_string
 from MusicIndo import Platform, app
+from MusicIndo.core.call import Yukki
 from MusicIndo.misc import SUDOERS
 from MusicIndo.utils.database import (
     get_assistant,
@@ -49,7 +43,7 @@ def PlayWrapper(command):
                 [
                     [
                         InlineKeyboardButton(
-                            text="ʜᴏᴡ ᴛᴏ ғɪx ?",
+                            text="How to Fix ?",
                             callback_data="AnonymousAdmin",
                         ),
                     ]
@@ -70,20 +64,18 @@ def PlayWrapper(command):
 
         if await is_maintenance() is False:
             if message.from_user.id not in SUDOERS:
-                return await message.reply_text(
-                    text=f"{app.mention} ɪs ᴜɴᴅᴇʀ ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ, ᴠɪsɪᴛ <a href={SUPPORT_CHAT}>sᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ</a> ғᴏʀ ᴋɴᴏᴡɪɴɢ ᴛʜᴇ ʀᴇᴀsᴏɴ.",
-                    disable_web_page_preview=True,
-                )
+                return
+
         if PRIVATE_BOT_MODE == str(True):
             if not await is_served_private_chat(message.chat.id):
                 await message.reply_text(
-                    "**ᴘʀɪᴠᴀᴛᴇ ᴍᴜsɪᴄ ʙᴏᴛ**\n\nᴏɴʟʏ ғᴏʀ ᴀᴜᴛʜᴏʀɪᴢᴇᴅ ᴄʜᴀᴛs ғʀᴏᴍ ᴛʜᴇ ᴏᴡɴᴇʀ. ᴀsᴋ ᴍʏ ᴏᴡɴᴇʀ ᴛᴏ ᴀʟʟᴏᴡ ʏᴏᴜʀ ᴄʜᴀᴛ ғɪʀsᴛ."
+                    "**PRIVATE MUSIC BOT**\n\nOnly For Authorized chats from the owner ask my owner to allow your chat first."
                 )
                 return await app.leave_chat(message.chat.id)
         if await is_commanddelete_on(message.chat.id):
             try:
                 await message.delete()
-            except:
+            except Exception:
                 pass
 
         audio_telegram = (
@@ -113,12 +105,21 @@ def PlayWrapper(command):
                 return await message.reply_text(_["setting_12"])
             try:
                 chat = await app.get_chat(chat_id)
-            except:
+            except Exception:
                 return await message.reply_text(_["cplay_4"])
             channel = chat.title
         else:
             chat_id = message.chat.id
             channel = None
+        try:
+            is_call_active = (await app.get_chat(chat_id)).is_call_active
+            if not is_call_active:
+                return await message.reply_text(
+                    "**No active video chat found **\n\nPlease make sure you started the voicechat."
+                )
+        except Exception:
+            pass
+
         playmode = await get_playmode(message.chat.id)
         playty = await get_playtype(message.chat.id)
         if playty != "Everyone":
@@ -142,74 +143,21 @@ def PlayWrapper(command):
             fplay = True
         else:
             fplay = None
-
-        if not await is_active_chat(chat_id):
+        if await is_active_chat(chat_id):
             userbot = await get_assistant(message.chat.id)
+            # Getting all members id that in voicechat
             try:
-                try:
-                    get = await app.get_chat_member(chat_id, userbot.id)
-                except ChatAdminRequired:
-                    return await message.reply_text(_["call_1"])
-                if (
-                    get.status == ChatMemberStatus.BANNED
-                    or get.status == ChatMemberStatus.RESTRICTED
-                ):
-                    return await message.reply_text(
-                        text=_["call_2"].format(userbot.username, userbot.id),
-                    )
-            except UserNotParticipant:
-                if chat_id in links:
-                    invitelink = links[chat_id]
-                else:
-                    if message.chat.username:
-                        invitelink = message.chat.username
-                        try:
-                            await userbot.resolve_peer(invitelink)
-                        except:
-                            pass
-                    else:
-                        try:
-                            await client.get_chat_member(message.chat.id, "me")
-                            invitelink = await client.export_chat_invite_link(
-                                message.chat.id
-                            )
-                        except ChatAdminRequired:
-                            return await message.reply_text(_["call_1"])
-                        except Exception as e:
-                            return await message.reply_text(
-                                _["call_3"].format(app.mention, type(e).__name__)
-                            )
+                call_participants_id = [
+                    member.chat.id
+                    async for member in userbot.get_call_members(chat_id)
+                    if member.chat
+                ]
+                # Checking if assistant id not in list so clear queues and remove active voice chat and process
 
-                if invitelink.startswith("https://t.me/+"):
-                    invitelink = invitelink.replace(
-                        "https://t.me/+", "https://t.me/joinchat/"
-                    )
-                myu = await message.reply_text(_["call_5"])
-                try:
-                    await asyncio.sleep(1)
-                    await userbot.join_chat(invitelink)
-                except InviteRequestSent:
-                    try:
-                        await app.approve_chat_join_request(chat_id, userbot.id)
-                    except Exception as e:
-                        return await myu.edit(_["call_3"].format(type(e).__name__))
-                    await asyncio.sleep(1)
-                    await myu.edit(_["call_6"].format(app.mention))
-                except UserAlreadyParticipant:
-                    pass
-                except Exception as e:
-                    return await myu.edit(_["call_3"].format(type(e).__name__))
-
-                links[chat_id] = invitelink
-                try:
-                    await myu.delete()
-                except Exception:
-                    pass
-
-                try:
-                    await userbot.resolve_peer(chat_id)
-                except:
-                    pass
+                if not call_participants_id or userbot.id not in call_participants_id:
+                    await Yukki.stop_stream(chat_id)
+            except ChannelPrivate:
+                pass 
 
         return await command(
             client,
