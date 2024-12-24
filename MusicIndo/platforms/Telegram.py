@@ -1,20 +1,9 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 import asyncio
 import os
 import time
 from datetime import datetime, timedelta
 from typing import Union
 
-import aiohttp
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Voice
 
 import config
@@ -26,7 +15,7 @@ from ..utils.formatters import convert_bytes, get_readable_time, seconds_to_min
 downloader = {}
 
 
-class Telegram:
+class TeleAPI:
     def __init__(self):
         self.chars_limit = 4096
         self.sleep = config.TELEGRAM_DOWNLOAD_EDIT_SLEEP
@@ -53,15 +42,16 @@ class Telegram:
         try:
             file_name = file.file_name
             if file_name is None:
-                file_name = "Telagram audio file" if audio else "Telagram video file"
-        except Exception:
-            file_name = "Telagram audio file" if audio else "Telagram video file"
+                file_name = "ᴛᴇʟᴇɢʀᴀᴍ ᴀᴜᴅɪᴏ ғɪʟᴇ" if audio else "ᴛᴇʟᴇɢʀᴀᴍ ᴠɪᴅᴇᴏ ғɪʟᴇ"
+
+        except:
+            file_name = "ᴛᴇʟᴇɢʀᴀᴍ ᴀᴜᴅɪᴏ ғɪʟᴇ" if audio else "ᴛᴇʟᴇɢʀᴀᴍ ᴠɪᴅᴇᴏ ғɪʟᴇ"
         return file_name
 
     async def get_duration(self, file):
         try:
             dur = seconds_to_min(file.duration)
-        except Exception:
+        except:
             dur = "Unknown"
         return dur
 
@@ -81,7 +71,7 @@ class Telegram:
                         else "ogg"
                     )
                 )
-            except Exception:
+            except:
                 file_name = audio.file_unique_id + "." + ".ogg"
             file_name = os.path.join(os.path.realpath("downloads"), file_name)
         if video:
@@ -89,39 +79,10 @@ class Telegram:
                 file_name = (
                     video.file_unique_id + "." + (video.file_name.split(".")[-1])
                 )
-            except Exception:
+            except:
                 file_name = video.file_unique_id + "." + "mp4"
             file_name = os.path.join(os.path.realpath("downloads"), file_name)
         return file_name
-
-    async def is_streamable_url(self, url: str) -> bool:
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url, timeout=5) as response:
-                    if response.status == 200:
-                        content_type = response.headers.get("Content-Type", "")
-                        if (
-                            "application/vnd.apple.mpegurl" in content_type
-                            or "application/x-mpegURL" in content_type
-                        ):
-                            return True
-                        if any(
-                            keyword in content_type
-                            for keyword in [
-                                "audio",
-                                "video",
-                                "mp4",
-                                "mpegurl",
-                                "m3u8",
-                                "mpeg",
-                            ]
-                        ):
-                            return True
-                        if url.endswith((".m3u8", ".index", ".mp4", ".mpeg", ".mpd")):
-                            return True
-        except aiohttp.ClientError:
-            pass
-        return False
 
     async def download(self, _, message, mystic, fname):
         left_time = {}
@@ -140,7 +101,7 @@ class Telegram:
                     [
                         [
                             InlineKeyboardButton(
-                                text="🚦 Cancel downloading",
+                                text="🚦 ᴄᴀɴᴄᴇʟ ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ",
                                 callback_data="stop_downloading",
                             ),
                         ]
@@ -159,17 +120,17 @@ class Telegram:
                     completed_size = convert_bytes(current)
                     speed = convert_bytes(speed)
                     text = f"""
-**{app.mention} Telagram Media Downloader**
+**{app.mention} ᴛᴇʟᴇɢʀᴀᴍ ᴍᴇᴅɪᴀ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ**
 
-**Total file size:** {total_size}
-**Completed:** {completed_size} 
-**Percentage:** {percentage[:5]}%
+**ᴛᴏᴛᴀʟ ғɪʟᴇ sɪᴢᴇ:** {total_size}
+**ᴄᴏᴍᴘʟᴇᴛᴇᴅ:** {completed_size} 
+**ᴘᴇʀᴄᴇɴᴛᴀɢᴇ:** {percentage[:5]}%
 
-**Speed:** {speed}/s
-**Elapsed Time:** {eta}"""
+**sᴘᴇᴇᴅ:** {speed}/s
+**ᴇʟᴘᴀsᴇᴅ ᴛɪᴍᴇ:** {eta}"""
                     try:
                         await mystic.edit_text(text, reply_markup=upl)
-                    except Exception:
+                    except:
                         pass
                     left_time[message.id] = datetime.now() + timedelta(
                         seconds=self.sleep
@@ -185,10 +146,10 @@ class Telegram:
                     progress=progress,
                 )
                 await mystic.edit_text(
-                    "Sucessfully Downloaded\n Processing File Now..."
+                    "sᴜᴄᴄᴇssғᴜʟʟʏ ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ...\n ᴘʀᴏᴄᴇssɪɴɢ ғɪʟᴇ ɴᴏᴡ"
                 )
-                downloader.pop(message.id, None)
-            except Exception:
+                downloader.pop(message.id)
+            except:
                 await mystic.edit_text(_["tg_2"])
 
         if len(downloader) > 10:
@@ -198,12 +159,12 @@ class Telegram:
             try:
                 low = min(timers)
                 eta = get_readable_time(low)
-            except Exception:
+            except:
                 eta = "Unknown"
             await mystic.edit_text(_["tg_1"].format(eta))
             return False
 
-        task = asyncio.create_task(down_load(), name=f"download_{message.chat.id}")
+        task = asyncio.create_task(down_load())
         lyrical[mystic.id] = task
         await task
         downloaded = downloader.get(message.id)

@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
 """
 import random
 import re
@@ -18,8 +9,9 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from config import BANNED_USERS, lyrical
 from strings import get_command
-from MusicIndo import app
-from MusicIndo.utils.decorators.language import language
+from DanteMusic import app
+from DanteMusic Import dante
+from DanteMusic.utils.decorators.language import language
 
 ###Commands
 LYRICS_COMMAND = get_command("LYRICS_COMMAND")
@@ -44,6 +36,7 @@ async def lrsearch(client, message: Message, _):
     S = y.search_song(title, get_full_info=False)
     if S is None:
         return await m.edit(_["lyrics_3"].format(title))
+        return await m.edit(kamu bisa menggunakan music di channel maupun digroup Telegram),
     ran_hash = "".join(random.choices(string.ascii_uppercase + string.digits, k=10))
     lyric = S.lyrics
     if "Embed" in lyric:

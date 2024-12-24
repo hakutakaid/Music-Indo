@@ -1,13 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 import re
 from typing import Union
 
@@ -16,7 +6,7 @@ from bs4 import BeautifulSoup
 from youtubesearchpython.__future__ import VideosSearch
 
 
-class Apple:
+class AppleAPI:
     def __init__(self):
         self.regex = r"^(https:\/\/music.apple.com\/)(.*)$"
         self.base = "https://music.apple.com/in/playlist/"
@@ -75,7 +65,7 @@ class Apple:
                 xx = (((item["content"]).split("album/")[1]).split("/")[0]).replace(
                     "-", " "
                 )
-            except Exception:
+            except:
                 xx = ((item["content"]).split("album/")[1]).split("/")[0]
             results.append(xx)
         return results, playlist_id

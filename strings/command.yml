@@ -1,18 +1,5 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-
-
-# Commands in English Language
-
-# Bot Commands
-PING_COMMAND : ["ping", "alive", "aalive"]
-PRIVACY_COMMAND : ["privacy"]
+# commands
+PING_COMMAND : ["ping"]
 START_COMMAND : ["start"]
 HELP_COMMAND : ["help"]
 SETTINGS_COMMAND : ["settings", "setting"]
@@ -25,17 +12,16 @@ LANGUAGE_COMMAND : ["lang", "language", "langs"]
 PLAY_COMMAND : ["play", "vplay", "cplay", "cvplay", "playforce", "vplayforce", "cplayforce", "cvplayforce"]
 PLAYMODE_COMMAND : ["playmode"]
 CHANNELPLAY_COMMAND : ["channelplay"]
-STREAM_COMMAND : ["stream", "cstream", "streamforce", "cstreamforce"]
+STREAM_COMMAND : ["stream", "cstream", "streamforce"]
 
 #Playlists Command
 PLAYLIST_COMMAND : ["playlist"]
-PLAY_PLAYLIST_COMMAND : ["playplaylist", "vplayplaylist"]
-DELETE_PLAYLIST_COMMAND : ["deleteplaylist", "delplaylist"]
-ADD_PLAYLIST_COMMAND : ["addplaylist"]
+DELETEPLAYLIST_COMMAND : ["deleteplaylist"]
+ADDPLAYLIST_COMMAND : ["addplaylist"]
 
 
 # Tools
-QUEUE_COMMAND : ["queue","cqueue","cplayer", "playing", "cplaying", "player"]
+QUEUE_COMMAND : ["queue","cqueue"]
 SONG_COMMAND : ["song", "video"]
 LYRICS_COMMAND : ["lyrics"]
 
@@ -46,14 +32,13 @@ UNAUTH_COMMAND : ["unauth"]
 AUTHUSERS_COMMAND : ["authusers"]
 PAUSE_COMMAND : ["pause", "cpause"]
 RESUME_COMMAND : ["resume", "cresume"]
-MUTE_COMMAND : ["cmute", "mute"]
+MUTE_COMMAND : ["mute", "cmute"]
 UNMUTE_COMMAND : ["unmute", "cunmute"]
 STOP_COMMAND : ["stop", "end", "cstop", "cend"]
 SKIP_COMMAND : ["skip", "cskip"]
 SHUFFLE_COMMAND : ["shuffle", "cshuffle"]
 LOOP_COMMAND : ["loop", "cloop"]
-SEEK_COMMAND : ["seek", "cseek"]
-SEEK_BACK_COMMAND : ["seekback", "cseekback"]
+SEEK_COMMAND : ["seek", "cseek", "seekback", "cseekback"]
 REBOOT_COMMAND : ["reboot"]
 
 # Sudo Users Commaands
@@ -64,7 +49,7 @@ DELSUDO_COMMAND : ["delsudo"]
 SUDOUSERS_COMMAND : ["sudolist"]
 
 #Broadcast 
-BROADCAST_COMMAND : ["broadcast", "gcast"]
+BROADCAST_COMMAND : ["broadcast"]
 
 #Blacklist chat
 BLACKLISTCHAT_COMMAND : ["blacklistchat"]
@@ -80,15 +65,16 @@ MAINTENANCE_COMMAND : ["maintenance"]
 LOGGER_COMMAND : ["logger"]
 
 #Heroku
-GETLOG_COMMAND : ["log", "logs", "get_log", "getlog", "get_logs", "getlogs"]
-GETVAR_COMMAND : ["get_var", "getvar"]
-DELVAR_COMMAND : ["del_var", "delvar"]
-SETVAR_COMMAND : ["set_var", "setvar"]
+GETLOG_COMMAND : ["get_log"]
+GETVAR_COMMAND : ["get_var"]
+DELVAR_COMMAND : ["del_var"]
+SETVAR_COMMAND : ["set_var"]
 USAGE_COMMAND : ["usage"]
+VARS_COMMAND : ["vars", "config"]
 
 
 #Basic Bot Commands
-UPDATE_COMMAND : ["update","gitpull", "up"]
+UPDATE_COMMAND : ["update","gitpull"]
 RESTART_COMMAND : ["restart"]
 AUTOEND_COMMAND : ["autoend"]
 
@@ -108,7 +94,6 @@ SPEEDTEST_COMMAND : ["speedtest"]
 #Voice chat commands
 ACTIVEVC_COMMAND : ["activevoice","activevc"]
 ACTIVEVIDEO_COMMAND : ["activevideo","activevd"]
-AC_COMMAND: ["ac"]
 
 #Gban Commands
 GBAN_COMMAND : ["gban"]

@@ -1,13 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 from typing import Dict, List, Union
 
 from MusicIndo.core.mongo import mongodb
@@ -101,8 +91,7 @@ async def add_served_user(user_id: int):
 
 
 async def delete_served_user(user_id: int):
-    if not await is_served_user(user_id):
-        await usersdb.delete_one({"user_id": user_id})
+    await usersdb.delete_one({"user_id": user_id})
 
 
 # Served Chats
@@ -382,11 +371,6 @@ async def get_userss(chat_id: int) -> Dict[str, int]:
     if not ids:
         return {}
     return ids["vidid"]
-
-
-async def delete_userss(chat_id: int) -> bool:
-    result = await userdb.delete_one({"chat_id": chat_id})
-    return result.deleted_count > 0
 
 
 async def get_user_top(chat_id: int, name: str) -> Union[bool, dict]:

@@ -1,17 +1,7 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 from pyrogram import filters
 
 from config import BANNED_USERS
-from MusicIndo import Platform, app
+from MusicIndo import YouTube, app
 from MusicIndo.utils.channelplay import get_channeplayCB
 from MusicIndo.utils.decorators.language import languageCB
 from MusicIndo.utils.stream.stream import stream
@@ -26,24 +16,24 @@ async def play_live_stream(client, CallbackQuery, _):
     if CallbackQuery.from_user.id != int(user_id):
         try:
             return await CallbackQuery.answer(_["playcb_1"], show_alert=True)
-        except Exception:
+        except:
             return
     try:
         chat_id, channel = await get_channeplayCB(_, cplay, CallbackQuery)
-    except Exception:
+    except:
         return
     video = True if mode == "v" else None
     user_name = CallbackQuery.from_user.first_name
     await CallbackQuery.message.delete()
     try:
         await CallbackQuery.answer()
-    except Exception:
+    except:
         pass
     mystic = await CallbackQuery.message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]
     )
     try:
-        details, track_id = await Platform.youtube.track(vidid, True)
+        details, track_id = await YouTube.track(vidid, True)
     except Exception:
         return await mystic.edit_text(_["play_3"])
     ffplay = True if fplay == "f" else None

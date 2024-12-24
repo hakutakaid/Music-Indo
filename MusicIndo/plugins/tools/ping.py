@@ -1,34 +1,23 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
 from datetime import datetime
 
+from pyrogram import filters
 from pyrogram.types import Message
 
-from config import BANNED_USERS, PING_IMG_URL
-from strings import command
+from config import BANNED_USERS
 from MusicIndo import app
-from MusicIndo.core.call import Yukki
+from MusicIndo.core.call import Ryn
 from MusicIndo.utils import bot_sys_stats
 from MusicIndo.utils.decorators.language import language
-from MusicIndo.utils.inline import support_group_markup
+from MusicIndo.utils.inline import supp_markup
 
 
-@app.on_message(command("PING_COMMAND") & ~BANNED_USERS)
+@app.on_message(filters.command(["ping", "alive"]) & ~BANNED_USERS & filters.group)
 @language
 async def ping_com(client, message: Message, _):
-    response = await message.reply_photo(
-        photo=PING_IMG_URL,
-        caption=_["ping_1"].format(app.mention),
+    response = await message.reply_text(_["ping_1"].format(app.mention),
     )
     start = datetime.now()
-    pytgping = await Yukki.ping()
+    pytgping = await Ryn.ping()
     UP, CPU, RAM, DISK = await bot_sys_stats()
     resp = (datetime.now() - start).microseconds / 1000
     await response.edit_text(
@@ -36,10 +25,10 @@ async def ping_com(client, message: Message, _):
             resp,
             app.mention,
             UP,
-            RAM,
-            CPU,
             DISK,
+            CPU,
+            RAM,
             pytgping,
         ),
-        reply_markup=support_group_markup(_),
+        reply_markup=supp_markup(_),
     )

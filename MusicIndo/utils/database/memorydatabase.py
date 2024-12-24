@@ -1,18 +1,7 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
-import json
-import os
 from typing import Dict, List, Union
 
 import config
+from config import PRIVATE_BOT_MODE
 from MusicIndo.core.mongo import mongodb
 
 channeldb = mongodb.cplaymode
@@ -22,9 +11,11 @@ playmodedb = mongodb.playmode
 playtypedb = mongodb.playtypedb
 langdb = mongodb.language
 authdb = mongodb.adminauth
-videodb = mongodb.yukkivideocalls
+videodb = mongodb.Rynvideocalls
 onoffdb = mongodb.onoffper
+suggdb = mongodb.suggestion
 autoenddb = mongodb.autoend
+coupledb = mongodb.couple
 notesdb = mongodb.notes
 filtersdb = mongodb.filters
 
@@ -36,11 +27,16 @@ channelconnect = {}
 langm = {}
 pause = {}
 mute = {}
+audio = {}
+video = {}
 active = []
 activevideo = []
+command = []
+cleanmode = []
 nonadmin = {}
 vlimit = []
 maintenance = []
+suggestion = {}
 autoend = {}
 greeting_message = {"welcome": {}, "goodbye": {}}
 
@@ -385,70 +381,43 @@ async def remove_active_video_chat(chat_id: int):
 
 
 # Delete command mode
-
-# Define file paths
-CLEANMODE_DB = os.path.join(config.TEMP_DB_FOLDER, "cleanmode.json")
-COMMAND_DB = os.path.join(config.TEMP_DB_FOLDER, "command.json")
-
-
-def load_cleanmode():
-    if os.path.exists(CLEANMODE_DB):
-        with open(CLEANMODE_DB, "r") as file:
-            return json.load(file)
-    return []
-
-
-def load_command():
-    if os.path.exists(COMMAND_DB):
-        with open(COMMAND_DB, "r") as file:
-            return json.load(file)
-    return []
-
-
-def save_cleanmode():
-    with open(CLEANMODE_DB, "w") as file:
-        json.dump(cleanmode, file)
-
-
-def save_command():
-    with open(COMMAND_DB, "w") as file:
-        json.dump(command, file)
-
-
-cleanmode = load_cleanmode()
-command = load_command()
-
-
-async def is_cleanmode_on(chat_id: int) -> bool:
-    return chat_id not in cleanmode
-
-
-async def cleanmode_off(chat_id: int):
-    if chat_id not in cleanmode:
-        cleanmode.append(chat_id)
-        save_cleanmode()
-
-
-async def cleanmode_on(chat_id: int):
-    if chat_id in cleanmode:
-        cleanmode.remove(chat_id)
-        save_cleanmode()
-
-
 async def is_commanddelete_on(chat_id: int) -> bool:
-    return chat_id not in command
+    if chat_id not in command:
+        return True
+    else:
+        return False
 
 
 async def commanddelete_off(chat_id: int):
     if chat_id not in command:
         command.append(chat_id)
-        save_command()
 
 
 async def commanddelete_on(chat_id: int):
-    if chat_id in command:
+    try:
         command.remove(chat_id)
-        save_command()
+    except:
+        pass
+
+
+# Clean Mode
+async def is_cleanmode_on(chat_id: int) -> bool:
+    if chat_id not in cleanmode:
+        return True
+    else:
+        return False
+
+
+async def cleanmode_off(chat_id: int):
+    if chat_id not in cleanmode:
+        cleanmode.append(chat_id)
+
+
+async def cleanmode_on(chat_id: int):
+    try:
+        cleanmode.remove(chat_id)
+    except:
+        pass
 
 
 # Non Admin Chat
@@ -595,65 +564,66 @@ async def maintenance_on():
 
 
 # Audio Video Limit
+
+
 from pytgcalls.types import AudioQuality, VideoQuality
-
-AUDIO_FILE = os.path.join(config.TEMP_DB_FOLDER, "audio.json")
-VIDEO_FILE = os.path.join(config.TEMP_DB_FOLDER, "video.json")
-
-
-def load_data(file_path):
-    if os.path.exists(file_path):
-        with open(file_path, "r") as file:
-            return json.load(file)
-    return {}
-
-
-def save_data(file_path, data):
-    with open(file_path, "w") as file:
-        json.dump(data, file, indent=4)
-
-
-audio = load_data(AUDIO_FILE)
-video = load_data(VIDEO_FILE)
 
 
 async def save_audio_bitrate(chat_id: int, bitrate: str):
-    audio[str(chat_id)] = bitrate
-    save_data(AUDIO_FILE, audio)
+    audio[chat_id] = bitrate
 
 
 async def save_video_bitrate(chat_id: int, bitrate: str):
-    video[str(chat_id)] = bitrate
-    save_data(VIDEO_FILE, video)
+    video[chat_id] = bitrate
 
 
 async def get_aud_bit_name(chat_id: int) -> str:
-    return audio.get(str(chat_id), "HIGH")
+    mode = audio.get(chat_id)
+    if not mode:
+        return "HIGH"
+    return mode
 
 
 async def get_vid_bit_name(chat_id: int) -> str:
-    return video.get(str(chat_id), "HD_720p")
+    mode = video.get(chat_id)
+    if not mode:
+        if PRIVATE_BOT_MODE == str(True):
+            return "HD_720p"
+        else:
+            return "HD_720p"
+    return mode
 
 
 async def get_audio_bitrate(chat_id: int) -> str:
-    mode = audio.get(str(chat_id), "MEDIUM")
-    return {
-        "STUDIO": AudioQuality.STUDIO,
-        "HIGH": AudioQuality.HIGH,
-        "MEDIUM": AudioQuality.MEDIUM,
-        "LOW": AudioQuality.LOW,
-    }.get(mode, AudioQuality.MEDIUM)
+    mode = audio.get(chat_id)
+    if not mode:
+        return AudioQuality.MEDIUM
+    if str(mode) == "STUDIO":
+        return AudioQuality.STUDIO
+    elif str(mode) == "HIGH":
+        return AudioQuality.HIGH
+    elif str(mode) == "MEDIUM":
+        return AudioQuality.MEDIUM
+    elif str(mode) == "LOW":
+        return AudioQuality.LOW
 
 
 async def get_video_bitrate(chat_id: int) -> str:
-    mode = video.get(
-        str(chat_id), "SD_480p"
-    )  # Ensure chat_id is a string for JSON compatibility
-    return {
-        "UHD_4K": VideoQuality.UHD_4K,
-        "QHD_2K": VideoQuality.QHD_2K,
-        "FHD_1080p": VideoQuality.FHD_1080p,
-        "HD_720p": VideoQuality.HD_720p,
-        "SD_480p": VideoQuality.SD_480p,
-        "SD_360p": VideoQuality.SD_360p,
-    }.get(mode, VideoQuality.SD_480p)
+    mode = video.get(chat_id)
+    if not mode:
+        if PRIVATE_BOT_MODE == str(True):
+            return VideoQuality.SD_480p
+        else:
+            return VideoQuality.SD_480p
+    if str(mode) == "UHD_4K":
+        return VideoQuality.UHD_4K
+    elif str(mode) == "QHD_2K":
+        return VideoQuality.QHD_2K
+    elif str(mode) == "FHD_1080p":
+        return VideoQuality.FHD_1080p
+    elif str(mode) == "HD_720p":
+        return VideoQuality.HD_720p
+    elif str(mode) == "SD_480p":
+        return VideoQuality.SD_480p
+    elif str(mode) == "SD_360p":
+        return VideoQuality.SD_360pppp

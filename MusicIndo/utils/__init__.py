@@ -1,17 +1,8 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 from .channelplay import *
 from .database import *
 from .decorators import *
 from .formatters import *
+from .image import *
 from .inline import *
 from .pastebin import *
 from .sys import *

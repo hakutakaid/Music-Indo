@@ -1,123 +1,71 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 import asyncio
 from datetime import datetime
 
 from pyrogram.enums import ChatType
 
 import config
-from strings import get_string
 from MusicIndo import app
-from MusicIndo.core.call import Yukki
-from MusicIndo.utils.database import (
-    get_assistant,
-    get_client,
-    get_lang,
-    is_active_chat,
-    is_autoend,
-)
-
-autoend = {}
+from MusicIndo.core.call import Ryn, autoend
+from MusicIndo.utils.database import get_client, is_active_chat, is_autoend
 
 
 async def auto_leave():
-    if config.AUTO_LEAVING_ASSISTANT == str(True):
-        from MusicIndo.core.userbot import assistants
+    if config.AUTO_LEAVING_ASSISTANT:
+        while not await asyncio.sleep(config.AUTO_LEAVE_ASSISTANT_TIME):
+            from DanteMusic.core.userbot import assistants
 
-        async def leave_inactive_chats(client):
-            left = 0
-            try:
-                async for i in client.get_dialogs():
-                    chat_type = i.chat.type
-                    if chat_type in [
-                        ChatType.SUPERGROUP,
-                        ChatType.GROUP,
-                        ChatType.CHANNEL,
-                    ]:
-                        chat_id = i.chat.id
-                        if chat_id not in [
-                            config.LOG_GROUP_ID,
-                            -1002159045835,
-                            -1002146211959,
-                        ]:
-                            if left == 20:
-                                break
-                            if not await is_active_chat(chat_id):
-                                try:
-                                    await client.leave_chat(chat_id)
-                                    left += 1
-                                except Exception:
-                                    continue
-            except Exception:
-                pass
-
-        if config.AUTO_LEAVING_ASSISTANT == str(True):
-            await asyncio.sleep(config.AUTO_LEAVE_ASSISTANT_TIME)
-            tasks = []
             for num in assistants:
                 client = await get_client(num)
-                tasks.append(leave_inactive_chats(client))
-            await asyncio.gather(*tasks)
+                left = 0
+                try:
+                    async for i in client.get_dialogs():
+                        chat_type = i.chat.type
+                        if chat_type in [
+                            ChatType.SUPERGROUP,
+                            ChatType.GROUP,
+                            ChatType.CHANNEL,
+                        ]:
+                            chat_id = i.chat.id
+                            if chat_id != config.LOG_GROUP_ID:
+                                if left == 20:
+                                    continue
+                                if not await is_active_chat(chat_id):
+                                    try:
+                                        await client.leave_chat(chat_id)
+                                        left += 1
+                                    except:
+                                        continue
+                except:
+                    pass
+
+
+asyncio.create_task(auto_leave())
 
 
 async def auto_end():
-    if await is_autoend():
-        await asyncio.sleep(30)
-        for chat_id, timer in list(autoend.items()):
+    while not await asyncio.sleep(5):
+        if not await is_autoend():
+            continue
+        for chat_id in autoend:
+            timer = autoend.get(chat_id)
+            if not timer:
+                continue
             if datetime.now() > timer:
                 if not await is_active_chat(chat_id):
-                    del autoend[chat_id]
+                    autoend[chat_id] = {}
                     continue
-
-                userbot = await get_assistant(chat_id)
-                members = []
-
+                autoend[chat_id] = {}
                 try:
-                    async for member in userbot.get_call_members(chat_id):
-                        if member is None:
-                            continue
-                        members.append(member)
-                except ValueError:
-                    try:
-                        await Yukki.stop_stream(chat_id)
-                    except Exception:
-                        pass
+                    await Ryn.stop_stream(chat_id)
+                except:
+                    continue
+                try:
+                    await app.send_message(
+                        chat_id,
+                        "Bot has left voice chat due to inactivity to avoid overload on servers. No-one was listening to the bot on voice chat.",
+                    )
+                except:
                     continue
 
-                if len(members) <= 1:
-                    try:
-                        await Yukki.stop_stream(chat_id)
-                    except Exception:
-                        pass
 
-                    try:
-                        language = await get_lang(message.chat.id)
-                        language = get_string(language)
-                    except Exception:
-                        language = get_string("en")
-                    try:
-                        await app.send_message(
-                            chat_id,
-                            language["misc_1"],
-                        )
-                    except Exception:
-                        pass
-
-                del autoend[chat_id]
-
-
-async def do_and_do():
-    while True:
-        await asyncio.gather(auto_leave(), auto_end())
-        await asyncio.sleep(1)
-
-
-asyncio.create_task(do_and_do())
+asyncio.create_task(auto_end())

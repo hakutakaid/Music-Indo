@@ -1,24 +1,12 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 import asyncio
-from datetime import datetime, timedelta
 
 from pyrogram import filters
 from pyrogram.enums import ChatMembersFilter
 from pyrogram.errors import FloodWait
-from pyrogram.raw import types
 
 import config
 from config import adminlist, chatstats, clean, userstats
-from strings import command
+from strings import get_command
 from MusicIndo import app
 from MusicIndo.utils.database import (
     get_active_chats,
@@ -28,50 +16,17 @@ from MusicIndo.utils.database import (
     get_served_chats,
     get_served_users,
     get_user_top,
-    is_cleanmode_on,
-    set_queries,
     update_particular_top,
     update_user_top,
 )
 from MusicIndo.utils.decorators.language import language
 from MusicIndo.utils.formatters import alpha_to_int
 
-AUTO_DELETE = config.CLEANMODE_DELETE_MINS
-AUTO_SLEEP = 5
+BROADCAST_COMMAND = get_command("BROADCAST_COMMAND")
 IS_BROADCASTING = False
-cleanmode_group = 15
 
 
-@app.on_raw_update(group=cleanmode_group)
-async def clean_mode(client, update, users, chats):
-    global IS_BROADCASTING
-    if IS_BROADCASTING:
-        return
-    try:
-        if not isinstance(update, types.UpdateReadChannelOutbox):
-            return
-    except Exception:
-        return
-    if users:
-        return
-    if chats:
-        return
-    message_id = update.max_id
-    chat_id = int(f"-100{update.channel_id}")
-    if not await is_cleanmode_on(chat_id):
-        return
-    if chat_id not in clean:
-        clean[chat_id] = []
-    time_now = datetime.now()
-    put = {
-        "msg_id": message_id,
-        "timer_after": time_now + timedelta(minutes=AUTO_DELETE),
-    }
-    clean[chat_id].append(put)
-    await set_queries(1)
-
-
-@app.on_message(command("BROADCAST_COMMAND") & filters.user(config.OWNER_ID))
+@app.on_message(filters.command(BROADCAST_COMMAND) & filters.user(config.OWNER_ID))
 @language
 async def braodcast_message(client, message, _):
     global IS_BROADCASTING
@@ -82,13 +37,12 @@ async def braodcast_message(client, message, _):
         if len(message.command) < 2:
             return await message.reply_text(_["broad_5"])
         query = message.text.split(None, 1)[1]
-
+        if "-pin" in query:
+            query = query.replace("-pin", "")
         if "-nobot" in query:
             query = query.replace("-nobot", "")
         if "-pinloud" in query:
             query = query.replace("-pinloud", "")
-        if "-pin" in query:
-            query = query.replace("-pin", "")
         if "-assistant" in query:
             query = query.replace("-assistant", "")
         if "-user" in query:
@@ -113,7 +67,7 @@ async def braodcast_message(client, message, _):
                 m = (
                     await app.forward_messages(i, y, x)
                     if message.reply_to_message
-                    else await app.send_message(i, text=query, send_direct=True)
+                    else await app.send_message(i, text=query)
                 )
                 if "-pin" in message.text:
                     try:
@@ -137,13 +91,12 @@ async def braodcast_message(client, message, _):
                 continue
         try:
             await message.reply_text(_["broad_1"].format(sent, pin))
-        except Exception:
+        except:
             pass
 
     # Bot broadcasting to users
     if "-user" in message.text:
         susr = 0
-        pin = 0
         served_users = []
         susers = await get_served_users()
         for user in susers:
@@ -153,20 +106,8 @@ async def braodcast_message(client, message, _):
                 m = (
                     await app.forward_messages(i, y, x)
                     if message.reply_to_message
-                    else await app.send_message(i, text=query, send_direct=True)
+                    else await app.send_message(i, text=query)
                 )
-                if "-pin" in message.text:
-                    try:
-                        await m.pin(both_sides=True, disable_notification=True)
-                        pin += 1
-                    except Exception:
-                        continue
-                elif "-pinloud" in message.text:
-                    try:
-                        await m.pin(both_sides=True, disable_notification=False)
-                        pin += 1
-                    except Exception:
-                        continue
                 susr += 1
             except FloodWait as e:
                 flood_time = int(e.value)
@@ -176,24 +117,21 @@ async def braodcast_message(client, message, _):
             except Exception:
                 pass
         try:
-            await message.reply_text(_["broad_7"].format(susr, pin))
-        except Exception:
+            await message.reply_text(_["broad_7"].format(susr))
+        except:
             pass
 
     # Bot broadcasting by assistant
     if "-assistant" in message.text:
         aw = await message.reply_text(_["broad_2"])
         text = _["broad_3"]
-        from MusicIndo.core.userbot import assistants
+        from DanteMusic.core.userbot import assistants
 
         for num in assistants:
             sent = 0
             client = await get_client(num)
-            contacts = [user.id for user in await client.get_contacts()]
             async for dialog in client.get_dialogs():
                 if dialog.chat.id == config.LOG_GROUP_ID:
-                    continue
-                if dialog.chat.id in contacts:
                     continue
                 try:
                     (
@@ -213,13 +151,13 @@ async def braodcast_message(client, message, _):
             text += _["broad_4"].format(num, sent)
         try:
             await aw.edit_text(text)
-        except Exception:
+        except:
             pass
     IS_BROADCASTING = False
 
 
 async def auto_clean():
-    while not await asyncio.sleep(AUTO_SLEEP):
+    while not await asyncio.sleep(10):
         try:
             for chat_id in chatstats:
                 for dic in chatstats[chat_id]:
@@ -251,7 +189,7 @@ async def auto_clean():
                         next_spot = 1
                         new_spot = {"spot": next_spot, "title": title}
                         await update_user_top(user_id, vidid, new_spot)
-        except Exception:
+        except:
             continue
         try:
             for chat_id in clean:
@@ -263,11 +201,11 @@ async def auto_clean():
                             await app.delete_messages(chat_id, x["msg_id"])
                         except FloodWait as e:
                             await asyncio.sleep(e.value)
-                        except Exception:
+                        except:
                             continue
                     else:
                         continue
-        except Exception:
+        except:
             continue
         try:
             served_chats = await get_active_chats()
@@ -284,8 +222,25 @@ async def auto_clean():
                     for user in authusers:
                         user_id = await alpha_to_int(user)
                         adminlist[chat_id].append(user_id)
-        except Exception:
+        except:
             continue
 
 
 asyncio.create_task(auto_clean())
+
+
+__MODULE__ = "Gcast"
+__HELP__ = """<blockquote><b>**<u>ʙʀᴏᴀᴅᴄᴀsᴛ ғᴇᴀᴛᴜʀᴇ</u>** [ᴏɴʟʏ ғᴏʀ sᴜᴅᴏᴇʀs] :
+
+/broadcast [ᴍᴇssᴀɢᴇ ᴏʀ ʀᴇᴩʟʏ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ] » ʙʀᴏᴀᴅᴄᴀsᴛ ᴀ ᴍᴇssᴀɢᴇ ᴛᴏ sᴇʀᴠᴇᴅ ᴄʜᴀᴛs ᴏғ ᴛʜᴇ ʙᴏᴛ.
+
+<u>ʙʀᴏᴀᴅᴄᴀsᴛɪɴɢ ᴍᴏᴅᴇs:</u>
+**-pin** » ᴩɪɴs ʏᴏᴜʀ ʙʀᴏᴀᴅᴄᴀsᴛᴇᴅ ᴍᴇssᴀɢᴇs ɪɴ sᴇʀᴠᴇᴅ ᴄʜᴀᴛs.
+**-pinloud** » ᴩɪɴs ʏᴏᴜʀ ʙʀᴏᴀᴅᴄᴀsᴛᴇᴅ ᴍᴇssᴀɢᴇ ɪɴ sᴇʀᴠᴇᴅ ᴄʜᴀᴛs ᴀɴᴅ sᴇɴᴅ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ ᴛᴏ ᴛʜᴇ ᴍᴇᴍʙᴇʀs.
+**-user** » ʙʀᴏᴀᴅᴄᴀsᴛs ᴛʜᴇ ᴍᴇssᴀɢᴇ ᴛᴏ ᴛʜᴇ ᴜsᴇʀs ᴡʜᴏ ʜᴀᴠᴇ sᴛᴀʀᴛᴇᴅ ʏᴏᴜʀ ʙᴏᴛ.
+**-assistant** » ʙʀᴏᴀᴅᴄᴀsᴛ ʏᴏᴜʀ ᴍᴇssᴀɢᴇ ғʀᴏᴍ ᴛʜᴇ ᴀssɪᴛᴀɴᴛ ᴀᴄᴄᴏᴜɴᴛ ᴏғ ᴛʜᴇ ʙᴏᴛ.
+**-nobot** » ғᴏʀᴄᴇs ᴛʜᴇ ʙᴏᴛ ᴛᴏ ɴᴏᴛ ʙʀᴏᴀᴅᴄᴀsᴛ ᴛʜᴇ ᴍᴇssᴀɢᴇ..
+
+> **ᴇxᴀᴍᴩʟᴇ:** `/broadcast -user -assistant -pin ᴛᴇsᴛɪɴɢ ʙʀᴏᴀᴅᴄᴀsᴛ`
+</b></blockquote>
+"""

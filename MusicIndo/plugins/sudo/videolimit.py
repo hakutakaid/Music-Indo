@@ -1,23 +1,16 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
+from pyrogram import filters
 from pyrogram.types import Message
 
-from strings import command
+from strings import get_command
 from MusicIndo import app
 from MusicIndo.misc import SUDOERS
 from MusicIndo.utils.database import set_video_limit
 from MusicIndo.utils.decorators.language import language
 
+VIDEOLIMIT_COMMAND = get_command("VIDEOLIMIT_COMMAND")
 
-@app.on_message(command("VIDEOLIMIT_COMMAND") & SUDOERS)
+
+@app.on_message(filters.command(VIDEOLIMIT_COMMAND) & SUDOERS)
 @language
 async def set_video_limit_kid(client, message: Message, _):
     if len(message.command) != 2:

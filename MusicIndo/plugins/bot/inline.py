@@ -1,13 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 from pyrogram.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
@@ -27,7 +17,7 @@ async def inline_query_handler(client, query):
     if text.strip() == "":
         try:
             await client.answer_inline_query(query.id, results=answer, cache_time=10)
-        except Exception:
+        except:
             return
     else:
         a = VideosSearch(text, limit=20)
@@ -76,5 +66,5 @@ __ʀᴇᴘʟʏ ᴡɪᴛʜ /play ᴏɴ ᴛʜɪs sᴇᴀʀᴄʜᴇᴅ ᴍᴇssᴀ�
             )
         try:
             return await client.answer_inline_query(query.id, results=answers)
-        except Exception:
+        except:
             return

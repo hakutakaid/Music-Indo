@@ -1,14 +1,6 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
 import asyncio
 import time
+import logging
 
 from pyrogram import filters
 from pyrogram.enums import ChatType, ParseMode
@@ -18,8 +10,8 @@ from youtubesearchpython.__future__ import VideosSearch
 import config
 from config import BANNED_USERS, START_IMG_URL
 from config.config import OWNER_ID
-from strings import command, get_string
-from MusicIndo import Platform, app
+from strings import get_string
+from MusicIndo import Telegram, YouTube, app
 from MusicIndo.misc import SUDOERS, _boot_
 from MusicIndo.plugins.play.playlist import del_plist_msg
 from MusicIndo.plugins.sudo.sudoers import sudoers_list
@@ -36,14 +28,14 @@ from MusicIndo.utils.database import (
 from MusicIndo.utils.decorators.language import LanguageStart
 from MusicIndo.utils.formatters import get_readable_time
 from MusicIndo.utils.functions import MARKDOWN, WELCOMEHELP
-from MusicIndo.utils.inline import private_panel, start_pannel
-
-from .help import paginate_modules
+from MusicIndo.utils.inline import alive_panel, private_panel, start_pannel
+from MusicIndo.utils.note_funcs import send_notes
+from .help import help_parser
 
 loop = asyncio.get_running_loop()
 
 
-@app.on_message(command("START_COMMAND") & filters.private & ~BANNED_USERS)
+@app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_comm(client, message: Message, _):
     chat_id = message.chat.id
@@ -51,12 +43,11 @@ async def start_comm(client, message: Message, _):
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
-            keyboard = await paginate_modules(0, chat_id, close=True)
-
             if config.START_IMG_URL:
+                text, keyboard = await help_parser(message.from_user.mention)
                 return await message.reply_photo(
                     photo=START_IMG_URL,
-                    caption=_["help_1"],
+                    caption=text,
                     reply_markup=keyboard,
                 )
             else:
@@ -79,8 +70,20 @@ async def start_comm(client, message: Message, _):
                 parse_mode=ParseMode.HTML,
                 disable_web_page_preview=True,
             )
+        if name.startswith("note_"):
+            try:
+                (
+                    _,
+                    Gchat_id,
+                    text,
+                ) = name.split("_", 2)
+                logging.info(f"{Gchat_id} {text}")
+                await send_notes(message, Gchat_id, text)
+            except Exception as e:
+                logging.exception(e)
+
         if name[0:3] == "sta":
-            m = await message.reply_text("🔎 Fetching Your personal stats.!")
+            m = await message.reply_text("🔎 ғᴇᴛᴄʜɪɴɢ ʏᴏᴜʀ ᴘᴇʀsᴏɴᴀʟ sᴛᴀᴛs.!")
             stats = await get_userss(message.from_user.id)
             tot = len(stats)
             if not stats:
@@ -115,9 +118,9 @@ async def start_comm(client, message: Message, _):
                     details = stats.get(vidid)
                     title = (details["title"][:35]).title()
                     if vidid == "telegram":
-                        msg += f"🔗[Telegram Files and Audio]({config.SUPPORT_GROUP}) ** played {count} Times**\n\n"
+                        msg += f"🔗[ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs ᴀɴᴅ ᴀᴜᴅɪᴏs]({config.SUPPORT_GROUP})  played {count} ᴛɪᴍᴇs\n\n"
                     else:
-                        msg += f"🔗 [{title}](https://www.youtube.com/watch?v={vidid}) ** played {count} Times**\n\n"
+                        msg += f"🔗 [{title}](https://www.youtube.com/watch?v={vidid})  played {count} times\n\n"
                 msg = _["ustats_2"].format(tot, tota, limit) + msg
                 return videoid, msg
 
@@ -126,7 +129,7 @@ async def start_comm(client, message: Message, _):
             except Exception as e:
                 print(e)
                 return
-            thumbnail = await Platform.youtube.thumbnail(videoid, True)
+            thumbnail = await YouTube.thumbnail(videoid, True)
             await m.delete()
             await message.reply_photo(photo=thumbnail, caption=msg)
             return
@@ -139,7 +142,7 @@ async def start_comm(client, message: Message, _):
                 sender_name = message.from_user.first_name
                 return await app.send_message(
                     config.LOG_GROUP_ID,
-                    f"{message.from_user.mention} Has just started bot to check <code>Sudolist </code>\n\n**User Id:** {sender_id}\n**User Name:** {sender_name}",
+                    f"<blockquote><b>{message.from_user.mention} baru saja memulai bot <code>list sudo </code>\n\n : {sender_id}\nUser name: {sender_name}</b><blockquote>",
                 )
             return
         if name[0:3] == "lyr":
@@ -147,16 +150,16 @@ async def start_comm(client, message: Message, _):
             lyrical = config.lyrical
             lyrics = lyrical.get(query)
             if lyrics:
-                await Platform.telegram.send_split_text(message, lyrics)
+                await Telegram.send_split_text(message, lyrics)
                 return
             else:
-                await message.reply_text("Failed to get lyrics ")
+                await message.reply_text("ғᴀɪʟᴇᴅ ᴛᴏ ɢᴇᴛ ʟʏʀɪᴄs.")
                 return
         if name[0:3] == "del":
             await del_plist_msg(client=client, message=message, _=_)
             await asyncio.sleep(1)
         if name[0:3] == "inf":
-            m = await message.reply_text("🔎 Fetching info..")
+            m = await message.reply_text("🔎 ғᴇᴛᴄʜɪɴɢ ɪɴғᴏ!")
             query = (str(name)).replace("info_", "", 1)
             query = f"https://www.youtube.com/watch?v={query}"
             results = VideosSearch(query, limit=1)
@@ -170,22 +173,22 @@ async def start_comm(client, message: Message, _):
                 link = result["link"]
                 published = result["publishedTime"]
             searched_text = f"""
-🔍__**Video track information **__
+🔍__ᴠɪᴅᴇᴏ ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ__
 
-❇️**Title:** {title}
+❇️ᴛɪᴛʟᴇ: {title}
 
-⏳**Duration:** {duration} Mins
-👀**Views:** `{views}`
-⏰**Published times:** {published}
-🎥**Channel Name:** {channel}
-📎**Channel Link:** [Visit from here]({channellink})
-🔗**Videp linl:** [Link]({link})
+⏳ᴅᴜʀᴀᴛɪᴏɴ: {duration} Mins
+👀ᴠɪᴇᴡs: `{views}`
+⏰ᴘᴜʙʟɪsʜᴇᴅ ᴛɪᴍᴇ: {published}
+🎥ᴄʜᴀɴɴᴇʟ ɴᴀᴍᴇ: {channel}
+📎ᴄʜᴀɴɴᴇʟ ʟɪɴᴋ: [ᴠɪsɪᴛ ғʀᴏᴍ ʜᴇʀᴇ]({channellink})
+🔗ᴠɪᴅᴇᴏ ʟɪɴᴋ: [ʟɪɴᴋ]({link})
 """
             key = InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(text="🎥 Watch ", url=f"{link}"),
-                        InlineKeyboardButton(text="🔄 Close", callback_data="close"),
+                        InlineKeyboardButton(text="🎥 ᴡᴀᴛᴄʜ ", url=f"{link}"),
+                        InlineKeyboardButton(text="🔄 ᴄʟᴏsᴇ", callback_data="close"),
                     ],
                 ]
             )
@@ -203,15 +206,18 @@ async def start_comm(client, message: Message, _):
                 sender_name = message.from_user.first_name
                 return await app.send_message(
                     config.LOG_GROUP_ID,
-                    f"{message.from_user.mention} Has just started bot ot check <code> Video information  </code>\n\n**User Id:** {sender_id}\n**User Name** {sender_name}",
+                    f"<blockquote><b>{message.from_user.mention} baru saja memulai botb<code>Info video </code>\n\nUser ID: {sender_id}\nUser name {sender_name}</b><blockquote>",
                 )
     else:
         try:
             await app.resolve_peer(OWNER_ID[0])
             OWNER = OWNER_ID[0]
-        except Exception:
+        except:
             OWNER = None
-        out = private_panel(_, app.username, OWNER)
+        out = private_panel(_)
+        b = await message.reply_sticker(
+            "CAACAgUAAxkBAAJ4tWaLZcUbwKzfkYDlGloILp06LVm6AAKCBwAC_-3QVE3JW0_6oFU9HgQ"
+        )
         if config.START_IMG_URL:
             try:
                 await message.reply_photo(
@@ -219,7 +225,7 @@ async def start_comm(client, message: Message, _):
                     caption=_["start_1"].format(app.mention),
                     reply_markup=InlineKeyboardMarkup(out),
                 )
-            except Exception:
+            except:
                 await message.reply_text(
                     text=_["start_1"].format(app.mention),
                     reply_markup=InlineKeyboardMarkup(out),
@@ -229,22 +235,33 @@ async def start_comm(client, message: Message, _):
                 text=_["start_1"].format(app.mention),
                 reply_markup=InlineKeyboardMarkup(out),
             )
+        await b.delete()
         if await is_on_off(config.LOG):
             sender_id = message.from_user.id
             sender_name = message.from_user.first_name
             return await app.send_message(
                 config.LOG_GROUP_ID,
-                f"{message.from_user.mention} Has started bot. \n\n**User id :** {sender_id}\n**User name:** {sender_name}",
+                f"{message.from_user.mention} memulai bot \n\nUser ID : {sender_id}\nUser name: {sender_name}",
             )
 
 
-@app.on_message(command("START_COMMAND") & filters.group & ~BANNED_USERS)
+@app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
 async def testbot(client, message: Message, _):
+    out = alive_panel(_)
     uptime = int(time.time() - _boot_)
     chat_id = message.chat.id
-    await message.reply_text(_["start_7"].format(get_readable_time(uptime)))
-
+    if config.START_IMG_URL:
+        await message.reply_photo(
+            photo=config.START_IMG_URL,
+            caption=_["start_7"].format(app.mention, get_readable_time(uptime)),
+            reply_markup=InlineKeyboardMarkup(out),
+        )
+    else:
+        await message.reply_text(
+            text=_["start_7"].format(app.mention, get_readable_time(uptime)),
+            reply_markup=InlineKeyboardMarkup(out),
+        )
     return await add_served_chat(message.chat.id)
 
 
@@ -254,7 +271,7 @@ async def welcome(client, message: Message):
     if config.PRIVATE_BOT_MODE == str(True):
         if not await is_served_private_chat(message.chat.id):
             await message.reply_text(
-                "This Bot's private mode has been enabled only my owner can use this if want to use in your chat so say my Owner to authorize your chat."
+                "mode pribadi bot ini telah diaktifkan hanya pemilik saya yang dapat menggunakan ini jika Anda ingin menggunakan ini dalam obrolan Anda, jadi katakan kepada pemilik saya untuk mengotorisasi obrolan Anda"
             )
             return await app.leave_chat(message.chat.id)
     else:
@@ -294,6 +311,24 @@ async def welcome(client, message: Message):
                     _["start_4"].format(app.mention, member.mention)
                 )
             return
-        except Exception:
+        except:
 
             return
+
+
+__MODULE__ = "info"
+__HELP__ = """<blockquote><b>
+
+/stats - Gᴇᴛ Tᴏᴘ 𝟷𝟶 Tʀᴀᴄᴋs Gʟᴏʙᴀʟ Sᴛᴀᴛs, Tᴏᴘ 𝟷𝟶 Usᴇʀs ᴏғ ʙᴏᴛ, Tᴏᴘ 𝟷𝟶 Cʜᴀᴛs ᴏɴ ʙᴏᴛ, Tᴏᴘ 𝟷𝟶 Pʟᴀʏᴇᴅ ɪɴ ᴀ ᴄʜᴀᴛ ᴇᴛᴄ ᴇᴛᴄ.
+
+/sudolist - Cʜᴇᴄᴋ Sᴜᴅᴏ Usᴇʀs ᴏғ Yᴜᴋᴋɪ Mᴜsɪᴄ Bᴏᴛ
+
+/lyrics [Mᴜsɪᴄ Nᴀᴍᴇ] - Sᴇᴀʀᴄʜᴇs Lʏʀɪᴄs ғᴏʀ ᴛʜᴇ ᴘᴀʀᴛɪᴄᴜʟᴀʀ Mᴜsɪᴄ ᴏɴ ᴡᴇʙ.
+
+/song [Tʀᴀᴄᴋ Nᴀᴍᴇ] ᴏʀ [YT Lɪɴᴋ] - Dᴏᴡɴʟᴏᴀᴅ ᴀɴʏ ᴛʀᴀᴄᴋ ғʀᴏᴍ ʏᴏᴜᴛᴜʙᴇ ɪɴ ᴍᴘ𝟹 ᴏʀ ᴍᴘ𝟺 ғᴏʀᴍᴀᴛs.
+
+/player -  Gᴇᴛ ᴀ ɪɴᴛᴇʀᴀᴄᴛɪᴠᴇ Pʟᴀʏɪɴɢ Pᴀɴᴇʟ.
+
+c sᴛᴀɴᴅs ғᴏʀ ᴄʜᴀɴɴᴇʟ ᴘʟᴀʏ.
+
+/queue ᴏʀ /cqueue - Cʜᴇᴄᴋ Qᴜᴇᴜᴇ Lɪsᴛ ᴏғ Mᴜsɪᴄ.</b></blockquote>"""

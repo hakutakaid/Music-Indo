@@ -1,11 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
 import aiohttp
 
 BASE = "https://batbin.me/"
@@ -21,7 +13,7 @@ async def post(url: str, *args, **kwargs):
         return data
 
 
-async def Yukkibin(text):
+async def Rynbin(text):
     resp = await post(f"{BASE}api/v2/paste", data=text)
     if not resp["success"]:
         return

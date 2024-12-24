@@ -1,30 +1,6 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from config import SUPPORT_GROUP
 from MusicIndo import app
-
-
-def support_group_markup(_):
-    upl = InlineKeyboardMarkup(
-        [
-            [
-                InlineKeyboardButton(
-                    text=_["S_B_3"],
-                    url=SUPPORT_GROUP,
-                ),
-            ]
-        ]
-    )
-    return upl
 
 
 def help_back_markup(_):

@@ -1,13 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 import re
 from typing import Union
 
@@ -16,7 +6,7 @@ from bs4 import BeautifulSoup
 from youtubesearchpython.__future__ import VideosSearch
 
 
-class Resso:
+class RessoAPI:
     def __init__(self):
         self.regex = r"^(https:\/\/m.resso.com\/)(.*)$"
         self.base = "https://m.resso.com/"
@@ -43,7 +33,7 @@ class Resso:
                 des = tag.get("content", None)
                 try:
                     des = des.split("·")[0]
-                except Exception:
+                except:
                     pass
         if des == "":
             return

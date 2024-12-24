@@ -1,20 +1,11 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 import asyncio
 
+from pyrogram import filters
 from pyrogram.errors import FloodWait
 from pyrogram.types import Message
 
 from config import BANNED_USERS
-from strings import command
+from strings import get_command
 from MusicIndo import app
 from MusicIndo.misc import SUDOERS
 from MusicIndo.utils import get_readable_time
@@ -28,8 +19,13 @@ from MusicIndo.utils.database import (
 )
 from MusicIndo.utils.decorators.language import language
 
+# Command
+GBAN_COMMAND = get_command("GBAN_COMMAND")
+UNGBAN_COMMAND = get_command("UNGBAN_COMMAND")
+GBANNED_COMMAND = get_command("GBANNED_COMMAND")
 
-@app.on_message(command("GBAN_COMMAND") & SUDOERS)
+
+@app.on_message(filters.command(GBAN_COMMAND) & SUDOERS)
 @language
 async def gbanuser(client, message: Message, _):
     if not message.reply_to_message:
@@ -74,7 +70,7 @@ async def gbanuser(client, message: Message, _):
     await mystic.delete()
 
 
-@app.on_message(command("UNGBAN_COMMAND") & SUDOERS)
+@app.on_message(filters.command(UNGBAN_COMMAND) & SUDOERS)
 @language
 async def gungabn(client, message: Message, _):
     if not message.reply_to_message:
@@ -113,7 +109,7 @@ async def gungabn(client, message: Message, _):
     await mystic.delete()
 
 
-@app.on_message(command("GBANNED_COMMAND") & SUDOERS)
+@app.on_message(filters.command(GBANNED_COMMAND) & SUDOERS)
 @language
 async def gbanned_list(client, message: Message, _):
     counts = await get_banned_count()

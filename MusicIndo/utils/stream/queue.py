@@ -1,14 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
-
 from typing import Union
 
 from config import autoclean, chatstats, userstats
@@ -26,13 +15,12 @@ async def put_queue(
     vidid,
     user_id,
     stream,
-    url: str = None,
     forceplay: Union[bool, str] = None,
 ):
     title = title.title()
     try:
         duration_in_seconds = time_to_seconds(duration) - 3
-    except Exception:
+    except:
         duration_in_seconds = 0
     put = {
         "title": title,
@@ -44,7 +32,6 @@ async def put_queue(
         "vidid": vidid,
         "seconds": duration_in_seconds,
         "played": 0,
-        "url": url,
     }
     if forceplay:
         if check := db.get(chat_id):
@@ -55,8 +42,7 @@ async def put_queue(
     else:
         db[chat_id].append(put)
     autoclean.append(file)
-    vidid = "telegram" if vidid == "soundcloud" or "saavn" in vidid else vidid
-
+    vidid = "telegram" if vidid == "soundcloud" else vidid
     to_append = {"vidid": vidid, "title": title}
     if chat_id not in chatstats:
         chatstats[chat_id] = []

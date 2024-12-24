@@ -1,26 +1,19 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 import random
 
 from pyrogram import filters
 from pyrogram.types import Message
 
 from config import BANNED_USERS
-from strings import command
+from strings import get_command
 from MusicIndo import app
 from MusicIndo.misc import db
 from MusicIndo.utils.decorators import AdminRightsCheck
 
+# Commands
+SHUFFLE_COMMAND = get_command("SHUFFLE_COMMAND")
 
-@app.on_message(command("SHUFFLE_COMMAND") & filters.group & ~BANNED_USERS)
+
+@app.on_message(filters.command(SHUFFLE_COMMAND) & filters.group & ~BANNED_USERS)
 @AdminRightsCheck
 async def admins(Client, message: Message, _, chat_id):
     if not len(message.command) == 1:
@@ -30,7 +23,7 @@ async def admins(Client, message: Message, _, chat_id):
         return await message.reply_text(_["admin_21"])
     try:
         popped = check.pop(0)
-    except Exception:
+    except:
         return await message.reply_text(_["admin_22"])
     check = db.get(chat_id)
     if not check:
@@ -38,4 +31,4 @@ async def admins(Client, message: Message, _, chat_id):
         return await message.reply_text(_["admin_22"])
     random.shuffle(check)
     check.insert(0, popped)
-    await message.reply_text(_["admin_23"].format(message.from_user.mention))
+    await message.reply_text(_["admin_23"].format(message.from_user.first_name))

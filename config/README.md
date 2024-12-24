@@ -1,20 +1,15 @@
-# Yukki Music Bot Configs
-
-Config vars are basically the variables which configure or modify bot to function, which are the basic necessities of plugins or code to work. You have to set the proper mandatory vars to make it functional and to start the basic feature of bot.
-
-### Get to know about all these vars in depth from our Docs. [Read Now from Here](https://notreallyshikhar.gitbook.io/yukkimusicbot/config-vars/available-vars)
 
 ## Mandatory Vars
 
-- These are the minimum required vars need to setup to make Yukki Music Bot functional.
+- These are the minimum required vars need to setup to make Music Bot functional.
 
 1. `API_ID` : Get it from my.telegram.org 
 2. `API_HASH`  : Get it from my.telegram.org 
 3. `BOT_TOKEN` : Get it from [@Botfather](http://t.me/BotFather) in Telegram
-4. `MONGO_DB_URI` : Get mongo db [from here.](https://notreallyshikhar.gitbook.io/yukkimusicbot/deployment/mongodb)
+4. `MONGO_DB_URI` : Get mongo db 
 5. `LOG_GROUP_ID` : You'll need a Private Group ID for this. Supergroup Needed with id starting from -100 
-6. `OWNER_ID` : Your Owner ID for managing your bot., muktiple ids can be seperated by commas.
-7. `STRING_SESSIONS`: Pyrogram v2 session strings for multiple assistants, separated by commas.
+6. `OWNER_ID` : Your Owner ID for managing your bot.
+7. `STRING_SESSION` : Pyrogram Session Needed, Generate string from in Telegram.
 
 
 ## Non-Mandatory Vars
@@ -48,15 +43,15 @@ Config vars are basically the variables which configure or modify bot to functio
 3. `TELEGRAM_EDIT_SLEEP` : Time sleep duration For Telegram Downloader. Default to 5 seconds
 4. `AUTO_LEAVING_ASSISTANT` : Set it in `True` if you want to leave your assistant after a certain amount of time.
 5. `ASSISTANT_LEAVE_TIME` : Time after which your assistant account will leave served chats automatically. Default to 5400 seconds, i.e 90 Mins
-
-6. `SET_CMDS` : Set it to `True` if you want your bot to set the commands for chat menu automatically. [Reference](https://i.postimg.cc/Bbg3LQTG/image.png)
+6. `AUTO_DOWNLOADS_CLEAR` : Set it `True` if you want to delete downloads after the music playout ends. 
+7. `AUTO_SUGGESTION_MODE` : Set it `True` if you want to bot to suggest about bot commands to random chats of your bots. 
+9. `AUTO_SUGGESTION_TIME` : Time after which your bot will suggest random 1/10 chats of your served chats about bot commands. Default to 5400 seconds, i.e 90 Mins
+10. `SET_CMDS` : Set it to `True` if you want your bot to set the commands for chat menu automatically. [Reference](https://i.postimg.cc/Bbg3LQTG/image.png)
 
 ## Spotify Vars
 
-- You can play tracks or playlists from spotify from Yukki Music bot
+- You can play tracks or playlists from spotify from Music bot
 - You'll need these two vars to make spotify play working. This is not essential , you can leave them blank if you want.
-
-### How to get these? [Read from here](https://notreallyshikhar.gitbook.io/yukkimusicbot/deployment/spotify)
 
 
 1. `SPOTIFY_CLIENT_ID` : Get it from https://developer.spotify.com/dashboard 
@@ -67,15 +62,13 @@ Config vars are basically the variables which configure or modify bot to functio
 - To work some Heroku compatible modules, this var value required to Access your account to use `get_log`, `usage`, `update` etc etc commands.
 - You can fill this var using your API key or Authorization token.
 
-### How to get these? [Read from here](https://notreallyshikhar.gitbook.io/yukkimusicbot/config-vars/heroku-vars)
-
 1. `HEROKU_API_KEY` : Get it from http://dashboard.heroku.com/account 
 2. `HEROKU_APP_NAME` : You have to Enter the app name which you gave to identify your Music Bot in Heroku.
 
 
 ## Custom Repo Vars
 
-- If you plan to use Yukki Music Bot with your own customized or modified code.
+- If you plan to use Music Bot with your own customized or modified code.
 
 1. `UPSTREAM_REPO` : Your Upstream Repo URL or Forked Repo.
 2. `UPSTREAM_BRANCH` : Default Branch of your Upstream Repo URL or Forked Repo. 
@@ -85,9 +78,6 @@ Config vars are basically the variables which configure or modify bot to functio
 
 
 ## Images/Thumbnail Vars
-
-- You can change images which are used in Yukki Music Bot.
-- You can generate telegaph links from [@YukkiTelegraphBot](http://t.me/YukkiTelegraphBot) and use it here.
 
 1. `START_IMG_URL` : Image which comes on /start command in private messages of bot.
 2. `PING_IMG_URL` : Image which comes on /ping command of bot.
@@ -102,9 +92,3 @@ Config vars are basically the variables which configure or modify bot to functio
 11. `SPOTIFY_ARTIST_IMG_URL` : This image comes when someone plays Spotify artist via link in inline mode. 
 12. `SPOTIFY_ALBUM_IMG_URL` : This image comes when someone plays Spotify album via link in inline mode. 
 13. `SPOTIFY_PLAYLIST_IMG_URL` : This image comes when someone plays Spotify album via link in inline mode. 
-
-## Multi Assistant Mode
-
-- Supports unlimited assistant clients.
-
-`STRING_SESSIONS`: Add multiple Pyrogram v2 string sessions, separated by commas.

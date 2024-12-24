@@ -1,19 +1,9 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 from pykeyboard import InlineKeyboard
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, Message
 
 from config import BANNED_USERS
-from strings import get_string, languages_present, command
+from strings import get_command, get_string, languages_present
 from MusicIndo import app
 from MusicIndo.utils.database import get_lang, set_lang
 from MusicIndo.utils.decorators import ActualAdminCB, language, languageCB
@@ -22,7 +12,7 @@ from MusicIndo.utils.decorators import ActualAdminCB, language, languageCB
 
 
 def lanuages_keyboard(_):
-    keyboard = InlineKeyboard(row_width=2)
+    keyboard = InlineKeyboard(row_width=3)
     keyboard.add(
         *[
             (
@@ -44,7 +34,10 @@ def lanuages_keyboard(_):
     return keyboard
 
 
-@app.on_message(command("LANGUAGE_COMMAND") & filters.group & ~BANNED_USERS)
+LANGUAGE_COMMAND = get_command("LANGUAGE_COMMAND")
+
+
+@app.on_message(filters.command(LANGUAGE_COMMAND) & filters.group & ~BANNED_USERS)
 @language
 async def langs_command(client, message: Message, _):
     keyboard = lanuages_keyboard(_)
@@ -59,7 +52,7 @@ async def langs_command(client, message: Message, _):
 async def lanuagecb(client, CallbackQuery, _):
     try:
         await CallbackQuery.answer()
-    except Exception:
+    except:
         pass
     keyboard = lanuages_keyboard(_)
     return await CallbackQuery.edit_message_reply_markup(reply_markup=keyboard)
@@ -72,16 +65,16 @@ async def language_markup(client, CallbackQuery, _):
     old = await get_lang(CallbackQuery.message.chat.id)
     if str(old) == str(langauge):
         return await CallbackQuery.answer(
-            "You are already using same language", show_alert=True
+            "ʏᴏᴜ ᴀʀᴇ ᴀʟʀᴇᴀᴅʏ ᴜsɪɴɢ sᴀᴍᴇ ʟᴀɴɢᴜᴀɢᴇ", show_alert=True
         )
     try:
         _ = get_string(langauge)
         await CallbackQuery.answer(
-            "Your language changed successfully..", show_alert=True
+            "ʏᴏᴜʀ ʟᴀɴɢᴜᴀɢᴇ ᴄʜᴀɴɢᴇᴅ sᴜᴄᴇssғᴜʟʟʏ..", show_alert=True
         )
-    except Exception:
+    except:
         return await CallbackQuery.answer(
-            "Failed to change language or language in under Upadte",
+            "ғᴀɪʟᴇᴅ ᴛᴏ ᴄʜᴀɴɢᴇ ʟᴀɴɢᴜᴀɢᴇ ᴏʀ ʟᴀɴɢᴜᴀɢᴇ ɪs ɪɴ ᴜɴᴅᴇʀ ᴜᴘᴅᴀᴛᴇ",
             show_alert=True,
         )
     await set_lang(CallbackQuery.message.chat.id, langauge)

@@ -1,22 +1,11 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
-
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, Message
 
 import config
 from config import BANNED_USERS
-from strings import command
-from MusicIndo import Platform, app
-from MusicIndo.core.call import Yukki
+from strings import get_command
+from MusicIndo import YouTube, app
+from MusicIndo.core.call import Ryn
 from MusicIndo.misc import db
 from MusicIndo.utils.database import get_loop
 from MusicIndo.utils.decorators import AdminRightsCheck
@@ -24,8 +13,11 @@ from MusicIndo.utils.inline.play import stream_markup, telegram_markup
 from MusicIndo.utils.stream.autoclear import auto_clean
 from MusicIndo.utils.thumbnails import gen_thumb
 
+# Commands
+SKIP_COMMAND = get_command("SKIP_COMMAND")
 
-@app.on_message(command("SKIP_COMMAND") & filters.group & ~BANNED_USERS)
+
+@app.on_message(filters.command(SKIP_COMMAND) & filters.group & ~BANNED_USERS)
 @AdminRightsCheck
 async def skip(cli, message: Message, _, chat_id):
     if not len(message.command) < 2:
@@ -45,12 +37,7 @@ async def skip(cli, message: Message, _, chat_id):
                             popped = None
                             try:
                                 popped = check.pop(0)
-                                if popped.get("mystic"):
-                                    try:
-                                        await popped.get("mystic").delete()
-                                    except Exception:
-                                        pass
-                            except Exception:
+                            except:
                                 return await message.reply_text(_["admin_16"])
                             if popped:
                                 await auto_clean(popped)
@@ -62,8 +49,8 @@ async def skip(cli, message: Message, _, chat_id):
                                         ),
                                         disable_web_page_preview=True,
                                     )
-                                    await Yukki.stop_stream(chat_id)
-                                except Exception:
+                                    await Dante.stop_stream(chat_id)
+                                except:
                                     return
                                 break
                     else:
@@ -81,28 +68,23 @@ async def skip(cli, message: Message, _, chat_id):
             popped = check.pop(0)
             if popped:
                 await auto_clean(popped)
-                if popped.get("mystic"):
-                    try:
-                        await popped.get("mystic").delete()
-                    except Exception:
-                        pass
             if not check:
                 await message.reply_text(
                     _["admin_10"].format(message.from_user.first_name),
                     disable_web_page_preview=True,
                 )
                 try:
-                    return await Yukki.stop_stream(chat_id)
-                except Exception:
+                    return await Dante.stop_stream(chat_id)
+                except:
                     return
-        except Exception:
+        except:
             try:
                 await message.reply_text(
                     _["admin_10"].format(message.from_user.first_name),
                     disable_web_page_preview=True,
                 )
-                return await Yukki.stop_stream(chat_id)
-            except Exception:
+                return await Dante.stop_stream(chat_id)
+            except:
                 return
     queued = check[0]["file"]
     title = (check[0]["title"]).title()
@@ -113,11 +95,11 @@ async def skip(cli, message: Message, _, chat_id):
     duration_min = check[0]["dur"]
     status = True if str(streamtype) == "video" else None
     if "live_" in queued:
-        n, link = await Platform.youtube.video(videoid, True)
+        n, link = await YouTube.video(videoid, True)
         if n == 0:
             return await message.reply_text(_["admin_11"].format(title))
         try:
-            await Yukki.skip_stream(chat_id, link, video=status)
+            await Dante.skip_stream(chat_id, link, video=status)
         except Exception:
             return await message.reply_text(_["call_7"])
         button = telegram_markup(_, chat_id)
@@ -135,16 +117,16 @@ async def skip(cli, message: Message, _, chat_id):
     elif "vid_" in queued:
         mystic = await message.reply_text(_["call_8"], disable_web_page_preview=True)
         try:
-            file_path, direct = await Platform.youtube.download(
+            file_path, direct = await YouTube.download(
                 videoid,
                 mystic,
                 videoid=True,
                 video=status,
             )
-        except Exception:
+        except:
             return await mystic.edit_text(_["call_7"])
         try:
-            await Yukki.skip_stream(chat_id, file_path, video=status)
+            await Dante.skip_stream(chat_id, file_path, video=status)
         except Exception:
             return await mystic.edit_text(_["call_7"])
         button = stream_markup(_, videoid, chat_id)
@@ -164,7 +146,7 @@ async def skip(cli, message: Message, _, chat_id):
         await mystic.delete()
     elif "index_" in queued:
         try:
-            await Yukki.skip_stream(chat_id, videoid, video=status)
+            await Dante.skip_stream(chat_id, videoid, video=status)
         except Exception:
             return await message.reply_text(_["call_7"])
         button = telegram_markup(_, chat_id)
@@ -177,7 +159,7 @@ async def skip(cli, message: Message, _, chat_id):
         db[chat_id][0]["markup"] = "tg"
     else:
         try:
-            await Yukki.skip_stream(chat_id, queued, video=status)
+            await Dante.skip_stream(chat_id, queued, video=status)
         except Exception:
             return await message.reply_text(_["call_7"])
         if videoid == "telegram":
@@ -206,17 +188,6 @@ async def skip(cli, message: Message, _, chat_id):
                 caption=_["stream_1"].format(
                     title, config.SUPPORT_GROUP, check[0]["dur"], user
                 ),
-                reply_markup=InlineKeyboardMarkup(button),
-            )
-            db[chat_id][0]["mystic"] = run
-            db[chat_id][0]["markup"] = "tg"
-        elif "saavn" in videoid:
-            button = telegram_markup(_, chat_id)
-            url = check[0]["url"]
-            details = await Platform.saavn.info(url)
-            run = await message.reply_photo(
-                photo=details["thumb"] or config.TELEGRAM_AUDIO_URL,
-                caption=_["stream_1"].format(title, url, check[0]["dur"], user),
                 reply_markup=InlineKeyboardMarkup(button),
             )
             db[chat_id][0]["mystic"] = run

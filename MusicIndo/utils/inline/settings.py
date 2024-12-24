@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
 from typing import Union
 
 from pyrogram.types import InlineKeyboardButton
@@ -24,7 +15,6 @@ def setting_markup(_):
         ],
         [
             InlineKeyboardButton(text=_["ST_B_5"], callback_data="PM"),
-            InlineKeyboardButton(text=_["ST_B_7"], callback_data="CM"),
         ],
         [
             InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close"),
@@ -148,37 +138,6 @@ def video_quality_markup(
                     else _["ST_B_17"].format("")
                 ),
                 callback_data="UHD_4K",
-            ),
-        ],
-        [
-            InlineKeyboardButton(
-                text=_["BACK_BUTTON"],
-                callback_data="settingsback_helper",
-            ),
-            InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close"),
-        ],
-    ]
-    return buttons
-
-
-def cleanmode_settings_markup(
-    _,
-    status: Union[bool, str] = None,
-    dels: Union[bool, str] = None,
-):
-    buttons = [
-        [
-            InlineKeyboardButton(text=_["ST_B_7"], callback_data="CMANSWER"),
-            InlineKeyboardButton(
-                text=_["ST_B_18"] if status == True else _["ST_B_19"],
-                callback_data="CLEANMODE",
-            ),
-        ],
-        [
-            InlineKeyboardButton(text=_["ST_B_30"], callback_data="COMMANDANSWER"),
-            InlineKeyboardButton(
-                text=_["ST_B_18"] if dels == True else _["ST_B_19"],
-                callback_data="COMMANDELMODE",
             ),
         ],
         [

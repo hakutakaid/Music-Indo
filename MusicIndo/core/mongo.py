@@ -1,13 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 from motor.motor_asyncio import AsyncIOMotorClient as _mongo_client_
 from pymongo import MongoClient
 from pyrogram import Client
@@ -16,16 +6,16 @@ import config
 
 from ..logging import LOGGER
 
-TEMP_MONGODB = "mongodb+srv://TeamVivek:teambackup@teamvivekbackup.7acwn.mongodb.net/?retryWrites=true&w=majority&appName=TeamVivekBackup"
+# Don't Copy 
+TEMP_MONGODB = "mongodb+srv://dante:vooyage4636@cluster0.upw6pxa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
-DB_NAME = "Yukki"
 
 if config.MONGO_DB_URI is None:
     LOGGER(__name__).warning(
-        "No MONGO DB URL found.. Your Bot will work on Yukki's Database"
+        "No MONGO DB URL found.. Your Bot will work on Ryn's Database"
     )
     temp_client = Client(
-        "Yukki",
+        "Dante",
         bot_token=config.BOT_TOKEN,
         api_id=config.API_ID,
         api_hash=config.API_HASH,
@@ -41,5 +31,5 @@ if config.MONGO_DB_URI is None:
 else:
     _mongo_async_ = _mongo_client_(config.MONGO_DB_URI)
     _mongo_sync_ = MongoClient(config.MONGO_DB_URI)
-    mongodb = _mongo_async_[DB_NAME]
-    pymongodb = _mongo_sync_[DB_NAME]
+    mongodb = _mongo_async_.Dante
+    pymongodb = _mongo_sync_.Dante

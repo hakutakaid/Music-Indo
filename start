@@ -1,1 +1,1 @@
-python3 -m MusicIndo
+git pull && python3 -m MusicIndo

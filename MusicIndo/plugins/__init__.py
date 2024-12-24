@@ -1,23 +1,12 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 import glob
-import importlib
-import logging
 import os
 import shutil
+import importlib
+from os.path import dirname, isfile, join, abspath
 import subprocess
+import logging
 import sys
-from os.path import abspath, dirname, isfile, join
-
-from config import EXTRA_PLUGINS, EXTRA_PLUGINS_FOLDER, EXTRA_PLUGINS_REPO
+from config import EXTRA_PLUGINS, EXTRA_PLUGINS_REPO, EXTRA_PLUGINS_FOLDER
 from MusicIndo import LOGGER
 
 logger = LOGGER(__name__)
@@ -25,10 +14,8 @@ logger = LOGGER(__name__)
 
 if EXTRA_PLUGINS_FOLDER in os.listdir():
     shutil.rmtree(EXTRA_PLUGINS_FOLDER)
-
 if "utils" in os.listdir():
     shutil.rmtree("utils")
-
 ROOT_DIR = abspath(join(dirname(__file__), "..", ".."))
 
 EXTERNAL_REPO_PATH = join(ROOT_DIR, EXTRA_PLUGINS_FOLDER)
@@ -86,7 +73,7 @@ def __list_all_modules():
     work_dirs = [main_repo_plugins_dir]
 
     if extra_plugins_enabled:
-        logger.info("Loading extra plugins...")
+        logger.info(f"loading extra plugins from {EXTRA_PLUGINS_REPO}")
         work_dirs.append(join(EXTERNAL_REPO_PATH, "plugins"))
 
     all_modules = []

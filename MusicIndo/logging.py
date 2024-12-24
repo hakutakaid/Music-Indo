@@ -1,13 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-
-
 import logging
 from logging.handlers import RotatingFileHandler
 
@@ -27,11 +17,6 @@ logging.getLogger("pyrogram").setLevel(logging.ERROR)
 logging.getLogger("pytgcalls").setLevel(logging.ERROR)
 logging.getLogger("pymongo").setLevel(logging.ERROR)
 logging.getLogger("httpx").setLevel(logging.ERROR)
-
-# Setting ntgcalls logger level and disabling propagation
-ntgcalls_logger = logging.getLogger("ntgcalls")
-ntgcalls_logger.setLevel(logging.CRITICAL)
-ntgcalls_logger.propagate = False
 
 
 def LOGGER(name: str) -> logging.Logger:

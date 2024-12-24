@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-
 from pyrogram.types import InlineQueryResultArticle, InputTextMessageContent
 
 answer = []
@@ -29,13 +20,13 @@ answer.extend(
             title="ᴍᴜᴛᴇ sᴛʀᴇᴀᴍ",
             description=f"ᴍᴜᴛᴇ ᴛʜᴇ ᴏɴɢᴏɪɴɢ sᴏɴɢ ᴏɴ ᴠᴏɪᴄᴇᴄʜᴀᴛ",
             thumb_url="https://telegra.ph/file/66516f2976cb6d87e20f9.png",
-            input_message_content=InputTextMessageContent("/vcmute"),
+            input_message_content=InputTextMessageContent("/mute"),
         ),
         InlineQueryResultArticle(
             title="ᴜɴᴍᴜᴛᴇ sᴛʀᴇᴀᴍ",
             description=f"ᴜɴᴍᴜᴛᴇ ᴛʜᴇ ᴏɴɢᴏɪɴɢ sᴏɴɢ ᴏɴ ᴠᴏɪᴄᴇᴄʜᴀᴛ",
             thumb_url="https://telegra.ph/file/3078794f9341ffd582e18.png",
-            input_message_content=InputTextMessageContent("/vcunmute"),
+            input_message_content=InputTextMessageContent("/unmute"),
         ),
         InlineQueryResultArticle(
             title="sᴋɪᴘ sᴛʀᴇᴀᴍ",

@@ -1,36 +1,23 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
 import asyncio
-import time
-from datetime import datetime, timedelta
 
+from pyrogram.errors import FloodWait
 from pyrogram.types import InlineKeyboardMarkup
 
 from strings import get_string
-from MusicIndo.core.call import Yukki
+from MusicIndo import app
 from MusicIndo.misc import db
 from MusicIndo.utils.database import (
     get_active_chats,
-    get_assistant,
     get_lang,
+    get_served_users,
     is_music_playing,
-    set_loop,
 )
 from MusicIndo.utils.formatters import seconds_to_min
 from MusicIndo.utils.inline import stream_markup_timer, telegram_markup_timer
 
 from ..admins.callback import wrong
-from .autoleave import autoend
 
 checker = {}
-muted = {}
 
 
 async def timer():
@@ -51,147 +38,93 @@ async def timer():
             db[chat_id][0]["played"] += 1
 
 
-async def leave_if_muted():
-    while True:
-        await asyncio.sleep(2)
-        for chat_id, details in list(muted.items()):
-            if time.time() - details["timestamp"] >= 60:
-                _ = details["_"]
-                try:
-                    userbot = await get_assistant(chat_id)
-                    members = []
-                    try:
-                        async for member in userbot.get_call_members(
-                            chat_id
-                        ):
-                            if member is None:
-                                continue
-                            members.append(member)
-                    except ValueError:
-                        try:
-                            await Yukki.stop_stream(chat_id)
-                        except Exception:
-                            pass
-                        continue
-
-                    m = next(
-                        (m for m in members if m.chat.id == userbot.id), None
-                    )
-                    if m is None:
-                        continue
-                    is_muted = bool(m.is_muted and not m.can_self_unmute)
-
-                    if is_muted:
-                        await Yukki.stop_stream(chat_id)
-                        await set_loop(chat_id, 0)
-
-                    del muted[chat_id]
-                except Exception:
-                    del muted[chat_id]
+asyncio.create_task(timer())
 
 
 async def markup_timer():
-    while True:
-        await asyncio.sleep(2)
+    while not await asyncio.sleep(2):
         active_chats = await get_active_chats()
         for chat_id in active_chats:
-            if not await is_music_playing(chat_id):
-                continue
-
-            playing = db.get(chat_id)
-            if not playing:
-                continue
-
-            duration_seconds = int(playing[0]["seconds"])
-
             try:
-                language = await get_lang(chat_id)
-                _ = get_string(language)
-            except Exception:
-                _ = get_string("en")
-
-            is_muted = False
-            try:
-                userbot = await get_assistant(chat_id)
-                members = []
+                if not await is_music_playing(chat_id):
+                    continue
+                playing = db.get(chat_id)
+                if not playing:
+                    continue
+                duration_seconds = int(playing[0]["seconds"])
+                if duration_seconds == 0:
+                    continue
                 try:
-                    async for member in userbot.get_call_members(chat_id):
-                        if member is None:
-                            continue
-                        members.append(member)
-                except ValueError:
-                    try:
-                        await Yukki.stop_stream(chat_id)
-                    except Exception:
-                        pass
+                    mystic = playing[0]["mystic"]
+                    markup = playing[0]["markup"]
+                except:
                     continue
-
-                if not members:
-                    await Yukki.stop_stream(chat_id)
-                    await set_loop(chat_id, 0)
+                try:
+                    check = wrong[chat_id][mystic.message_id]
+                    if check is False:
+                        continue
+                except:
+                    pass
+                try:
+                    language = await get_lang(chat_id)
+                    _ = get_string(language)
+                except:
+                    _ = get_string("en")
+                try:
+                    buttons = (
+                        stream_markup_timer(
+                            _,
+                            playing[0]["vidid"],
+                            chat_id,
+                            seconds_to_min(playing[0]["played"]),
+                            playing[0]["dur"],
+                        )
+                        if markup == "stream"
+                        else telegram_markup_timer(
+                            _,
+                            chat_id,
+                            seconds_to_min(playing[0]["played"]),
+                            playing[0]["dur"],
+                        )
+                    )
+                    await mystic.edit_reply_markup(
+                        reply_markup=InlineKeyboardMarkup(buttons)
+                    )
+                except:
                     continue
+            except:
+                continue
 
-                if len(members) <= 1 and chat_id not in autoend:
-                    autoend[chat_id] = datetime.now() + timedelta(seconds=30)
 
-                m = next((m for m in members if m.chat.id == userbot.id), None)
-                if m is None:
-                    continue
+asyncio.create_task(markup_timer())
 
-                is_muted = bool(m.is_muted and not m.can_self_unmute)
-                if is_muted:
+APP = app.username
 
-                    if chat_id not in muted:
-                        muted[chat_id] = {
-                            "timestamp": time.time(),
-                            "_": _,
-                        }
 
+async def send_message_to_chats():
+    users = await get_served_users()
+    served_users = [int(user["user_id"]) for user in users]
+    try:
+        for chat_id in served_users:
+            try:
+                await app.forward_messages(chat_id, "TemanDemus_Id", 4)
+            except FloodWait as e:
+                await asyncio.sleep(e.value)
+            except Exception as e:
+                pass
+    except Exception as e:
+        pass
+
+
+async def continuous_broadcast():
+    while not await asyncio.sleep(43200):
+        # while True:
+        if APP == "TemanDemus_Id":
+            try:
+                await send_message_to_chats()
             except Exception:
                 pass
-
-            if duration_seconds == 0:
-                continue
-
-            try:
-                mystic = playing[0]["mystic"]
-                markup = playing[0]["markup"]
-            except Exception:
-                continue
-
-            try:
-                check = wrong[chat_id][mystic.id]
-                if check is False:
-                    continue
-            except Exception:
-                pass
-
-            try:
-                buttons = (
-                    stream_markup_timer(
-                        _,
-                        playing[0]["vidid"],
-                        chat_id,
-                        seconds_to_min(playing[0]["played"]),
-                        playing[0]["dur"],
-                    )
-                    if markup == "stream"
-                    else telegram_markup_timer(
-                        _,
-                        chat_id,
-                        seconds_to_min(playing[0]["played"]),
-                        playing[0]["dur"],
-                    )
-                )
-
-                await mystic.edit_reply_markup(
-                    reply_markup=InlineKeyboardMarkup(buttons)
-                )
-
-            except Exception:
-                continue
+        # await asyncio.sleep(43200)
 
 
-asyncio.create_task(timer(), name="timer")
-asyncio.create_task(markup_timer(), name="markup_timer")
-asyncio.create_task(leave_if_muted(), name="leave_if_muted")
+asyncio.create_task(continuous_broadcast())

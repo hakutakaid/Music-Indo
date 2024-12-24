@@ -1,13 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 import random
 from os.path import realpath
 
@@ -15,7 +5,8 @@ import aiohttp
 from aiohttp import client_exceptions
 
 
-from MusicIndo.utils.exceptions import UnableToFetchCarbon
+class UnableToFetchCarbon(Exception):
+    pass
 
 
 themes = [
@@ -76,7 +67,7 @@ colour = [
 ]
 
 
-class Carbon:
+class CarbonAPI:
     def __init__(self):
         self.language = "auto"
         self.drop_shadow = True

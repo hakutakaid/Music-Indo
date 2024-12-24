@@ -1,18 +1,9 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-
-from MusicIndo.core.bot import YukkiBot
+from SafoneAPI import SafoneAPI
+from MusicIndo.core.bot import RynBot
 from MusicIndo.core.dir import dirr
 from MusicIndo.core.git import git
 from MusicIndo.core.userbot import Userbot
 from MusicIndo.misc import dbb, heroku, sudo
-
 from .logging import LOGGER
 
 # Directories
@@ -29,14 +20,20 @@ heroku()
 
 # Load Sudo Users from DB
 sudo()
-
+api = SafoneAPI()
 # Bot Client
-app = YukkiBot()
+app = RynBot()
 
 # Assistant Client
 userbot = Userbot()
 
-from .platforms import PlaTForms
+from .platforms import *
 
-Platform = PlaTForms()
+YouTube = YouTubeAPI()
+Carbon = CarbonAPI()
+Spotify = SpotifyAPI()
+Apple = AppleAPI()
+Resso = RessoAPI()
+SoundCloud = SoundAPI()
+Telegram = TeleAPI()
 HELPABLE = {}

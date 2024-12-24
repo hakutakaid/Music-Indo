@@ -1,55 +1,48 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 import asyncio
 
 import speedtest
-
-from strings import command
-from MusicIndo import app
+from pyrogram import filters
 from MusicIndo.misc import SUDOERS
+from strings import get_command
+from MusicIndo import app
+
+# Commands
+SPEEDTEST_COMMAND = get_command("SPEEDTEST_COMMAND")
 
 
 def testspeed(m):
     try:
         test = speedtest.Speedtest()
         test.get_best_server()
-        m = m.edit("⇆ Running Download Speedtest ...")
+        m = m.edit("⇆...")
         test.download()
-        m = m.edit("⇆ Running Upload SpeedTest...")
+        m = m.edit("⇆......")
         test.upload()
         test.results.share()
         result = test.results.dict()
-        m = m.edit("↻ Sharing SpeedTest results")
+        m = m.edit("↻")
     except Exception as e:
         return m.edit(e)
     return result
 
 
-@app.on_message(command("SPEEDTEST_COMMAND") & SUDOERS)
+@app.on_message(filters.command(SPEEDTEST_COMMAND) & SUDOERS)
 async def speedtest_function(client, message):
-    m = await message.reply_text("ʀᴜɴɴɪɴɢ sᴘᴇᴇᴅᴛᴇsᴛ")
+    m = await message.reply_text("maksimal kecepatan server")
     loop = asyncio.get_event_loop_policy().get_event_loop()
     result = await loop.run_in_executor(None, testspeed, m)
-    output = f"""**Speedtest Results**
+    output = f"""**mendapatkan kecepatan server**
     
-<u>**Client:**</u>
-**ISP :** {result['client']['isp']}
-**Country :** {result['client']['country']}
+<u>**ᴄʟɪᴇɴᴛ:**</u>
+**ɪsᴘ :** {result['client']['isp']}
+**ᴄᴏᴜɴᴛʀʏ :** {result['client']['country']}
   
-<u>**Server:**</u>
-**Name :** {result['server']['name']}
-**Country:** {result['server']['country']}, {result['server']['cc']}
-**Sponsor:** {result['server']['sponsor']}
-**Latency:** {result['server']['latency']}  
-**Ping :** {result['ping']}"""
+<u>**sᴇʀᴠᴇʀ :**</u>
+**ɴᴀᴍᴇ :** {result['server']['name']}
+**ᴄᴏᴜɴᴛʀʏ :** {result['server']['country']}, {result['server']['cc']}
+**sᴘᴏɴsᴏʀ :** {result['server']['sponsor']}
+**ʟᴀᴛᴇɴᴄʏ :** {result['server']['latency']}  
+**ᴘɪɴɢ :** {result['ping']}"""
     msg = await app.send_photo(
         chat_id=message.chat.id, photo=result["share"], caption=output
     )

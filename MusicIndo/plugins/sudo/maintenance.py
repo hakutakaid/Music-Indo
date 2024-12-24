@@ -1,16 +1,7 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
+from pyrogram import filters
 from pyrogram.types import Message
 
-from strings import get_string, command
+from strings import get_command, get_string
 from MusicIndo import app
 from MusicIndo.misc import SUDOERS
 from MusicIndo.utils.database import (
@@ -20,13 +11,16 @@ from MusicIndo.utils.database import (
     maintenance_on,
 )
 
+# Commands
+MAINTENANCE_COMMAND = get_command("MAINTENANCE_COMMAND")
 
-@app.on_message(command("MAINTENANCE_COMMAND") & SUDOERS)
+
+@app.on_message(filters.command(MAINTENANCE_COMMAND) & SUDOERS)
 async def maintenance(client, message: Message):
     try:
         language = await get_lang(message.chat.id)
         _ = get_string(language)
-    except Exception:
+    except:
         _ = get_string("en")
     usage = _["maint_1"]
     if len(message.command) != 2:
@@ -36,7 +30,7 @@ async def maintenance(client, message: Message):
     state = state.lower()
     if state == "enable":
         if await is_maintenance() is False:
-            await message.reply_text(_["maint_6"])
+            await message.reply_text("ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ ᴍᴏᴅᴇ ɪs ᴀʟʀᴇᴀᴅʏ ᴇɴᴀʙʟᴇᴅ")
         else:
             await maintenance_on()
             await message.reply_text(_["maint_2"])
@@ -45,6 +39,6 @@ async def maintenance(client, message: Message):
             await maintenance_off()
             await message.reply_text(_["maint_3"])
         else:
-            await message.reply_text(_["maint_5"])
+            await message.reply_text("ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ ᴍᴏᴅᴇ ɪs ᴀʟʀᴇᴀᴅʏ ᴅɪsᴀʙʟᴇᴅ")
     else:
         await message.reply_text(usage)

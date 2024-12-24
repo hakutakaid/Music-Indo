@@ -1,25 +1,18 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, Message
 
 from config import BANNED_USERS
-from strings import command
+from strings import get_command
 from MusicIndo import app
 from MusicIndo.utils.database import get_playmode, get_playtype, is_nonadmin_chat
 from MusicIndo.utils.decorators import language
 from MusicIndo.utils.inline.settings import playmode_users_markup
 
+### Commands
+PLAYMODE_COMMAND = get_command("PLAYMODE_COMMAND")
 
-@app.on_message(command("PLAYMODE_COMMAND") & filters.group & ~BANNED_USERS)
+
+@app.on_message(filters.command(PLAYMODE_COMMAND) & filters.group & ~BANNED_USERS)
 @language
 async def playmode_(client, message: Message, _):
     playmode = await get_playmode(message.chat.id)

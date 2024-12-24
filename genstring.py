@@ -1,13 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-
-
 import asyncio
 
 from pyrogram import Client as c
@@ -15,20 +5,23 @@ from pyrogram import Client as c
 API_ID = input("\nEnter Your API_ID:\n > ")
 API_HASH = input("\nEnter Your API_HASH:\n > ")
 
-i = c("yukkistring", in_memory=True, api_id=API_ID, api_hash=API_HASH)
+
+print("\n\n Enter Phone number when asked.\n\n")
+
+i = c("Rynstring", in_memory=True, api_id=API_ID, api_hash=API_HASH)
 
 
 async def main():
     await i.start()
     ss = await i.export_session_string()
-    print("\nHERE IS YOUR STRING SESSION, COPY IT, DON'T SHARE!!\n")
-    print(f"\n{ss}\n")
-    print("\n STRING GENERATED\n")
     xx = f"HERE IS YOUR STRING SESSION, COPY IT, DON'T SHARE!!\n\n`{ss}`\n\n STRING GENERATED"
     try:
         await i.send_message("me", xx)
-    except Exception:
+    except BaseException:
         pass
+    print("\nHERE IS YOUR STRING SESSION, COPY IT, DON'T SHARE!!\n")
+    print(f"\n{ss}\n")
+    print("\n STRING GENERATED\n")
 
 
 asyncio.run(main())

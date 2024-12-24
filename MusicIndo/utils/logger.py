@@ -1,36 +1,28 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-from config import LOG, LOG_GROUP_ID
+from config import LOG_GROUP_ID
 from MusicIndo import app
 from MusicIndo.utils.database import is_on_off
 
 
 async def play_logs(message, streamtype):
-    if await is_on_off(LOG):
+    if await is_on_off(2):
         if message.chat.username:
             chatusername = f"@{message.chat.username}"
         else:
-            chatusername = "Private Group"
+            chatusername = "ᴘʀɪᴠᴀᴛᴇ ɢʀᴏᴜᴘ"
 
         logger_text = f"""
-**{app.mention} Play Log**
+<blockquote><b>{app.mention} ᴘʟᴀʏ ʟᴏɢ
 
-**Chat ID:** `{message.chat.id}`
-**Chat Name:** {message.chat.title}
-**Chat Username:** {chatusername}
+ᴄʜᴀᴛ ɪᴅ : `{message.chat.id}`
+ᴄʜᴀᴛ ɴᴀᴍᴇ : {message.chat.title}
+ᴄʜᴀᴛ ᴜsᴇʀɴᴀᴍᴇ : {chatusername}
 
-**User ID:** `{message.from_user.id}`
-**Name:** {message.from_user.mention}
-**Username:** @{message.from_user.username}
+ᴜsᴇʀ ɪᴅ : `{message.from_user.id}`
+ɴᴀᴍᴇ : {message.from_user.mention}
+ᴜsᴇʀɴᴀᴍᴇ : @{message.from_user.username}
 
-**Query:** {message.text.split(None, 1)[1]}
-**Stream Type:** {streamtype}"""
+ǫᴜᴇʀʏ : {message.text.split(None, 1)[1]}
+sᴛʀᴇᴀᴍᴛʏᴘᴇ : {streamtype}<b></blockquote>"""
         if message.chat.id != LOG_GROUP_ID:
             try:
                 await app.send_message(
@@ -38,6 +30,6 @@ async def play_logs(message, streamtype):
                     text=logger_text,
                     disable_web_page_preview=True,
                 )
-            except Exception:
-                pass
+            except Exception as e:
+                print(e)
         return

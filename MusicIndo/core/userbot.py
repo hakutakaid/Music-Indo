@@ -1,17 +1,7 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-import asyncio
 import sys
 
 from pyrogram import Client
-from pyrogram.errors import ChatWriteForbidden
+
 import config
 
 from ..logging import LOGGER
@@ -22,67 +12,161 @@ assistantids = []
 
 class Userbot(Client):
     def __init__(self):
-        self.clients = []
-        self.sessions = config.STRING_SESSIONS
-
-        for i, session in enumerate(self.sessions, start=1):
-
-            client = Client(
-                f"YukkiString{i}",
-                api_id=config.API_ID,
-                api_hash=config.API_HASH,
-                in_memory=True,
-                no_updates=True,
-                session_string=session.strip(),
-            )
-            self.clients.append(client)
-
-    async def _start(self, client, index):
-        LOGGER(__name__).info("Starting Assistant Clients")
-        try:
-            await client.start()
-            assistants.append(index)
-            try:
-                await client.send_message(config.LOG_GROUP_ID, "Assistant Started")
-            except ChatWriteForbidden:
-                try:
-                    await client.join_chat(config.LOG_GROUP_ID)
-                    await client.send_message(config.LOG_GROUP_ID, "Assistant Started")
-                except Exception:
-                    LOGGER(__name__).error(
-                        f"Assistant Account {index} has failed to send message in Loggroup Make sure you have added assistsant in Loggroup."
-                    )
-                    sys.exit(1)
-
-            get_me = await client.get_me()
-            client.username = get_me.username
-            client.id = get_me.id
-            client.mention = get_me.mention
-            assistantids.append(get_me.id)
-            client.name = f"{get_me.first_name} {get_me.last_name or ''}".strip()
-
-        except Exception as e:
-            LOGGER(__name__).error(
-                f"Assistant Account {index} failed with error: {str(e)}."
-            )
-            sys.exit(1)
+        self.one = Client(
+            "RynString1",
+            api_id=config.API_ID,
+            api_hash=config.API_HASH,
+            session_string=str(config.STRING1),
+        )
+        self.two = Client(
+            "RynString2",
+            api_id=config.API_ID,
+            api_hash=config.API_HASH,
+            session_string=str(config.STRING2),
+        )
+        self.three = Client(
+            "RynString3",
+            api_id=config.API_ID,
+            api_hash=config.API_HASH,
+            session_string=str(config.STRING3),
+        )
+        self.four = Client(
+            "RynString4",
+            api_id=config.API_ID,
+            api_hash=config.API_HASH,
+            session_string=str(config.STRING4),
+        )
+        self.five = Client(
+            "RynString5",
+            api_id=config.API_ID,
+            api_hash=config.API_HASH,
+            session_string=str(config.STRING5),
+        )
 
     async def start(self):
-        tasks = []  # List to hold start tasks
-        for i, client in enumerate(self.clients, start=1):
-            task = self._start(client, i)
-            tasks.append(task)
-        await asyncio.gather(*tasks)
-
-    async def stop(self):
-        """Gracefully stop all clients."""
-        tasks = [client.stop() for client in self.clients]
-        await asyncio.gather(*tasks)
-    
-    def __getattr__(self, name):
-        if not self.clients:
-            raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'")
-        first_client = self.clients[0]
-        if hasattr(first_client, name):
-            return getattr(first_client, name)
-        raise AttributeError(f"'{type(first_client).__name__}' object has no attribute '{name}'")
+        LOGGER(__name__).info(f"Starting Assistant Clients")
+        if config.STRING1:
+            await self.one.start()
+            try:
+                await self.one.join_chat("CariTemanSahabatOnline_Id")
+                await self.one.join_chat("SpotifyStream_Id")               
+            except:
+                pass
+            assistants.append(1)
+            try:
+                await self.one.send_message(config.LOG_GROUP_ID, "<blockquote><b>Assistant Started.<b></blockquote>")
+            except:
+                LOGGER(__name__).error(
+                    f"Assistant Account 1 has failed to access the log Group. Make sure that you have added your assistant to your log group and promoted as admin! "
+                )
+                sys.exit()
+            get_me = await self.one.get_me()
+            self.one.username = get_me.username
+            self.one.id = get_me.id
+            self.one.mention = get_me.mention
+            assistantids.append(get_me.id)
+            if get_me.last_name:
+                self.one.name = get_me.first_name + " " + get_me.last_name
+            else:
+                self.one.name = get_me.first_name
+            LOGGER(__name__).info(f"Assistant Started as {self.one.name}")
+        if config.STRING2:
+            await self.two.start()
+            try:
+                await self.two.join_chat("CariTemanSahabatOnline_Id")
+                await self.two.join_chat("SpotifyStream_Id")
+            except:
+                pass
+            assistants.append(2)
+            try:
+                await self.two.send_message(config.LOG_GROUP_ID, "<blockquote><b>Assistant Started.<b></blockquote>")
+            except:
+                LOGGER(__name__).error(
+                    f"Assistant Account 2 has failed to access the log Group. Make sure that you have added your assistant to your log group and promoted as admin! "
+                )
+                sys.exit()
+            get_me = await self.two.get_me()
+            self.two.username = get_me.username
+            self.two.id = get_me.id
+            self.two.mention = get_me.mention
+            assistantids.append(get_me.id)
+            if get_me.last_name:
+                self.two.name = get_me.first_name + " " + get_me.last_name
+            else:
+                self.two.name = get_me.first_name
+            LOGGER(__name__).info(f"Assistant Two Started as {self.two.name}")
+        if config.STRING3:
+            await self.three.start()
+            try:
+                await self.three.join_chat("CariTemanSahabatOnline_Id")
+                await self.three.join_chat("SpotifyStream_Id")
+            except:
+                pass
+            assistants.append(3)
+            try:
+                await self.three.send_message(config.LOG_GROUP_ID, "<blockquote><b>Assistant Started.<b></blockquote>")
+            except:
+                LOGGER(__name__).error(
+                    f"Assistant Account 3 has failed to access the log Group. Make sure that you have added your assistant to your log group and promoted as admin! "
+                )
+                sys.exit()
+            get_me = await self.three.get_me()
+            self.three.username = get_me.username
+            self.three.id = get_me.id
+            self.three.mention = get_me.mention
+            assistantids.append(get_me.id)
+            if get_me.last_name:
+                self.three.name = get_me.first_name + " " + get_me.last_name
+            else:
+                self.three.name = get_me.first_name
+            LOGGER(__name__).info(f"Assistant Three Started as {self.three.name}")
+        if config.STRING4:
+            await self.four.start()
+            try:
+                await self.four.join_chat("CariTemanSahabatOnline_Id")
+                await self.four.join_chat("SpotifyStream_Id")
+            except:
+                pass
+            assistants.append(4)
+            try:
+                await self.four.send_message(config.LOG_GROUP_ID, "<blockquote><b>Assistant Started.<b></blockquote>")
+            except:
+                LOGGER(__name__).error(
+                    f"Assistant Account 4 has failed to access the log Group. Make sure that you have added your assistant to your log group and promoted as admin! "
+                )
+                sys.exit()
+            get_me = await self.four.get_me()
+            self.four.username = get_me.username
+            self.four.id = get_me.id
+            self.four.mention = get_me.mention
+            assistantids.append(get_me.id)
+            if get_me.last_name:
+                self.four.name = get_me.first_name + " " + get_me.last_name
+            else:
+                self.four.name = get_me.first_name
+            LOGGER(__name__).info(f"Assistant Four Started as {self.four.name}")
+        if config.STRING5:
+            await self.five.start()
+            try:
+                await self.five.join_chat("CariTemanSahabatOnline_Id")
+                await self.five.join_chat("SpotifyStream_Id")
+            except:
+                pass
+            assistants.append(5)
+            try:
+                await self.five.send_message(config.LOG_GROUP_ID, "<blockquote><b>Assistant Started.<b></blockquote>")
+            except:
+                LOGGER(__name__).error(
+                    f"Assistant Account 5 has failed to access the log Group. Make sure that you have added your assistant to your log group and promoted as admin! "
+                )
+                sys.exit()
+            get_me = await self.five.get_me()
+            self.five.username = get_me.username
+            self.five.id = get_me.id
+            self.five.mention = get_me.mention
+            assistantids.append(get_me.id)
+            if get_me.last_name:
+                self.five.name = get_me.first_name + " " + get_me.last_name
+            else:
+                self.five.name = get_me.first_name
+            LOGGER(__name__).info(f"Assistant Five Started as {self.five.name}")

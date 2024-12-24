@@ -1,38 +1,23 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 import os
+
 from config import autoclean
-from MusicIndo.utils.decorators import asyncify
 
 
-@asyncify
-def auto_clean(popped):
-    def _auto_clean(popped_item):
-        try:
-            rem = popped_item["file"]
-            autoclean.remove(rem)
-            count = autoclean.count(rem)
-            if count == 0:
-                if "vid_" not in rem and "live_" not in rem and "index_" not in rem:
-                    try:
+async def auto_clean(popped):
+    try:
+        rem = popped["file"]
+        autoclean_copy = autoclean.copy()
+        for item in autoclean_copy:
+            if item == rem:
+                autoclean.remove(item)
+
+        count = autoclean.count(rem)
+        if count == 0:
+            if not ("vid_" in rem or "live_" in rem or "index_" in rem):
+                try:
+                    if os.path.exists(rem):
                         os.remove(rem)
-                    except Exception:
-                        pass
-        except Exception:
-            pass
-
-    if isinstance(popped, dict):
-        _auto_clean(popped)
-    elif isinstance(popped, list):
-        for pop in popped:
-            _auto_clean(pop)
-    else:
-        raise ValueError("Expected popped to be a dict or list.")
+                except:
+                    pass
+    except:
+        pass

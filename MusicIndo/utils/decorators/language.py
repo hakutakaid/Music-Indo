@@ -1,14 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-from pyrogram.enums import ChatType
-
 from strings import get_string
 from MusicIndo.misc import SUDOERS
 from MusicIndo.utils.database import get_lang, is_commanddelete_on, is_maintenance
@@ -16,21 +5,21 @@ from MusicIndo.utils.database import get_lang, is_commanddelete_on, is_maintenan
 
 def language(mystic):
     async def wrapper(_, message, **kwargs):
-        try:
-            language = await get_lang(message.chat.id)
-            language = get_string(language)
-        except Exception:
-            language = get_string("en")
-        if not await is_maintenance():
+        if await is_maintenance() is False:
             if message.from_user.id not in SUDOERS:
-                if message.chat.type == ChatType.PRIVATE:
-                    return await message.reply_text(language["maint_4"])
-                return
+                return await message.reply_text(
+                    "» ʙᴏᴛ ɪs ᴜɴᴅᴇʀ ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ ғᴏʀ sᴏᴍᴇ ᴛɪᴍᴇ, ᴩʟᴇᴀsᴇ ᴠɪsɪᴛ sᴜᴩᴩᴏʀᴛ ᴄʜᴀᴛ ᴛᴏ ᴋɴᴏᴡ ᴛʜᴇ ʀᴇᴀsᴏɴ."
+                )
         if await is_commanddelete_on(message.chat.id):
             try:
                 await message.delete()
-            except Exception:
+            except:
                 pass
+        try:
+            language = await get_lang(message.chat.id)
+            language = get_string(language)
+        except:
+            language = get_string("en")
         return await mystic(_, message, language)
 
     return wrapper
@@ -38,20 +27,17 @@ def language(mystic):
 
 def languageCB(mystic):
     async def wrapper(_, CallbackQuery, **kwargs):
+        if await is_maintenance() is False:
+            if CallbackQuery.from_user.id not in SUDOERS:
+                return await CallbackQuery.answer(
+                    "» ʙᴏᴛ ɪs ᴜɴᴅᴇʀ ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ ғᴏʀ sᴏᴍᴇ ᴛɪᴍᴇ, ᴩʟᴇᴀsᴇ ᴠɪsɪᴛ sᴜᴩᴩᴏʀᴛ ᴄʜᴀᴛ ᴛᴏ ᴋɴᴏᴡ ᴛʜᴇ ʀᴇᴀsᴏɴ.",
+                    show_alert=True,
+                )
         try:
             language = await get_lang(CallbackQuery.message.chat.id)
             language = get_string(language)
-        except Exception:
+        except:
             language = get_string("en")
-        if not await is_maintenance():
-            if CallbackQuery.from_user.id not in SUDOERS:
-                if CallbackQuery.message.chat.type == ChatType.PRIVATE:
-                    return await CallbackQuery.answer(
-                        language["maint_4"],
-                        show_alert=True,
-                    )
-                return
-
         return await mystic(_, CallbackQuery, language)
 
     return wrapper
@@ -62,7 +48,7 @@ def LanguageStart(mystic):
         try:
             language = await get_lang(message.chat.id)
             language = get_string(language)
-        except Exception:
+        except:
             language = get_string("en")
         return await mystic(_, message, language)
 

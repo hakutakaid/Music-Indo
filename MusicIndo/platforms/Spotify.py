@@ -1,13 +1,3 @@
-#
-# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
-#
-# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
-# and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 import re
 
 import spotipy
@@ -15,10 +5,9 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from youtubesearchpython.__future__ import VideosSearch
 
 import config
-from MusicIndo.utils.decorators import asyncify
 
 
-class Spotify:
+class SpotifyAPI:
     def __init__(self):
         self.regex = r"^(https:\/\/open.spotify.com\/)(.*)$"
         self.client_id = config.SPOTIFY_CLIENT_ID
@@ -62,8 +51,7 @@ class Spotify:
         }
         return track_details, vidid
 
-    @asyncify
-    def playlist(self, url: str) -> tuple:
+    async def playlist(self, url):
         playlist = self.spotify.playlist(url)
         playlist_id = playlist["id"]
         results = []
@@ -77,8 +65,7 @@ class Spotify:
             results.append(info)
         return results, playlist_id
 
-    @asyncify
-    def album(self, url: str) -> tuple:
+    async def album(self, url):
         album = self.spotify.album(url)
         album_id = album["id"]
         results = []
@@ -89,19 +76,23 @@ class Spotify:
                 if "Various Artists" not in fetched:
                     info += fetched
             results.append(info)
-        return results, album_id
 
-    @asyncify
-    def artist(self, url: str) -> tuple:
-        artist_info = self.spotify.artist(url)
-        artist_id = artist_info["id"]
+        return (
+            results,
+            album_id,
+        )
+
+    async def artist(self, url):
+        artistinfo = self.spotify.artist(url)
+        artist_id = artistinfo["id"]
         results = []
-        artist_top_tracks = self.spotify.artist_top_tracks(url)
-        for item in artist_top_tracks["tracks"]:
+        artisttoptracks = self.spotify.artist_top_tracks(url)
+        for item in artisttoptracks["tracks"]:
             info = item["name"]
             for artist in item["artists"]:
                 fetched = f' {artist["name"]}'
                 if "Various Artists" not in fetched:
                     info += fetched
             results.append(info)
+
         return results, artist_id
