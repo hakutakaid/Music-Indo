@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -16,16 +16,13 @@ from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
 
 import config
 from config import BANNED_USERS
-from strings import get_command
-from MusicIndo import app
+from strings import command
+from MusicIndo import app, Platform
 from MusicIndo.misc import db
 from MusicIndo.utils import Yukkibin, get_channeplayCB, seconds_to_min
 from MusicIndo.utils.database import get_cmode, is_active_chat, is_music_playing
 from MusicIndo.utils.decorators.language import language, languageCB
-from MusicIndo.utils.inline import queue_back_markup, queue_markup
-
-###Commands
-QUEUE_COMMAND = get_command("QUEUE_COMMAND")
+from MusicIndo.utils.inline.queue import queue_back_markup, queue_markup
 
 basic = {}
 
@@ -49,7 +46,7 @@ def get_duration(playing):
         return "Inline"
 
 
-@app.on_message(filters.command(QUEUE_COMMAND) & filters.group & ~BANNED_USERS)
+@app.on_message(command("QUEUE_COMMAND") & filters.group & ~BANNED_USERS)
 @language
 async def ping_com(client, message: Message, _):
     if message.command[0][0] == "c":
@@ -58,7 +55,7 @@ async def ping_com(client, message: Message, _):
             return await message.reply_text(_["setting_12"])
         try:
             await app.get_chat(chat_id)
-        except:
+        except Exception:
             return await message.reply_text(_["cplay_4"])
         cplay = True
     else:
@@ -73,7 +70,7 @@ async def ping_com(client, message: Message, _):
     videoid = got[0]["vidid"]
     user = got[0]["by"]
     title = (got[0]["title"]).title()
-    typo = (got[0]["streamtype"]).title()
+    type = (got[0]["streamtype"]).title()
     DUR = get_duration(got)
     if "live_" in file:
         IMAGE = get_image(videoid)
@@ -85,24 +82,27 @@ async def ping_com(client, message: Message, _):
         if videoid == "telegram":
             IMAGE = (
                 config.TELEGRAM_AUDIO_URL
-                if typo == "Audio"
+                if type == "Audio"
                 else config.TELEGRAM_VIDEO_URL
             )
         elif videoid == "soundcloud":
             IMAGE = config.SOUNCLOUD_IMG_URL
+        elif "saavn" in videoid:
+            details = await Platform.saavn.info(got[0]["url"])
+            IMAGE = details["thumb"]
         else:
             IMAGE = get_image(videoid)
     send = (
-        "**⌛️ᴅᴜʀᴀᴛɪᴏɴ:** ᴜɴᴋɴᴏᴡɴ ᴅᴜʀᴀᴛɪᴏɴ sᴛʀᴇᴀᴍ \n\nᴄʟɪᴄᴋ ᴏɴ ʙᴜᴛᴛᴏɴ ʙᴇʟᴏᴡ ᴛᴏ ɢᴇᴛ ᴡʜᴏʟᴇ ǫᴜᴇᴜᴇᴅ ʟɪsᴛ."
+        "**⌛️ Duration:** Unknown duration limit\n\nClick on below button to get whole queued list"
         if DUR == "Unknown"
-        else "\nᴄʟɪᴄᴋ ᴏɴ ʙᴜᴛᴛᴏɴ ʙᴇʟᴏᴡ ᴛᴏ ɢᴇᴛ ᴡʜᴏʟʀ ǫᴜᴇᴜᴇᴅ ʟɪsᴛ."
+        else "\nClick on below button to get whole queued list."
     )
-    cap = f"""**{app.mention} ᴘʟᴀʏᴇʀ**
+    cap = f"""**{app.mention} Player**
 
-🎥**ᴘʟᴀʏɪɴɢ:** {title}
+🎥**Playing:** {title}
 
-🔗**sᴛʀᴇᴀᴍ ᴛʏᴘᴇ:** {typo}
-🙍‍♂️**ᴘʟᴀʏᴇᴅ ʙʏ:** {user}
+🔗**Stream Type:** {type}
+🙍‍♂️**Played By:** {user}
 {send}"""
     upl = (
         queue_markup(_, DUR, "c" if cplay else "g", videoid)
@@ -143,7 +143,7 @@ async def ping_com(client, message: Message, _):
                         break
                 else:
                     break
-        except:
+        except Exception:
             return
 
 
@@ -151,7 +151,7 @@ async def ping_com(client, message: Message, _):
 async def quite_timer(client, CallbackQuery: CallbackQuery):
     try:
         await CallbackQuery.answer()
-    except:
+    except Exception:
         pass
 
 
@@ -163,7 +163,7 @@ async def queued_tracks(client, CallbackQuery: CallbackQuery, _):
     what, videoid = callback_request.split("|")
     try:
         chat_id, channel = await get_channeplayCB(_, what, CallbackQuery)
-    except:
+    except Exception:
         return
     if not await is_active_chat(chat_id):
         return await CallbackQuery.answer(_["general_6"], show_alert=True)
@@ -185,11 +185,11 @@ async def queued_tracks(client, CallbackQuery: CallbackQuery, _):
     for x in got:
         j += 1
         if j == 1:
-            msg += f'ᴄᴜʀʀᴇɴᴛ ᴘʟᴀʏɪɴɢ:\n\n🏷ᴛɪᴛʟᴇ: {x["title"]}\nᴅᴜʀᴀᴛɪᴏɴ: {x["dur"]}\nʙʏ: {x["by"]}\n\n'
+            msg += f'Current playing:\n\n🏷Title: {x["title"]}\nDuration: {x["dur"]}\nBy: {x["by"]}\n\n'
         elif j == 2:
-            msg += f'ǫᴜᴇᴜᴇᴅ:\n\n🏷ᴛɪᴛʟᴇ: {x["title"]}\nᴅᴜʀᴀᴛɪᴏɴ: {x["dur"]}\nʙʏ: {x["by"]}\n\n'
+            msg += f'Queued:\n\n🏷Title: {x["title"]}\nDuratiom: {x["dur"]}\nby: {x["by"]}\n\n'
         else:
-            msg += f'🏷ᴛɪᴛʟᴇ: {x["title"]}\nᴅᴜʀᴀᴛɪᴏɴ: {x["dur"]}\nʙʏ: {x["by"]}\n\n'
+            msg += f'🏷Title: {x["title"]}\nDuration: {x["dur"]}\nBy: {x["by"]}\n\n'
     if "Queued" in msg:
         if len(msg) < 700:
             await asyncio.sleep(1)
@@ -197,17 +197,6 @@ async def queued_tracks(client, CallbackQuery: CallbackQuery, _):
 
         if "🏷" in msg:
             msg = msg.replace("🏷", "")
-        if "ᴄᴜʀʀᴇɴᴛ ᴘʟᴀʏɪɴɢ" in msg:
-            msg = msg.replace("ᴄᴜʀʀᴇɴᴛ ᴘʟᴀʏɪɴɢ", "Current Playling")
-        if "ᴛɪᴛʟᴇ" in msg:
-            msg = msg.replace("ᴛɪᴛʟᴇ", "Title")
-        if "ᴅᴜʀᴀᴛɪᴏɴ" in msg:
-            msg = msg.replace("ᴅᴜʀᴀᴛɪᴏɴ", "Duration")
-        if "ʙʏ" in msg:
-            msg = msg.replace("ʙʏ", "By")
-        if "ǫᴜᴇᴜᴇᴅ" in msg:
-            msg = msg.replace("ǫᴜᴇᴜᴇᴅ", "Queued")
-
         link = await Yukkibin(msg)
         await CallbackQuery.edit_message_text(
             _["queue_3"].format(link), reply_markup=buttons
@@ -216,17 +205,6 @@ async def queued_tracks(client, CallbackQuery: CallbackQuery, _):
         if len(msg) > 700:
             if "🏷" in msg:
                 msg = msg.replace("🏷", "")
-            if "ᴄᴜʀʀᴇɴᴛ ᴘʟᴀʏɪɴɢ" in msg:
-                msg = msg.replace("ᴄᴜʀʀᴇɴᴛ ᴘʟᴀʏɪɴɢ", "Current Playling")
-            if "ᴛɪᴛʟᴇ" in msg:
-                msg = msg.replace("ᴛɪᴛʟᴇ", "Title")
-            if "ᴅᴜʀᴀᴛɪᴏɴ" in msg:
-                msg = msg.replace("ᴅᴜʀᴀᴛɪᴏɴ", "Duration")
-            if "ʙʏ" in msg:
-                msg = msg.replace("ʙʏ", "By")
-            if "ǫᴜᴇᴜᴇᴅ" in msg:
-                msg = msg.replace("ǫᴜᴇᴜᴇᴅ", "Queued")
-
             link = await Yukkibin(msg)
             await asyncio.sleep(1)
             return await CallbackQuery.edit_message_text(
@@ -244,7 +222,7 @@ async def queue_back(client, CallbackQuery: CallbackQuery, _):
     cplay = callback_data.split(None, 1)[1]
     try:
         chat_id, channel = await get_channeplayCB(_, cplay, CallbackQuery)
-    except:
+    except Exception:
         return
     if not await is_active_chat(chat_id):
         return await CallbackQuery.answer(_["general_6"], show_alert=True)
@@ -256,7 +234,7 @@ async def queue_back(client, CallbackQuery: CallbackQuery, _):
     videoid = got[0]["vidid"]
     user = got[0]["by"]
     title = (got[0]["title"]).title()
-    typo = (got[0]["streamtype"]).title()
+    type = (got[0]["streamtype"]).title()
     DUR = get_duration(got)
     if "live_" in file:
         IMAGE = get_image(videoid)
@@ -268,24 +246,27 @@ async def queue_back(client, CallbackQuery: CallbackQuery, _):
         if videoid == "telegram":
             IMAGE = (
                 config.TELEGRAM_AUDIO_URL
-                if typo == "Audio"
+                if type == "Audio"
                 else config.TELEGRAM_VIDEO_URL
             )
         elif videoid == "soundcloud":
             IMAGE = config.SOUNCLOUD_IMG_URL
+        elif "saavn" in videoid:
+            details = await Platform.saavn.info(got[0]["url"])
+            IMAGE = details["thumb"]
         else:
             IMAGE = get_image(videoid)
     send = (
-        "**⌛️ᴅᴜʀᴀᴛɪᴏɴ:** ᴜɴᴋɴᴏᴡɴ ᴅᴜʀᴀᴛɪᴏɴ sᴛʀᴇᴀᴍ \n\nᴄʟɪᴄᴋ ᴏɴ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ᴡʜᴏʟᴇ ǫᴜᴇᴜᴇᴅ ʟɪsᴛ."
+        "**⌛️ Duration:** Unknown duration limit\n\nClick on below button to get whole queued list"
         if DUR == "Unknown"
-        else "\nᴄʟɪᴄᴋ ᴏɴ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ᴡʜᴏʟᴇ ǫᴜᴇᴜᴇᴅ ʟɪsᴛ."
+        else "\nClick on below button to get whole queued list."
     )
-    cap = f"""**{app.mention} ᴘʟᴀʏᴇʀ**
+    cap = f"""**{app.mention} Player**
 
-🎥**ᴘʟᴀʏɪɴɢ:** {title}
+🎥**Playing:** {title}
 
-🔗**sᴛʀᴇᴀᴍ ᴛʏᴘᴇ:** {typo}
-🙍‍♂️**ᴘʟᴀʏᴇᴅ ʙʏ :** {user}
+🔗**Stream Type:** {type}
+🙍‍♂️**Played By:** {user}
 {send}"""
     upl = (
         queue_markup(_, DUR, cplay, videoid)
@@ -328,5 +309,5 @@ async def queue_back(client, CallbackQuery: CallbackQuery, _):
                         break
                 else:
                     break
-        except:
+        except Exception:
             return

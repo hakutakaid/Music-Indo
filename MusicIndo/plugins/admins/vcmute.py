@@ -1,15 +1,17 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
 
 from pyrogram import filters
 from pyrogram.types import Message
+
+from strings import command
 
 from config import BANNED_USERS
 from MusicIndo import app
@@ -18,11 +20,11 @@ from MusicIndo.utils.database import is_muted, mute_off, mute_on
 from MusicIndo.utils.decorators import AdminRightsCheck
 
 
-@app.on_message(filters.command(["vcmute"]) & filters.group & ~BANNED_USERS)
+@app.on_message(command("MUTE_COMMAND") & filters.group & ~BANNED_USERS)
 @AdminRightsCheck
 async def mute_admin(cli, message: Message, _, chat_id):
     if not len(message.command) == 1 or message.reply_to_message:
-        return await message.reply_text(_["general_2"])
+        return
     if await is_muted(chat_id):
         return await message.reply_text(_["admin_5"], disable_web_page_preview=True)
     await mute_on(chat_id)
@@ -32,11 +34,11 @@ async def mute_admin(cli, message: Message, _, chat_id):
     )
 
 
-@app.on_message(filters.command(["vcunmute"]) & filters.group & ~BANNED_USERS)
+@app.on_message(command("UNMUTE_COMMAND") & filters.group & ~BANNED_USERS)
 @AdminRightsCheck
 async def unmute_admin(Client, message: Message, _, chat_id):
     if not len(message.command) == 1 or message.reply_to_message:
-        return await message.reply_text(_["general_2"])
+        return
     if not await is_muted(chat_id):
         return await message.reply_text(_["admin_7"], disable_web_page_preview=True)
     await mute_off(chat_id)

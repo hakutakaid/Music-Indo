@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
+# and is released under the MIT License.
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -49,6 +49,7 @@ def git():
         UPSTREAM_REPO = f"https://{GIT_USERNAME}:{config.GIT_TOKEN}@{TEMP_REPO}"
     else:
         UPSTREAM_REPO = config.UPSTREAM_REPO
+
     try:
         repo = Repo()
         LOGGER(__name__).info(f"Git Client Found [VPS DEPLOYER]")
@@ -69,15 +70,29 @@ def git():
             origin.refs[config.UPSTREAM_BRANCH]
         )
         repo.heads[config.UPSTREAM_BRANCH].checkout(True)
+
         try:
             repo.create_remote("origin", config.UPSTREAM_REPO)
-        except BaseException:
+        except Exception:
             pass
-        nrs = repo.remote("origin")
-        nrs.fetch(config.UPSTREAM_BRANCH)
-        try:
-            nrs.pull(config.UPSTREAM_BRANCH)
-        except GitCommandError:
-            repo.git.reset("--hard", "FETCH_HEAD")
+
+    nrs = repo.remote("origin")
+    nrs.fetch(config.UPSTREAM_BRANCH)
+
+    requirements_file = "requirements.txt"
+    diff_index = repo.head.commit.diff("FETCH_HEAD")
+
+    requirements_updated = any(
+        diff.a_path == requirements_file or diff.b_path == requirements_file
+        for diff in diff_index
+    )
+
+    try:
+        nrs.pull(config.UPSTREAM_BRANCH)
+    except GitCommandError:
+        repo.git.reset("--hard", "FETCH_HEAD")
+
+    if requirements_updated:
         install_req("pip3 install --no-cache-dir -r requirements.txt")
-        LOGGER(__name__).info(f"Fetched Updates from: {REPO_LINK}")
+
+    LOGGER(__name__).info(f"Fetched Updates from: {REPO_LINK}")

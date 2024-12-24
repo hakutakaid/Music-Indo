@@ -1,39 +1,36 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the "MIT License".
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
 import logging
 import os
-import sys
 from os import listdir, mkdir
+
 from config import TEMP_DB_FOLDER
+
+# remove all files on startup  that contains these extentions
+files = [
+    ".jpg",
+    ".jpeg",
+    ".mp3",
+    ".m4a",
+    ".mp4",
+    ".webm",
+    ".png",
+]
 
 
 def dirr():
-    assets_folder = "assets"
     downloads_folder = "downloads"
     cache_folder = "cache"
 
-    if assets_folder not in listdir():
-        logging.warning(
-            f"{assets_folder} Folder not Found. Please clone or fork repository again."
-        )
-        sys.exit()
-
     for file in os.listdir():
-        if (
-            file.endswith(".jpg")
-            or file.endswith(".jpeg")
-            or file.endswith(".mp3")
-            or file.endswith(".png")
-            or file.endswith(".session")
-            or file.endswith(".session-journal")
-        ):
+        if any(file.endswith(ext) for ext in files):
             os.remove(file)
 
     if downloads_folder not in listdir():

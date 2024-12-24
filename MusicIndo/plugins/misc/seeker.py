@@ -1,29 +1,36 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
 import asyncio
+import time
+from datetime import datetime, timedelta
 
 from pyrogram.types import InlineKeyboardMarkup
 
 from strings import get_string
+from MusicIndo.core.call import Yukki
 from MusicIndo.misc import db
 from MusicIndo.utils.database import (
     get_active_chats,
+    get_assistant,
     get_lang,
     is_music_playing,
+    set_loop,
 )
 from MusicIndo.utils.formatters import seconds_to_min
 from MusicIndo.utils.inline import stream_markup_timer, telegram_markup_timer
 
 from ..admins.callback import wrong
+from .autoleave import autoend
 
 checker = {}
+muted = {}
 
 
 async def timer():
@@ -44,62 +51,147 @@ async def timer():
             db[chat_id][0]["played"] += 1
 
 
-asyncio.create_task(timer())
+async def leave_if_muted():
+    while True:
+        await asyncio.sleep(2)
+        for chat_id, details in list(muted.items()):
+            if time.time() - details["timestamp"] >= 60:
+                _ = details["_"]
+                try:
+                    userbot = await get_assistant(chat_id)
+                    members = []
+                    try:
+                        async for member in userbot.get_call_members(
+                            chat_id
+                        ):
+                            if member is None:
+                                continue
+                            members.append(member)
+                    except ValueError:
+                        try:
+                            await Yukki.stop_stream(chat_id)
+                        except Exception:
+                            pass
+                        continue
+
+                    m = next(
+                        (m for m in members if m.chat.id == userbot.id), None
+                    )
+                    if m is None:
+                        continue
+                    is_muted = bool(m.is_muted and not m.can_self_unmute)
+
+                    if is_muted:
+                        await Yukki.stop_stream(chat_id)
+                        await set_loop(chat_id, 0)
+
+                    del muted[chat_id]
+                except Exception:
+                    del muted[chat_id]
 
 
 async def markup_timer():
-    while not await asyncio.sleep(2):
+    while True:
+        await asyncio.sleep(2)
         active_chats = await get_active_chats()
         for chat_id in active_chats:
+            if not await is_music_playing(chat_id):
+                continue
+
+            playing = db.get(chat_id)
+            if not playing:
+                continue
+
+            duration_seconds = int(playing[0]["seconds"])
+
             try:
-                if not await is_music_playing(chat_id):
-                    continue
-                playing = db.get(chat_id)
-                if not playing:
-                    continue
-                duration_seconds = int(playing[0]["seconds"])
-                if duration_seconds == 0:
-                    continue
+                language = await get_lang(chat_id)
+                _ = get_string(language)
+            except Exception:
+                _ = get_string("en")
+
+            is_muted = False
+            try:
+                userbot = await get_assistant(chat_id)
+                members = []
                 try:
-                    mystic = playing[0]["mystic"]
-                    markup = playing[0]["markup"]
-                except:
+                    async for member in userbot.get_call_members(chat_id):
+                        if member is None:
+                            continue
+                        members.append(member)
+                except ValueError:
+                    try:
+                        await Yukki.stop_stream(chat_id)
+                    except Exception:
+                        pass
                     continue
-                try:
-                    check = wrong[chat_id][mystic.message_id]
-                    if check is False:
-                        continue
-                except:
-                    pass
-                try:
-                    language = await get_lang(chat_id)
-                    _ = get_string(language)
-                except:
-                    _ = get_string("en")
-                try:
-                    buttons = (
-                        stream_markup_timer(
-                            _,
-                            playing[0]["vidid"],
-                            chat_id,
-                            seconds_to_min(playing[0]["played"]),
-                            playing[0]["dur"],
-                        )
-                        if markup == "stream"
-                        else telegram_markup_timer(
-                            _,
-                            chat_id,
-                            seconds_to_min(playing[0]["played"]),
-                            playing[0]["dur"],
-                        )
+
+                if not members:
+                    await Yukki.stop_stream(chat_id)
+                    await set_loop(chat_id, 0)
+                    continue
+
+                if len(members) <= 1 and chat_id not in autoend:
+                    autoend[chat_id] = datetime.now() + timedelta(seconds=30)
+
+                m = next((m for m in members if m.chat.id == userbot.id), None)
+                if m is None:
+                    continue
+
+                is_muted = bool(m.is_muted and not m.can_self_unmute)
+                if is_muted:
+
+                    if chat_id not in muted:
+                        muted[chat_id] = {
+                            "timestamp": time.time(),
+                            "_": _,
+                        }
+
+            except Exception:
+                pass
+
+            if duration_seconds == 0:
+                continue
+
+            try:
+                mystic = playing[0]["mystic"]
+                markup = playing[0]["markup"]
+            except Exception:
+                continue
+
+            try:
+                check = wrong[chat_id][mystic.id]
+                if check is False:
+                    continue
+            except Exception:
+                pass
+
+            try:
+                buttons = (
+                    stream_markup_timer(
+                        _,
+                        playing[0]["vidid"],
+                        chat_id,
+                        seconds_to_min(playing[0]["played"]),
+                        playing[0]["dur"],
                     )
-                    await mystic.edit_reply_markup(
-                        reply_markup=InlineKeyboardMarkup(buttons)
+                    if markup == "stream"
+                    else telegram_markup_timer(
+                        _,
+                        chat_id,
+                        seconds_to_min(playing[0]["played"]),
+                        playing[0]["dur"],
                     )
-                except:
-                    continue
-            except:
+                )
+
+                await mystic.edit_reply_markup(
+                    reply_markup=InlineKeyboardMarkup(buttons)
+                )
+
+            except Exception:
                 continue
 
 
-asyncio.create_task(markup_timer())
+asyncio.create_task(timer(), name="timer")
+asyncio.create_task(markup_timer(), name="markup_timer")
+asyncio.create_task(leave_if_muted(), name="leave_if_muted")

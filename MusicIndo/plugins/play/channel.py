@@ -1,30 +1,36 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
 
 from pyrogram import filters
-from pyrogram.enums import ChatMembersFilter, ChatMemberStatus, ChatType
+
 from pyrogram.types import Message
 
+from pyrogram.enums import ChatMembersFilter, ChatMemberStatus, ChatType
+
+from pyrogram.errors import ChatAdminRequired
+
 from config import BANNED_USERS
-from strings import get_command
+from strings import command, get_command
 from MusicIndo import app
-from MusicIndo.utils.database import set_cmode
+from MusicIndo.utils.database import get_lang, set_cmode
 from MusicIndo.utils.decorators.admins import AdminActual
 
-### Multi-Lang Commands
-CHANNELPLAY_COMMAND = get_command("CHANNELPLAY_COMMAND")
 
-
-@app.on_message(filters.command(CHANNELPLAY_COMMAND) & filters.group & ~BANNED_USERS)
+@app.on_message(command("CHANNELPLAY_COMMAND") & filters.group & ~BANNED_USERS)
 @AdminActual
 async def playmode_(client, message: Message, _):
+    try:
+        lang_code = await get_lang(message.chat.id)
+        CHANNELPLAY_COMMAND = get_command(lang_code)["CHANNELPLAY_COMMAND"]
+    except Exception:
+        CHANNELPLAY_COMMAND = get_command("en")["CHANNELPLAY_COMMAND"]
     if len(message.command) < 2:
         return await message.reply_text(
             _["cplay_1"].format(message.chat.title, CHANNELPLAY_COMMAND[0])
@@ -46,7 +52,7 @@ async def playmode_(client, message: Message, _):
     else:
         try:
             chat = await app.get_chat(query)
-        except:
+        except Exception:
             return await message.reply_text(_["cplay_4"])
         if chat.type != ChatType.CHANNEL:
             return await message.reply_text(_["cplay_5"])
@@ -54,12 +60,16 @@ async def playmode_(client, message: Message, _):
             admins = app.get_chat_members(
                 chat.id, filter=ChatMembersFilter.ADMINISTRATORS
             )
-        except:
+        except Exception:
             return await message.reply_text(_["cplay_4"])
-        async for users in admins:
-            if users.status == ChatMemberStatus.OWNER:
-                creatorusername = users.user.username
-                creatorid = users.user.id
+        try:
+            async for users in admins:
+                if users.status == ChatMemberStatus.OWNER:
+                    creatorusername = users.user.username
+                    creatorid = users.user.id
+        except ChatAdminRequired:
+            return await message.reply_text(_["cplay_4"])
+
         if creatorid != message.from_user.id:
             return await message.reply_text(
                 _["cplay_6"].format(chat.title, creatorusername)

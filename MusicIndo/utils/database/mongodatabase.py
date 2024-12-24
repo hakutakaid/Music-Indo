@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -101,7 +101,8 @@ async def add_served_user(user_id: int):
 
 
 async def delete_served_user(user_id: int):
-    await usersdb.delete_one({"user_id": user_id})
+    if not await is_served_user(user_id):
+        await usersdb.delete_one({"user_id": user_id})
 
 
 # Served Chats
@@ -381,6 +382,11 @@ async def get_userss(chat_id: int) -> Dict[str, int]:
     if not ids:
         return {}
     return ids["vidid"]
+
+
+async def delete_userss(chat_id: int) -> bool:
+    result = await userdb.delete_one({"chat_id": chat_id})
+    return result.deleted_count > 0
 
 
 async def get_user_top(chat_id: int, name: str) -> Union[bool, dict]:

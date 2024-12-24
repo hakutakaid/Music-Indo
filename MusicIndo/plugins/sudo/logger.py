@@ -1,27 +1,23 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
 
-from pyrogram import filters
 
 import config
-from strings import get_command
+from strings import command
 from MusicIndo import app
 from MusicIndo.misc import SUDOERS
 from MusicIndo.utils.database import add_off, add_on
 from MusicIndo.utils.decorators.language import language
 
-# Commands
-LOGGER_COMMAND = get_command("LOGGER_COMMAND")
 
-
-@app.on_message(filters.command(LOGGER_COMMAND) & SUDOERS)
+@app.on_message(command("LOGGER_COMMAND") & SUDOERS)
 @language
 async def logger(client, message, _):
     usage = _["log_1"]

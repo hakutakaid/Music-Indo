@@ -1,17 +1,16 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
 
-from pyrogram import filters
 from pyrogram.types import Message
 
-from strings import get_command, get_string
+from strings import get_string, command
 from MusicIndo import app
 from MusicIndo.misc import SUDOERS
 from MusicIndo.utils.database import (
@@ -21,16 +20,13 @@ from MusicIndo.utils.database import (
     maintenance_on,
 )
 
-# Commands
-MAINTENANCE_COMMAND = get_command("MAINTENANCE_COMMAND")
 
-
-@app.on_message(filters.command(MAINTENANCE_COMMAND) & SUDOERS)
+@app.on_message(command("MAINTENANCE_COMMAND") & SUDOERS)
 async def maintenance(client, message: Message):
     try:
         language = await get_lang(message.chat.id)
         _ = get_string(language)
-    except:
+    except Exception:
         _ = get_string("en")
     usage = _["maint_1"]
     if len(message.command) != 2:
@@ -40,7 +36,7 @@ async def maintenance(client, message: Message):
     state = state.lower()
     if state == "enable":
         if await is_maintenance() is False:
-            await message.reply_text("ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ ᴍᴏᴅᴇ ɪs ᴀʟʀᴇᴀᴅʏ ᴇɴᴀʙʟᴇᴅ")
+            await message.reply_text(_["maint_6"])
         else:
             await maintenance_on()
             await message.reply_text(_["maint_2"])
@@ -49,6 +45,6 @@ async def maintenance(client, message: Message):
             await maintenance_off()
             await message.reply_text(_["maint_3"])
         else:
-            await message.reply_text("ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ ᴍᴏᴅᴇ ɪs ᴀʟʀᴇᴀᴅʏ ᴅɪsᴀʙʟᴇᴅ")
+            await message.reply_text(_["maint_5"])
     else:
         await message.reply_text(usage)

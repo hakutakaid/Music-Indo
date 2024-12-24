@@ -1,66 +1,78 @@
-<img src="https://telegra.ph/file/c0e014ff34f34d1056627.png" align="right" width="200" height="200"/>
+# 🎵 **MusicIndo** 🎶
 
-# Yukki Music Bot <img src="https://img.shields.io/github/v/release/TeamYukki/MusicIndoBot?color=black&logo=github&logoColor=black&style=social" alt="RELEASE">
+[**MusicIndo**](https://github.com/TheTeamVivek/MusicIndo) is an enhanced version of the original [**MusicIndoBot**](https://github.com/TeamYukki/MusicIndoBot), optimized for high-quality music streaming in Telegram voice chats. Built with Python and Pyrogram. 🚀
 
-[Yukki Music Bot](https://github.com/TeamYukki/MusicIndoBot) is a Powerful Telegram Music+Video Bot written in Python using Pyrogram and Py-Tgcalls by which you can stream songs, video and even live streams in your group calls via various sources.
-
-* Youtube, Soundcloud, Apple Music, Spotify, Resso, Live Streams and Telegram Audios & Videos support.
-* Written from scratch, making it stable and less crashes with attractive thumbnails.
-* Loop, Seek, Shuffle, Specific Skip, Playlists etc support
+## ⭐ Support the Original
+If you're using or forking this project, please show your support by starring the original repo:
+[**MusicIndoBot**](https://github.com/TeamYukki/MusicIndoBot)
 
 
+## 🚀 Quick Deployment Options
 
-## 🚀 Heroku Deployment
+### Deploy on Heroku
+Get started quickly by deploying to Heroku with just one click:
 
-<h4>Click the button below to deploy Yukki Music Bot on Heroku!</h4>    
-<h4>If You show any error like failed to app Creation Then fork and deploy </h4>
-<a href="https://dashboard.heroku.com/new?template=https://github.com/hakutakaid/Music-Indo"><img src="https://img.shields.io/badge/Deploy%20To%20Heroku-red?style=for-the-badge&logo=heroku" width="200""/></a>
+<a href="https://dashboard.heroku.com/new?template=https://github.com/TheTeamVivek/MusicIndo">
+  <img src="https://img.shields.io/badge/Deploy%20To%20Heroku-red?style=for-the-badge&logo=heroku" width="200"/>
+</a>
+
+### 🖥️ VPS Deployment Guide
+
+  - Update and Install Dependencies: `sudo apt update && sudo apt upgrade -y && sudo apt install -y ffmpeg git python3-pip python3-venv tmux nano`
+
+  - Create the Virtual Environment: `python3 -m venv .venv`
+
+  - Activate Virtual Env: `source .venv/bin/activate`
+
+  - Clone the Repository: `git clone https://github.com/TheTeamVivek/MusicIndo && cd MusicIndo`
+
+  - Install Python Requirements: `pip install -r requirements.txt`
+
+  - Copy and Edit Environment Variables:
+
+    Copy the sample environment file: `cp sample.env .env`
+
+    Edit the variables in the .env file: `nano .env`
+
+  After editing, press `Ctrl+X`, then `Y`, and press **Enter** to save the changes.
 
 
-## 🖇 VPS Deployment
-- Get your [Necessary Variables](https://github.com/hakutakaid/Music-Indo.git/blob/master/sample.env)
-- clone repo : `git clone https://github.com/hakutakaid/Music-Indo.git && cd Music-Indo`
-- Setup by : `bash setup`
-- Install tmux to keep running your bot when you close the terminal by :
-`sudo apt install tmux && tmux`
-- Finally run the bot by :
-`python3 -m MusicIndo`
-- For getting out from tmux session : Press `Ctrl+b` and then `d`<br>
+  -  Run the Bot: `bash start`
+
+  - Keep the Bot Running with tmux: `tmux`
+
+To exit the **tmux session** without stopping the bot, press `Ctrl+b`, then `d`.
 
 
-# Yukki Music Configs
- [Checkout Here For Config Vars](https://github.com/hakutakaid/Music-Indo.git/blob/master/config/README.md)
-# 🏷 Support / Assistance
 
-Reach out to the maintainer at one of the following places:
+## ⚙️ Configuration
 
-- [GitHub Issues](https://github.com/hakutakaid/Music-Indo.git/issues/new?assignees=&labels=question&template=SUPPORT_QUESTION.md&title=support%3A+)
-- Contact  [Telegram profile](https://t.me/HakuID)
-- [Telegram Support](https://t.me/LogUbotX)
+Need help setting up? Check out our detailed configuration guide: [**Configuration Instructions**](https://github.com/TheTeamVivek/MusicIndo/blob/master/config/README.md).
 
-If you want to say **thank you** or/and support active development of MusicIndoBot:
 
-- Add a [GitHub Star](https://github.com/TeamYukki/MusicIndoBot) to the project.
-- Fork the [Repo](https://github.com/hakutakaid/Music-Indo.git) :)
-- Write interesting articles about the project on [Dev.to](https://dev.to/), [Medium](https://medium.com/) or your personal blog.
+## 🤝 Need Help?
 
-# Together, we can make **MusicIndo** better!
+We're here to support you through multiple channels:
 
-# 📑 Acknowledgement / Credits
+- [**📝 Open a GitHub Issue**](https://github.com/TheTeamVivek/MusicIndo/issues/new?assignees=&labels=question&title=support%3A+&body=%23+Support+Question)
 
-<h3 align="center">
-    ─「 Credits 」─
-</h3>
+- [**💬 Contact Us**](https://t.me/TheTeamVk)
 
-<p align="center">
-<a href="https://github.com/pyrogram/pyrogram"> <img src="https://img.shields.io/badge/Pyrogram-black?style=for-the-badge&logo=github" alt="Pyrogram" /> </a>
-<a href="https://github.com/pytgcalls/pytgcalls"> <img src="https://img.shields.io/badge/PyTgCalls-black?style=for-the-badge&logo=github" alt="Pytgcalls" /> </a>
-<a href="https://github.com/AnonymousX1025"> <img src="https://img.shields.io/badge/Anonymous-black?style=for-the-badge&logo=github" alt="Anonymous" /> </a>
-<a href="https://github.com/NotReallyShikhar"> <img src="https://img.shields.io/badge/Shikhar-black?style=for-the-badge&logo=github" alt="Shikhar" /> </a>
-<a href="https://github.com/TheHamkerCat"> <img src="https://img.shields.io/badge/TheHamkerCat-black?style=for-the-badge&logo=github" alt="TheHamkerCat" /> </a>
-<a href="https://github.com/Pranav-Saraswat"> <img src="https://img.shields.io/badge/PranavSaraswat-black?style=for-the-badge&logo=github" alt="PranavSaraswat" /> </a>
-<a href="https://github.com/hakutakaid"> <img src="https://img.shields.io/badge/hakutakaid-black?style=for-the-badge&logo=github" alt="hakutakaid" /> </a>
-</p>
+- [**👥 Join Support Group**](https://t.me/TheTeamVk)
 
-- <b> _Special Thanks To [Team Yukki](https://github.com/TeamYukki) ғᴏʀ [MusicIndoBot](https://github.com/TeamYukki/MusicIndoBot)_ </b>
 
+## ❣️ Show Your Support
+
+Love MusicIndo? Here's how you can help:
+
+- ⭐ [**Star the MusicIndoBot Project**](https://github.com/TeamYukki/MusicIndoBot).
+
+- 🍴 [**Fork and and contribute to the this Repository**](https://github.com/TheTeamVivek/MusicIndo)
+
+- 📢 Share your experience on [**Dev.to**](https://dev.to/), [**Medium**](https://medium.com/), or your **personal blog.**
+
+Together, we can make [**MusicIndo**](https://github.com/TheTeamVivek/MusicIndo) and [**MusicIndoBot**](https://github.com/TeamYukki/MusicIndoBot) even better!
+
+## 🙏 Special Thanks
+
+A heartfelt thanks to [**Team Yukki**](https://github.com/TeamYukki) for creating the amazing  [**MusicIndoBot**](https://github.com/TeamYukki/MusicIndoBot) that inspired this project!

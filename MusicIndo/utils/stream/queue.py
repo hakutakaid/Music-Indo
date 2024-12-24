@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -26,12 +26,13 @@ async def put_queue(
     vidid,
     user_id,
     stream,
+    url: str = None,
     forceplay: Union[bool, str] = None,
 ):
     title = title.title()
     try:
         duration_in_seconds = time_to_seconds(duration) - 3
-    except:
+    except Exception:
         duration_in_seconds = 0
     put = {
         "title": title,
@@ -43,6 +44,7 @@ async def put_queue(
         "vidid": vidid,
         "seconds": duration_in_seconds,
         "played": 0,
+        "url": url,
     }
     if forceplay:
         if check := db.get(chat_id):
@@ -53,7 +55,8 @@ async def put_queue(
     else:
         db[chat_id].append(put)
     autoclean.append(file)
-    vidid = "telegram" if vidid == "soundcloud" else vidid
+    vidid = "telegram" if vidid == "soundcloud" or "saavn" in vidid else vidid
+
     to_append = {"vidid": vidid, "title": title}
     if chat_id not in chatstats:
         chatstats[chat_id] = []

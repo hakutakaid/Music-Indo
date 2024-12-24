@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -12,16 +12,13 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from config import BANNED_USERS
-from strings import get_command
+from strings import command
 from MusicIndo import app
 from MusicIndo.utils.database.memorydatabase import get_loop, set_loop
 from MusicIndo.utils.decorators import AdminRightsCheck
 
-# Commands
-LOOP_COMMAND = get_command("LOOP_COMMAND")
 
-
-@app.on_message(filters.command(LOOP_COMMAND) & filters.group & ~BANNED_USERS)
+@app.on_message(command("LOOP_COMMAND") & filters.group & ~BANNED_USERS)
 @AdminRightsCheck
 async def admins(cli, message: Message, _, chat_id):
     usage = _["admin_24"]

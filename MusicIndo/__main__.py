@@ -1,14 +1,16 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
-import asyncio
 import importlib
+
 from pyrogram import idle
+from pytgcalls.exceptions import NoActiveGroupCall
+
 import config
 from config import BANNED_USERS
 from MusicIndo import HELPABLE, LOGGER, app, userbot
@@ -18,13 +20,7 @@ from MusicIndo.utils.database import get_banned_users, get_gbanned
 
 
 async def init():
-    if (
-        not config.STRING1
-        and not config.STRING2
-        and not config.STRING3
-        and not config.STRING4
-        and not config.STRING5
-    ):
+    if len(config.STRING_SESSIONS) == 0:
         LOGGER("MusicIndo").error(
             "No Assistant Clients Vars Defined!.. Exiting Process."
         )
@@ -48,21 +44,28 @@ async def init():
 
         if hasattr(imported_module, "__MODULE__") and imported_module.__MODULE__:
             if hasattr(imported_module, "__HELP__") and imported_module.__HELP__:
-                if imported_module.__MODULE__.lower() not in HELPABLE:
-                    HELPABLE[imported_module.__MODULE__.lower()] = imported_module
-                else:
-                    raise Exception(
-                        f"Can't have two modules with name! '{imported_module.__MODULE__}' Please Change One"
-                    )
-
+                HELPABLE[imported_module.__MODULE__.lower()] = imported_module
     LOGGER("MusicIndo.plugins").info("Successfully Imported All Modules ")
     await userbot.start()
     await Yukki.start()
+    LOGGER("MusicIndo").info("Assistant Started Sucessfully")
+    try:
+        await Yukki.stream_call(
+            "http://docs.evostream.com/sample_content/assets/sintel1m720p.mp4"
+        )
+    except NoActiveGroupCall:
+        LOGGER("MusicIndo").error(
+            "Please ensure the voice call in your log group is active."
+        )
+        exit()
+
     await Yukki.decorators()
     LOGGER("MusicIndo").info("MusicIndo Started Successfully")
     await idle()
+    await app.stop()
+    await userbot.stop()
 
 
 if __name__ == "__main__":
-    asyncio.get_event_loop_policy().get_event_loop().run_until_complete(init())
+    app.run(init())
     LOGGER("MusicIndo").info("Stopping MusicIndo! GoodBye")

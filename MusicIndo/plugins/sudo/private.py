@@ -1,18 +1,17 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
 
-from pyrogram import filters
 from pyrogram.types import Message
 
 import config
-from strings import get_command
+from strings import command
 from MusicIndo import app
 from MusicIndo.misc import SUDOERS
 from MusicIndo.utils.database import (
@@ -23,12 +22,8 @@ from MusicIndo.utils.database import (
 )
 from MusicIndo.utils.decorators.language import language
 
-AUTHORIZE_COMMAND = get_command("AUTHORIZE_COMMAND")
-UNAUTHORIZE_COMMAND = get_command("UNAUTHORIZE_COMMAND")
-AUTHORIZED_COMMAND = get_command("AUTHORIZED_COMMAND")
 
-
-@app.on_message(filters.command(AUTHORIZE_COMMAND) & SUDOERS)
+@app.on_message(command("AUTHORIZE_COMMAND") & SUDOERS)
 @language
 async def authorize(client, message: Message, _):
     if config.PRIVATE_BOT_MODE != str(True):
@@ -37,7 +32,7 @@ async def authorize(client, message: Message, _):
         return await message.reply_text(_["pbot_1"])
     try:
         chat_id = int(message.text.strip().split()[1])
-    except:
+    except Exception:
         return await message.reply_text(_["pbot_7"])
     if not await is_served_private_chat(chat_id):
         await add_private_chat(chat_id)
@@ -46,7 +41,7 @@ async def authorize(client, message: Message, _):
         await message.reply_text(_["pbot_5"])
 
 
-@app.on_message(filters.command(UNAUTHORIZE_COMMAND) & SUDOERS)
+@app.on_message(command("UNAUTHORIZE_COMMAND") & SUDOERS)
 @language
 async def unauthorize(client, message: Message, _):
     if config.PRIVATE_BOT_MODE != str(True):
@@ -55,7 +50,7 @@ async def unauthorize(client, message: Message, _):
         return await message.reply_text(_["pbot_2"])
     try:
         chat_id = int(message.text.strip().split()[1])
-    except:
+    except Exception:
         return await message.reply_text(_["pbot_7"])
     if not await is_served_private_chat(chat_id):
         return await message.reply_text(_["pbot_6"])
@@ -64,7 +59,7 @@ async def unauthorize(client, message: Message, _):
         return await message.reply_text(_["pbot_4"])
 
 
-@app.on_message(filters.command(AUTHORIZED_COMMAND) & SUDOERS)
+@app.on_message(command("AUTHORIZED_COMMAND") & SUDOERS)
 @language
 async def authorized(client, message: Message, _):
     if config.PRIVATE_BOT_MODE != str(True):
@@ -98,12 +93,3 @@ async def authorized(client, message: Message, _):
         else:
             text = f"{text} {msg}"
             return await m.edit(text)
-
-
-__MODULE__ = "P-ʙᴏᴛ"
-__HELP__ = """
-      ⚡️<u>Pʀɪᴠᴀᴛᴇ Bᴏᴛ Fᴜɴᴄᴛɪᴏɴ:</u>
-/authorize [CHAT_ID] - Aʟʟᴏᴡ ᴀ ᴄʜᴀᴛ ғᴏʀ ᴜsɪɴɢ ʏᴏᴜʀ ʙᴏᴛ.
-/unauthorize[CHAT_ID] - Dɪsᴀʟʟᴏᴡ ᴀ ᴄʜᴀᴛ ғʀᴏᴍ ᴜsɪɴɢ ʏᴏᴜʀ ʙᴏᴛ.
-/authorized - Cʜᴇᴄᴋ ᴀʟʟ ᴀʟʟᴏᴡᴇᴅ ᴄʜᴀᴛs ᴏғ ʏᴏᴜʀ ʙᴏᴛ.
-"""

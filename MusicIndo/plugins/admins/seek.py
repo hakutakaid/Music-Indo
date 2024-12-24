@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -11,17 +11,16 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from config import BANNED_USERS
-from strings import get_command
+from strings import command
 from MusicIndo import Platform, app
 from MusicIndo.core.call import Yukki
 from MusicIndo.misc import db
 from MusicIndo.utils import AdminRightsCheck, seconds_to_min
 
-# Commands
-SEEK_COMMAND = get_command("SEEK_COMMAND")
 
-
-@app.on_message(filters.command(SEEK_COMMAND) & filters.group & ~BANNED_USERS)
+@app.on_message(
+    command(["SEEK_COMMAND", "SEEK_BACK_COMMAND"]) & filters.group & ~BANNED_USERS
+)
 @AdminRightsCheck
 async def seek_comm(cli, message: Message, _, chat_id):
     if len(message.command) == 1:
@@ -55,7 +54,7 @@ async def seek_comm(cli, message: Message, _, chat_id):
         to_seek = duration_played + duration_to_skip + 1
     mystic = await message.reply_text(_["admin_32"])
     if "vid_" in file_path:
-        n, file_path = await YouTube.video(playing[0]["vidid"], True)
+        n, file_path = await Platform.youtube.video(playing[0]["vidid"], True)
         if n == 0:
             return await message.reply_text(_["admin_30"])
     try:
@@ -66,7 +65,7 @@ async def seek_comm(cli, message: Message, _, chat_id):
             duration,
             playing[0]["streamtype"],
         )
-    except:
+    except Exception:
         return await mystic.edit_text(_["admin_34"])
     if message.command[0][-2] == "c":
         db[chat_id][0]["played"] -= duration_to_skip

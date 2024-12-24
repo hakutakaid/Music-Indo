@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -11,13 +11,13 @@
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
-from config import LOG_GROUP_ID, LOG
+from config import LOG, LOG_GROUP_ID
 from MusicIndo import app
 from MusicIndo.utils.database import delete_served_chat, get_assistant, is_on_off
 
 
 @app.on_message(filters.new_chat_members)
-async def join_watcher(_, message):
+async def on_bot_added(_, message):
     try:
         if not await is_on_off(LOG):
             return
@@ -30,12 +30,12 @@ async def join_watcher(_, message):
                     message.chat.username if message.chat.username else "ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀᴛ"
                 )
                 msg = (
-                    f"**ᴍᴜsɪᴄ ʙᴏᴛ ᴀᴅᴅᴇᴅ ɪɴ ᴀ ɴᴇᴡ ɢʀᴏᴜᴘ #New_Group**\n\n"
-                    f"**ᴄʜᴀᴛ ɴᴀᴍᴇ:** {message.chat.title}\n"
-                    f"**ᴄʜᴀᴛ ɪᴅ:** {message.chat.id}\n"
-                    f"**ᴄʜᴀᴛ ᴜsᴇʀɴᴀᴍᴇ:** @{username}\n"
-                    f"**ᴄʜᴀᴛ ᴍᴇᴍʙᴇʀ ᴄᴏᴜɴᴛ:** {count}\n"
-                    f"**ᴀᴅᴅᴇᴅ ʙʏ:** {message.from_user.mention}"
+                    f"**Music bot added in new Group #New_Group**\n\n"
+                    f"**Chat Name:** {message.chat.title}\n"
+                    f"**Chat Id:** {message.chat.id}\n"
+                    f"**Chat Username:** @{username}\n"
+                    f"**Chat Member Count:** {count}\n"
+                    f"**Added By:** {message.from_user.mention}"
                 )
                 await app.send_message(
                     LOG_GROUP_ID,
@@ -44,20 +44,21 @@ async def join_watcher(_, message):
                         [
                             [
                                 InlineKeyboardButton(
-                                    f"ᴀᴅᴅᴇᴅ ʙʏ",
-                                    url=f"tg://openmessage?user_id={message.from_user.id}",
+                                    text=f"Added by: {message.from_user.first_name}",
+                                    user_id=message.from_user.id,
                                 )
                             ]
                         ]
                     ),
                 )
-                await userbot.join_chat(f"{username}")
-    except Exception as e:
-        print(f"Error: {e}")
+                if message.chat.username:
+                    await userbot.join_chat(message.chat.username)
+    except Exception:
+        pass
 
 
 @app.on_message(filters.left_chat_member)
-async def on_left_chat_member(_, message: Message):
+async def on_bot_kicked(_, message: Message):
     try:
         if not await is_on_off(LOG):
             return
@@ -73,9 +74,29 @@ async def on_left_chat_member(_, message: Message):
                 f"@{message.chat.username}" if message.chat.username else "ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀᴛ"
             )
             chat_id = message.chat.id
-            left = f"✫ <b><u>#Left_group</u></b> ✫\nᴄʜᴀᴛ ɴᴀᴍᴇ : {title}\nᴄʜᴀᴛ ɪᴅ : {chat_id}\n\nʀᴇᴍᴏᴠᴇᴅ ʙʏ : {remove_by}"
-            await app.send_message(LOG_GROUP_ID, text=left)
+            left = (
+                f"Bot was Removed in {title} #Left_group\n"
+                f"**Chat Name**: {title}\n"
+                f"**Chat Id**: {chat_id}\n"
+                f"**Chat Username**: {username}\n"
+                f"**Removed By**: {remove_by}"
+            )
+
+            await app.send_message(
+                LOG_GROUP_ID,
+                text=left,
+                reply_markup=InlineKeyboardMarkup(
+                    [
+                        [
+                            InlineKeyboardButton(
+                                text=f"Removed By: {message.from_user.first_name}",
+                                user_id=message.from_user.id,
+                            )
+                        ]
+                    ]
+                ),
+            )
             await delete_served_chat(chat_id)
             await userbot.leave_chat(chat_id)
     except Exception as e:
-        print(f"Error: {e}")
+        pass

@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -12,17 +12,14 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from config import BANNED_USERS
-from strings import get_command
+from strings import command
 from MusicIndo import app
 from MusicIndo.core.call import Yukki
 from MusicIndo.utils.database import is_music_playing, music_on
 from MusicIndo.utils.decorators import AdminRightsCheck
 
-# Commands
-RESUME_COMMAND = get_command("RESUME_COMMAND")
 
-
-@app.on_message(filters.command(RESUME_COMMAND) & filters.group & ~BANNED_USERS)
+@app.on_message(command("RESUME_COMMAND") & filters.group & ~BANNED_USERS)
 @AdminRightsCheck
 async def resume_com(cli, message: Message, _, chat_id):
     if not len(message.command) == 1:

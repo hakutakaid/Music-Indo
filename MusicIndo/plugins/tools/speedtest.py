@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -11,48 +11,45 @@
 import asyncio
 
 import speedtest
-from pyrogram import filters
-from MusicIndo.misc import SUDOERS
-from strings import get_command
-from MusicIndo import app
 
-# Commands
-SPEEDTEST_COMMAND = get_command("SPEEDTEST_COMMAND")
+from strings import command
+from MusicIndo import app
+from MusicIndo.misc import SUDOERS
 
 
 def testspeed(m):
     try:
         test = speedtest.Speedtest()
         test.get_best_server()
-        m = m.edit("⇆ ʀᴜɴɴɪɴɢ ᴅᴏᴡɴʟᴏᴀᴅ sᴩᴇᴇᴅᴛᴇsᴛ...")
+        m = m.edit("⇆ Running Download Speedtest ...")
         test.download()
-        m = m.edit("⇆ ʀᴜɴɴɪɴɢ ᴜᴘʟᴏᴀᴅ sᴘᴇᴇᴅᴛᴇsᴛ...")
+        m = m.edit("⇆ Running Upload SpeedTest...")
         test.upload()
         test.results.share()
         result = test.results.dict()
-        m = m.edit("↻ sʜᴀʀɪɴɢ sᴘᴇᴇᴅᴛᴇsᴛ ʀᴇsᴜʟᴛ")
+        m = m.edit("↻ Sharing SpeedTest results")
     except Exception as e:
         return m.edit(e)
     return result
 
 
-@app.on_message(filters.command(SPEEDTEST_COMMAND) & SUDOERS)
+@app.on_message(command("SPEEDTEST_COMMAND") & SUDOERS)
 async def speedtest_function(client, message):
     m = await message.reply_text("ʀᴜɴɴɪɴɢ sᴘᴇᴇᴅᴛᴇsᴛ")
     loop = asyncio.get_event_loop_policy().get_event_loop()
     result = await loop.run_in_executor(None, testspeed, m)
-    output = f"""**sᴘᴇᴇᴅᴛᴇsᴛ ʀᴇsᴜʟᴛ**
+    output = f"""**Speedtest Results**
     
-<u>**ᴄʟɪᴇɴᴛ:**</u>
-**ɪsᴘ :** {result['client']['isp']}
-**ᴄᴏᴜɴᴛʀʏ :** {result['client']['country']}
+<u>**Client:**</u>
+**ISP :** {result['client']['isp']}
+**Country :** {result['client']['country']}
   
-<u>**sᴇʀᴠᴇʀ :**</u>
-**ɴᴀᴍᴇ :** {result['server']['name']}
-**ᴄᴏᴜɴᴛʀʏ :** {result['server']['country']}, {result['server']['cc']}
-**sᴘᴏɴsᴏʀ :** {result['server']['sponsor']}
-**ʟᴀᴛᴇɴᴄʏ :** {result['server']['latency']}  
-**ᴘɪɴɢ :** {result['ping']}"""
+<u>**Server:**</u>
+**Name :** {result['server']['name']}
+**Country:** {result['server']['country']}, {result['server']['cc']}
+**Sponsor:** {result['server']['sponsor']}
+**Latency:** {result['server']['latency']}  
+**Ping :** {result['ping']}"""
     msg = await app.send_photo(
         chat_id=message.chat.id, photo=result["share"], caption=output
     )

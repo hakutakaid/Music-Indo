@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -18,9 +18,8 @@ from pyrogram.raw import types
 
 import config
 from config import adminlist, chatstats, clean, userstats
-from strings import get_command
+from strings import command
 from MusicIndo import app
-from MusicIndo.misc import SUDOERS
 from MusicIndo.utils.database import (
     get_active_chats,
     get_authuser_names,
@@ -36,9 +35,7 @@ from MusicIndo.utils.database import (
 )
 from MusicIndo.utils.decorators.language import language
 from MusicIndo.utils.formatters import alpha_to_int
-from MusicIndo.utils.cleanmode import protected_messages
 
-BROADCAST_COMMAND = get_command("BROADCAST_COMMAND")
 AUTO_DELETE = config.CLEANMODE_DELETE_MINS
 AUTO_SLEEP = 5
 IS_BROADCASTING = False
@@ -53,7 +50,7 @@ async def clean_mode(client, update, users, chats):
     try:
         if not isinstance(update, types.UpdateReadChannelOutbox):
             return
-    except:
+    except Exception:
         return
     if users:
         return
@@ -74,7 +71,7 @@ async def clean_mode(client, update, users, chats):
     await set_queries(1)
 
 
-@app.on_message(filters.command(BROADCAST_COMMAND) & SUDOERS)
+@app.on_message(command("BROADCAST_COMMAND") & filters.user(config.OWNER_ID))
 @language
 async def braodcast_message(client, message, _):
     global IS_BROADCASTING
@@ -85,12 +82,13 @@ async def braodcast_message(client, message, _):
         if len(message.command) < 2:
             return await message.reply_text(_["broad_5"])
         query = message.text.split(None, 1)[1]
-        if "-pin" in query:
-            query = query.replace("-pin", "")
+
         if "-nobot" in query:
             query = query.replace("-nobot", "")
         if "-pinloud" in query:
             query = query.replace("-pinloud", "")
+        if "-pin" in query:
+            query = query.replace("-pin", "")
         if "-assistant" in query:
             query = query.replace("-assistant", "")
         if "-user" in query:
@@ -115,7 +113,7 @@ async def braodcast_message(client, message, _):
                 m = (
                     await app.forward_messages(i, y, x)
                     if message.reply_to_message
-                    else await app.send_message(i, text=query)
+                    else await app.send_message(i, text=query, send_direct=True)
                 )
                 if "-pin" in message.text:
                     try:
@@ -139,12 +137,13 @@ async def braodcast_message(client, message, _):
                 continue
         try:
             await message.reply_text(_["broad_1"].format(sent, pin))
-        except:
+        except Exception:
             pass
 
     # Bot broadcasting to users
     if "-user" in message.text:
         susr = 0
+        pin = 0
         served_users = []
         susers = await get_served_users()
         for user in susers:
@@ -154,8 +153,20 @@ async def braodcast_message(client, message, _):
                 m = (
                     await app.forward_messages(i, y, x)
                     if message.reply_to_message
-                    else await app.send_message(i, text=query)
+                    else await app.send_message(i, text=query, send_direct=True)
                 )
+                if "-pin" in message.text:
+                    try:
+                        await m.pin(both_sides=True, disable_notification=True)
+                        pin += 1
+                    except Exception:
+                        continue
+                elif "-pinloud" in message.text:
+                    try:
+                        await m.pin(both_sides=True, disable_notification=False)
+                        pin += 1
+                    except Exception:
+                        continue
                 susr += 1
             except FloodWait as e:
                 flood_time = int(e.value)
@@ -165,8 +176,8 @@ async def braodcast_message(client, message, _):
             except Exception:
                 pass
         try:
-            await message.reply_text(_["broad_7"].format(susr))
-        except:
+            await message.reply_text(_["broad_7"].format(susr, pin))
+        except Exception:
             pass
 
     # Bot broadcasting by assistant
@@ -178,8 +189,11 @@ async def braodcast_message(client, message, _):
         for num in assistants:
             sent = 0
             client = await get_client(num)
+            contacts = [user.id for user in await client.get_contacts()]
             async for dialog in client.get_dialogs():
                 if dialog.chat.id == config.LOG_GROUP_ID:
+                    continue
+                if dialog.chat.id in contacts:
                     continue
                 try:
                     (
@@ -199,7 +213,7 @@ async def braodcast_message(client, message, _):
             text += _["broad_4"].format(num, sent)
         try:
             await aw.edit_text(text)
-        except:
+        except Exception:
             pass
     IS_BROADCASTING = False
 
@@ -237,7 +251,7 @@ async def auto_clean():
                         next_spot = 1
                         new_spot = {"spot": next_spot, "title": title}
                         await update_user_top(user_id, vidid, new_spot)
-        except:
+        except Exception:
             continue
         try:
             for chat_id in clean:
@@ -245,21 +259,15 @@ async def auto_clean():
                     continue
                 for x in clean[chat_id]:
                     if datetime.now() > x["timer_after"]:
-                        # Skip deletion if the message is protected
-                        if (
-                            chat_id in protected_messages
-                            and x["msg_id"] in protected_messages[chat_id]
-                        ):
-                            continue
                         try:
                             await app.delete_messages(chat_id, x["msg_id"])
                         except FloodWait as e:
                             await asyncio.sleep(e.value)
-                        except:
+                        except Exception:
                             continue
                     else:
                         continue
-        except:
+        except Exception:
             continue
         try:
             served_chats = await get_active_chats()
@@ -276,20 +284,8 @@ async def auto_clean():
                     for user in authusers:
                         user_id = await alpha_to_int(user)
                         adminlist[chat_id].append(user_id)
-        except:
+        except Exception:
             continue
 
 
 asyncio.create_task(auto_clean())
-
-__MODULE__ = "G-ᴄᴀsᴛ"
-__HELP__ = """🍒 **<u>ʙʀᴏᴀᴅᴄᴀsᴛ ғᴇᴀᴛᴜʀᴇ</u>** [ᴏɴʟʏ ғᴏʀ sᴜᴅᴏᴇʀs] :
-/broadcast [ᴍᴇssᴀɢᴇ ᴏʀ ʀᴇᴩʟʏ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ] » ʙʀᴏᴀᴅᴄᴀsᴛ ᴀ ᴍᴇssᴀɢᴇ ᴛᴏ sᴇʀᴠᴇᴅ ᴄʜᴀᴛs ᴏғ ᴛʜᴇ ʙᴏᴛ.
-<u>ʙʀᴏᴀᴅᴄᴀsᴛɪɴɢ ᴍᴏᴅᴇs:</u>
-**-pin** » ᴩɪɴs ʏᴏᴜʀ ʙʀᴏᴀᴅᴄᴀsᴛᴇᴅ ᴍᴇssᴀɢᴇs ɪɴ sᴇʀᴠᴇᴅ ᴄʜᴀᴛs.
-**-pinloud** » ᴩɪɴs ʏᴏᴜʀ ʙʀᴏᴀᴅᴄᴀsᴛᴇᴅ ᴍᴇssᴀɢᴇ ɪɴ sᴇʀᴠᴇᴅ ᴄʜᴀᴛs ᴀɴᴅ sᴇɴᴅ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ ᴛᴏ ᴛʜᴇ ᴍᴇᴍʙᴇʀs.
-**-user** » ʙʀᴏᴀᴅᴄᴀsᴛs ᴛʜᴇ ᴍᴇssᴀɢᴇ ᴛᴏ ᴛʜᴇ ᴜsᴇʀs ᴡʜᴏ ʜᴀᴠᴇ sᴛᴀʀᴛᴇᴅ ʏᴏᴜʀ ʙᴏᴛ.
-**-assistant** » ʙʀᴏᴀᴅᴄᴀsᴛ ʏᴏᴜʀ ᴍᴇssᴀɢᴇ ғʀᴏᴍ ᴛʜᴇ ᴀssɪᴛᴀɴᴛ ᴀᴄᴄᴏᴜɴᴛ ᴏғ ᴛʜᴇ ʙᴏᴛ.
-**-nobot** » ғᴏʀᴄᴇs ᴛʜᴇ ʙᴏᴛ ᴛᴏ ɴᴏᴛ ʙʀᴏᴀᴅᴄᴀsᴛ ᴛʜᴇ ᴍᴇssᴀɢᴇ..
-> **ᴇxᴀᴍᴩʟᴇ:** `/broadcast -user -assistant -pin ᴛᴇsᴛɪɴɢ ʙʀᴏᴀᴅᴄᴀsᴛ`
-"""

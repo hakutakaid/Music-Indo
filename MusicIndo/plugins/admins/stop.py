@@ -1,46 +1,38 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
 from pyrogram import filters
-from pyrogram.types import Message
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
-
-from config import BANNED_USERS
+from config import BANNED_USERS, adminlist
+from strings import get_string, command
 from MusicIndo import app
 from MusicIndo.core.call import Yukki
-from MusicIndo.utils.database import (
-    set_loop,
-    delete_filter,
-    is_maintenance,
-    is_commanddelete_on,
-    get_lang,
-    is_nonadmin_chat,
-    is_active_chat,
-    get_cmode,
-)
-
-from config import adminlist
-from MusicIndo.plugins import extra_plugins_enabled
-from strings import get_string
 from MusicIndo.misc import SUDOERS
-
-
-@app.on_message(
-    filters.command(["stop", "end", "cstop", "cend"]) & filters.group & ~BANNED_USERS
+from MusicIndo.plugins import extra_plugins_enabled
+from MusicIndo.utils.database import (
+    delete_filter,
+    get_cmode,
+    get_lang,
+    is_active_chat,
+    is_commanddelete_on,
+    is_maintenance,
+    is_nonadmin_chat,
+    set_loop,
 )
+
+
+@app.on_message(command("STOP_COMMAND") & filters.group & ~BANNED_USERS)
 async def stop_music(cli, message: Message):
     if await is_maintenance() is False:
         if message.from_user.id not in SUDOERS:
-            return await message.reply_text(
-                "Bot is under maintenance. Please wait for some time..."
-            )
+            return
     if not len(message.command) < 2:
         if extra_plugins_enabled:
             if not message.command[0][0] == "c" and not message.command[0][0] == "e":
@@ -54,12 +46,12 @@ async def stop_music(cli, message: Message):
     if await is_commanddelete_on(message.chat.id):
         try:
             await message.delete()
-        except:
+        except Exception:
             pass
     try:
         language = await get_lang(message.chat.id)
         _ = get_string(language)
-    except:
+    except Exception:
         _ = get_string("en")
 
     if message.sender_chat:
@@ -81,7 +73,7 @@ async def stop_music(cli, message: Message):
             return await message.reply_text(_["setting_12"])
         try:
             await app.get_chat(chat_id)
-        except:
+        except Exception:
             return await message.reply_text(_["cplay_4"])
     else:
         chat_id = message.chat.id
@@ -96,6 +88,12 @@ async def stop_music(cli, message: Message):
             else:
                 if message.from_user.id not in admins:
                     return await message.reply_text(_["admin_19"])
+    try:
+        check = db.get(chat_id)
+        if check[0].get("mystic"):
+            await check[0].get("mystic").delete()
+    except Exception:
+        pass
     await Yukki.stop_stream(chat_id)
     await set_loop(chat_id, 0)
     await message.reply_text(_["admin_9"].format(message.from_user.mention))

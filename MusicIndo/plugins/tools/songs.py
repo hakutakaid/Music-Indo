@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -23,18 +23,15 @@ from pyrogram.types import (
 )
 
 from config import BANNED_USERS, SONG_DOWNLOAD_DURATION, SONG_DOWNLOAD_DURATION_LIMIT
-from strings import get_command
+from strings import command
 from MusicIndo import Platform, app
+from MusicIndo.platforms.Youtube import cookies
 from MusicIndo.utils.decorators.language import language, languageCB
 from MusicIndo.utils.formatters import convert_bytes
 from MusicIndo.utils.inline.song import song_markup
 
-# Command
 
-SONG_COMMAND = get_command("SONG_COMMAND")
-
-
-@app.on_message(filters.command(SONG_COMMAND) & filters.group & ~BANNED_USERS)
+@app.on_message(command("SONG_COMMAND") & filters.group & ~BANNED_USERS)
 @language
 async def song_commad_group(client, message: Message, _):
 
@@ -55,7 +52,7 @@ async def song_commad_group(client, message: Message, _):
 # Song Module
 
 
-@app.on_message(filters.command(SONG_COMMAND) & filters.private & ~BANNED_USERS)
+@app.on_message(command("SONG_COMMAND") & filters.private & ~BANNED_USERS)
 @language
 async def song_commad_private(client, message: Message, _):
 
@@ -65,7 +62,7 @@ async def song_commad_private(client, message: Message, _):
 
     if url:
 
-        if not await YouTube.exists(url):
+        if not await Platform.youtube.exists(url):
 
             return await message.reply_text(_["song_5"])
 
@@ -77,7 +74,7 @@ async def song_commad_private(client, message: Message, _):
             duration_sec,
             thumbnail,
             vidid,
-        ) = await YouTube.details(url)
+        ) = await Platform.youtube.details(url)
 
         if str(duration_min) == "None":
 
@@ -117,9 +114,9 @@ async def song_commad_private(client, message: Message, _):
             duration_sec,
             thumbnail,
             vidid,
-        ) = await YouTube.details(query)
+        ) = await Platform.youtube.details(query)
 
-    except:
+    except Exception:
 
         return await mystic.edit_text(_["play_3"])
 
@@ -175,7 +172,7 @@ async def song_helper_cb(client, CallbackQuery, _):
 
         await CallbackQuery.answer(_["song_6"], show_alert=True)
 
-    except:
+    except Exception:
 
         pass
 
@@ -183,9 +180,9 @@ async def song_helper_cb(client, CallbackQuery, _):
 
         try:
 
-            formats_available, link = await YouTube.formats(vidid, True)
+            formats_available, link = await Platform.youtube.formats(vidid, True)
 
-        except:
+        except Exception:
 
             return await CallbackQuery.edit_message_text(_["song_7"])
 
@@ -238,7 +235,7 @@ async def song_helper_cb(client, CallbackQuery, _):
 
         try:
 
-            formats_available, link = await YouTube.formats(vidid, True)
+            formats_available, link = await Platform.youtube.formats(vidid, True)
 
         except Exception as e:
 
@@ -248,7 +245,7 @@ async def song_helper_cb(client, CallbackQuery, _):
 
         keyboard = InlineKeyboard()
 
-        # AVC Formats Only [ Alexa MUSIC BOT ]
+        # AVC Formats Only
 
         done = [160, 133, 134, 135, 136, 137, 298, 299, 264, 304, 266]
 
@@ -299,7 +296,7 @@ async def song_download_cb(client, CallbackQuery, _):
 
         await CallbackQuery.answer("ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ...")
 
-    except:
+    except Exception:
 
         pass
 
@@ -313,7 +310,7 @@ async def song_download_cb(client, CallbackQuery, _):
 
     yturl = f"https://www.youtube.com/watch?v={vidid}"
 
-    with yt_dlp.YoutubeDL({"quiet": True}) as ytdl:
+    with yt_dlp.YoutubeDL({"quiet": True, "cookiefile": f"{cookies()}"}) as ytdl:
 
         x = ytdl.extract_info(yturl, download=False)
 
@@ -335,7 +332,7 @@ async def song_download_cb(client, CallbackQuery, _):
 
         try:
 
-            file_path = await YouTube.download(
+            file_path = await Platform.youtube.download(
                 yturl,
                 mystic,
                 songvideo=True,
@@ -380,7 +377,7 @@ async def song_download_cb(client, CallbackQuery, _):
 
         try:
 
-            filename = await YouTube.download(
+            filename = await Platform.youtube.download(
                 yturl,
                 mystic,
                 songaudio=True,
