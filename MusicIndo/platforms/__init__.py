@@ -13,7 +13,7 @@ from .Carbon import Carbon
 #from .JioSavan import Saavn
 from .Resso import Resso
 from .Soundcloud import SoundCloud
-from .Spotify import Spotify
+from .Spotify import SpotifyAPI
 from .Telegram import Telegram
 from .Youtube import YouTube
 
@@ -25,6 +25,6 @@ class PlaTForms:
 #        self.saavn = Saavn()
         self.resso = Resso()
         self.soundcloud = SoundCloud()
-        self.spotify = Spotify()
+        self.spotify = SpotifyAPI()
         self.telegram = Telegram()
         self.youtube = YouTube()
