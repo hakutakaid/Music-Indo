@@ -15,7 +15,7 @@ from .Resso import Resso
 from .Soundcloud import SoundCloud
 from .Spotify import SpotifyAPI
 from .Telegram import Telegram
-from .Youtube import YouTube
+from .Youtube import YouTubeApi
 
 
 class PlaTForms:
@@ -27,4 +27,4 @@ class PlaTForms:
         self.soundcloud = SoundCloud()
         self.spotify = SpotifyAPI()
         self.telegram = Telegram()
-        self.youtube = YouTube()
+        self.youtube = YouTubeApi()
