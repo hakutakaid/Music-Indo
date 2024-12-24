@@ -15,7 +15,7 @@ from typing import Union
 from pyrogram.types import InlineKeyboardMarkup
 
 import config
-from MusicIndo import Carbon, YouTube, app
+from MusicIndo import app, Platform
 from MusicIndo.core.call import Yukki
 from MusicIndo.misc import db
 from MusicIndo.utils.database import (

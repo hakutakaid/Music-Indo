@@ -26,7 +26,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from youtube_search import YoutubeSearch
 
 from config import BANNED_USERS, SERVER_PLAYLIST_LIMIT
-from MusicIndo import Carbon, app
+from MusicIndo import app, Platform
 from MusicIndo.utils.database import (
     delete_playlist,
     get_assistant,
