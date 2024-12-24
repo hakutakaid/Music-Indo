@@ -10,7 +10,7 @@
 
 from .Apple import Apple
 from .Carbon import Carbon
-from .JioSavan import Saavn
+#from .JioSavan import Saavn
 from .Resso import Resso
 from .Soundcloud import SoundCloud
 from .Spotify import Spotify
@@ -22,7 +22,7 @@ class PlaTForms:
     def __init__(self):
         self.apple = Apple()
         self.carbon = Carbon()
-        self.saavn = Saavn()
+#        self.saavn = Saavn()
         self.resso = Resso()
         self.soundcloud = SoundCloud()
         self.spotify = Spotify()
