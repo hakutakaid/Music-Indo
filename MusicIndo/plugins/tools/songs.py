@@ -61,7 +61,7 @@ async def song_commad_private(client, message: Message, _):
 
     await message.delete()
 
-    url = await YouTube.url(message)
+    url = await Platform.youtube.url(message)
 
     if url:
 
