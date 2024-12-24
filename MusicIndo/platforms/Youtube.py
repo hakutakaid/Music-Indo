@@ -41,7 +41,7 @@ async def shell_cmd(cmd):
     return out.decode("utf-8")
 
 
-class YouTubeApi:
+class YouTube:
     def __init__(self):
         self.base = "https://www.youtube.com/watch?v="
         self.regex = r"(?:youtube\.com|youtu\.be)"
