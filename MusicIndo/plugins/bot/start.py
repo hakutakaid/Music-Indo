@@ -19,7 +19,7 @@ import config
 from config import BANNED_USERS, START_IMG_URL
 from config.config import OWNER_ID
 from strings import get_string
-from MusicIndo import Telegram, YouTube, app
+from MusicIndo import app, Platform
 from MusicIndo.misc import SUDOERS, _boot_
 from MusicIndo.plugins.play.playlist import del_plist_msg
 from MusicIndo.plugins.sudo.sudoers import sudoers_list
