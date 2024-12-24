@@ -44,8 +44,8 @@ async def init():
 
     LOGGER("MusicIndo.plugins").info("Successfully Imported All Modules ")
     await userbot.start()
-    await Dante.start()
-    await Dante.decorators()
+    await Ryn.start()
+    await Ryn.decorators()
     LOGGER("MusicIndo").info("Ryn Music Bot Started Successfully")
     await idle()
 
