@@ -19,7 +19,7 @@ from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
 from config import BANNED_USERS, lyrical
-from MusicIndo import Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app
+from MusicIndo import app, Platform
 from MusicIndo.core.call import Yukki
 from MusicIndo.utils import seconds_to_min, time_to_seconds
 from MusicIndo.utils.channelplay import get_channeplayCB
