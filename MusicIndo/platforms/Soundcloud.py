@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
+# and is released under the MIT License.
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -13,9 +13,10 @@ from os import path
 from yt_dlp import YoutubeDL
 
 from MusicIndo.utils.formatters import seconds_to_min
+from MusicIndo.utils.decorators import asyncify
 
 
-class SoundAPI:
+class SoundCloud:
     def __init__(self):
         self.opts = {
             "outtmpl": "downloads/%(id)s.%(ext)s",
@@ -25,17 +26,15 @@ class SoundAPI:
             "continuedl": True,
         }
 
-    async def valid(self, link: str):
-        if "soundcloud" in link:
-            return True
-        else:
-            return False
+    async def valid(self, link: str) -> bool:
+        return "soundcloud" in link
 
-    async def download(self, url):
+    @asyncify
+    def download(self, url: str) -> dict | bool:
         d = YoutubeDL(self.opts)
         try:
             info = d.extract_info(url)
-        except:
+        except Exception:
             return False
         xyz = path.join("downloads", f"{info['id']}.{info['ext']}")
         duration_min = seconds_to_min(info["duration"])

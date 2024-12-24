@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by AnonymousX888@Github, < https://github.com/AnonymousX888 >.
+# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/hakutakaid/Music-Indo.git > project,
-# and is released under the "GNU v3.0 License Agreement".
-# Please see < https://github.com/hakutakaid/Music-Indo.git/blob/master/LICENSE >
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
+# and is released under the MIT License.
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -15,8 +15,7 @@ import aiohttp
 from aiohttp import client_exceptions
 
 
-class UnableToFetchCarbon(Exception):
-    pass
+from MusicIndo.utils.exceptions import UnableToFetchCarbon
 
 
 themes = [
@@ -77,7 +76,7 @@ colour = [
 ]
 
 
-class CarbonAPI:
+class Carbon:
     def __init__(self):
         self.language = "auto"
         self.drop_shadow = True
