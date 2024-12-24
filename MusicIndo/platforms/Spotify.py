@@ -1,9 +1,9 @@
 #
 # Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
 #
-# This file is part of < https://github.com/TheTeamVivek/YukkiMusic > project,
+# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/TheTeamVivek/YukkiMusic/blob/master/LICENSE >
+# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 #
@@ -15,7 +15,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from youtubesearchpython.__future__ import VideosSearch
 
 import config
-from YukkiMusic.utils.decorators import asyncify
+from MusicIndo.utils.decorators import asyncify
 
 
 class Spotify:
