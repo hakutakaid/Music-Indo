@@ -27,7 +27,7 @@ from pytgcalls.types.stream import *
 
 import config
 from strings import get_string
-from MusicIndo import LOGGER, YouTube, app
+from MusicIndo import LOGGER, Platform, app, userbot
 from MusicIndo.misc import db
 from MusicIndo.utils.database import (
     add_active_chat,
