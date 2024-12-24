@@ -70,7 +70,7 @@ LOG_GROUP_ID = int(getenv("LOG_GROUP_ID", ""))
 
 # Your User ID.
 OWNER_ID = list(
-    map(int, getenv("OWNER_ID", "936922513").split())
+    map(int, getenv("OWNER_ID", "1231904088").split())
 )  # Input type must be interger
 
 
@@ -84,9 +84,9 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 # For customized or modified Repository
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/Youghvee/MusicIndo.git",
+    "https://github.com/hakutakaid/Music-Indo",
 )
-UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "main")
+UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "haku")
 
 # GIT TOKEN ( if your edited repo is private)
 GIT_TOKEN = getenv(
@@ -95,10 +95,10 @@ GIT_TOKEN = getenv(
 
 # Only  Links formats are  accepted for this Var value.
 SUPPORT_CHANNEL = getenv(
-    "SUPPORT_CHANNEL", "https://t.me/SpotifyStream_Id"
+    "SUPPORT_CHANNEL", "https://t.me/hakutakaid_gh"
 )  # Example:- https://t.me/TheTeamVivek
 SUPPORT_GROUP = getenv(
-    "SUPPORT_GROUP", "https://t.me/CariTemanSahabatOnline_Id"
+    "SUPPORT_GROUP", "https://t.me/ZeebSupport"
 )  # Example:- https://t.me/TheTeamVk
 
 
@@ -122,7 +122,7 @@ TELEGRAM_DOWNLOAD_EDIT_SLEEP = int(getenv("TELEGRAM_EDIT_SLEEP", "5"))
 
 
 # Your Github Repo.. Will be shown on /start Command
-GITHUB_REPO = getenv("GITHUB_REPO", "https://t.me/Usern4meDoestExist404")
+GITHUB_REPO = getenv("GITHUB_REPO", "https://t.me/hakutakaid_gh")
 
 
 # Spotify Client.. Get it from https://developer.spotify.com/dashboard
