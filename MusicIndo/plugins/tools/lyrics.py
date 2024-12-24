@@ -9,9 +9,9 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from config import BANNED_USERS, lyrical
 from strings import get_command
-from DanteMusic import app
-from DanteMusic Import dante
-from DanteMusic.utils.decorators.language import language
+from RynMusic import app
+from RynMusic Import dante
+from RynMusic.utils.decorators.language import language
 
 ###Commands
 LYRICS_COMMAND = get_command("LYRICS_COMMAND")

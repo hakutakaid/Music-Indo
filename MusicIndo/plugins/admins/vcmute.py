@@ -16,7 +16,7 @@ async def mute_admin(cli, message: Message, _, chat_id):
     if await is_muted(chat_id):
         return await message.reply_text(_["admin_5"], disable_web_page_preview=True)
     await mute_on(chat_id)
-    await Dante.mute_stream(chat_id)
+    await Ryn.mute_stream(chat_id)
     await message.reply_text(
         _["admin_6"].format(message.from_user.mention), disable_web_page_preview=True
     )
@@ -30,7 +30,7 @@ async def unmute_admin(Client, message: Message, _, chat_id):
     if not await is_muted(chat_id):
         return await message.reply_text(_["admin_7"], disable_web_page_preview=True)
     await mute_off(chat_id)
-    await Dante.unmute_stream(chat_id)
+    await Ryn.unmute_stream(chat_id)
     await message.reply_text(
         _["admin_8"].format(message.from_user.mention), disable_web_page_preview=True
     )

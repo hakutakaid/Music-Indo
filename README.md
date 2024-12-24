@@ -1,6 +1,6 @@
 ## 🚀 Heroku Deployment
 
-<h4>Click the button below to deploy Dante Music Bot on Heroku!</h4>    
+<h4>Click the button below to deploy Ryn Music Bot on Heroku!</h4>    
 <h4>If You show any error like failed to app Creation Then fork and deploy </h4>
 <a href="https://dashboard.heroku.com/new?template=https://github.com/Youghvee/MusicIndo.git"><img src="https://img.shields.io/badge/Deploy%20To%20Heroku-red?style=for-the-badge&logo=heroku" width="200""/></a>
 
@@ -41,7 +41,7 @@ Get to know about all these vars in depth from our Docs. [Read Now from Here]()
 
 ## Mandatory Vars
 
-- These are the minimum required vars need to setup to make Dante Music Bot functional.
+- These are the minimum required vars need to setup to make Ryn Music Bot functional.
 
 1. `API_ID` : Get it from my.telegram.org 
 2. `API_HASH`  : Get it from my.telegram.org 
@@ -49,7 +49,7 @@ Get to know about all these vars in depth from our Docs. [Read Now from Here]()
 4. `MONGO_DB_URI` : Get mongo db [from here.]()
 5. `LOG_GROUP_ID` : You'll need a Private Group ID for this. Supergroup Needed with id starting from -100 
 6. `OWNER_ID` : Your Owner ID for managing your bot.
-7. `STRING_SESSION` : Pyrogram Session Needed, Generate string from [@DanteStringBot](http://t.me/) in Telegram.
+7. `STRING_SESSION` : Pyrogram Session Needed, Generate string from [@RynStringBot](http://t.me/) in Telegram.
 
 
 ## Non-Mandatory Vars
@@ -88,10 +88,10 @@ Get to know about all these vars in depth from our Docs. [Read Now from Here]()
 
 ## Spotify Vars
 
-- You can play tracks or playlists from spotify from Dante Music bot
+- You can play tracks or playlists from spotify from Ryn Music bot
 - You'll need these two vars to make spotify play working. This is not essential , you can leave them blank if you want.
 
-### How to get these? [Read from here](https://notreallyshikhar.gitbook.io/Dantemusicbot/deployment/spotify)
+### How to get these? [Read from here](https://notreallyshikhar.gitbook.io/Rynmusicbot/deployment/spotify)
 
 
 1. `SPOTIFY_CLIENT_ID` : Get it from https://developer.spotify.com/dashboard 
@@ -110,7 +110,7 @@ Get to know about all these vars in depth from our Docs. [Read Now from Here]()
 
 ## Custom Repo Vars
 
-- If you plan to use Dante Music Bot with your own customized or modified code.
+- If you plan to use Ryn Music Bot with your own customized or modified code.
 
 1. `UPSTREAM_REPO` : Your Upstream Repo URL or Forked Repo.
 2. `UPSTREAM_BRANCH` : Default Branch of your Upstream Repo URL or Forked Repo. 

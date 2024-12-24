@@ -1,6 +1,6 @@
 .env
 .cache
-Dantelogs.txt
+Rynlogs.txt
 .DS_Store
 *.session
 raw_files/

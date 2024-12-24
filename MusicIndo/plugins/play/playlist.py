@@ -54,7 +54,7 @@ async def check_playlist(client, message: Message, _):
         count += 1
         msg += f"\n\n{count}- {title[:70]}\n"
         msg += _["playlist_5"].format(duration)
-    link = await Dantebin(msg)
+    link = await Rynbin(msg)
     lines = msg.count("\n")
     if lines >= 17:
         car = os.linesep.join(msg.split(os.linesep)[:17])
@@ -774,7 +774,7 @@ async def del_plist(client, CallbackQuery, _):
 @app.on_callback_query(filters.regex("recover_playlist") & ~BANNED_USERS)
 @languageCB
 async def add_playlist(client, CallbackQuery, _):
-    from DanteMusic import YouTube
+    from RynMusic import YouTube
 
     callback_data = CallbackQuery.data.strip()
     videoid = callback_data.split(None, 1)[1]
@@ -845,7 +845,7 @@ async def del_plist(client, CallbackQuery, _):
 @languageCB
 async def add_playlist(client, CallbackQuery, _):
     try:
-        from DanteMusic import YouTube
+        from RynMusic import YouTube
     except ImportError as e:
         print(f"ERROR {e}")
         return
@@ -896,7 +896,7 @@ async def add_playlist(client, CallbackQuery, _):
 @languageCB
 async def add_playlist(client, CallbackQuery, _):
     try:
-        from DanteMusic import YouTube
+        from RynMusic import YouTube
     except ImportError as e:
         print(f"ERROR {e}")
         return

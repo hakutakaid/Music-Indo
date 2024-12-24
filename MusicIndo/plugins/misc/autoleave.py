@@ -12,7 +12,7 @@ from MusicIndo.utils.database import get_client, is_active_chat, is_autoend
 async def auto_leave():
     if config.AUTO_LEAVING_ASSISTANT:
         while not await asyncio.sleep(config.AUTO_LEAVE_ASSISTANT_TIME):
-            from DanteMusic.core.userbot import assistants
+            from RynMusic.core.userbot import assistants
 
             for num in assistants:
                 client = await get_client(num)
