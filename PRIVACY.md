@@ -119,8 +119,8 @@ The bot includes:
 
 For privacy-related questions or concerns:
 - [Support Group](https://t.me/TheTeamVk)
-- [Updates Channel](https://t.me/TheTeamVivek)
-- [GitHub](https://github.com/TheTeamVivek/MusicIndo)
+- [Updates Channel](https://t.me/hakutakaid)
+- [GitHub](https://github.com/hakutakaid/MusicIndo)
 
 ## 14. Compliance
 

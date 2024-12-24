@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
+# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
 #
-# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
+# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
+# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved
 
@@ -98,7 +98,7 @@ for filename in os.listdir(r"./strings/langs/"):
 
 if not commands:
     print(
-        "There's a problem loading the command files. Please report it to TheTeamVivek at @TheTeamVivek on Telegram"
+        "There's a problem loading the command files. Please report it to hakutakaid at @hakutakaid on Telegram"
     )
     sys.exit()
 

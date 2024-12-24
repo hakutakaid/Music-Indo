@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
+# Copyright (C) 2024 by hakutakaid@Github, < https://github.com/hakutakaid >.
 #
-# This file is part of < https://github.com/TheTeamVivek/MusicIndo > project,
+# This file is part of < https://github.com/hakutakaid/MusicIndo > project,
 # and is released under the MIT License.
-# Please see < https://github.com/TheTeamVivek/MusicIndo/blob/master/LICENSE >
+# Please see < https://github.com/hakutakaid/MusicIndo/blob/master/LICENSE >
 #
 # All rights reserved.
 import re
@@ -53,7 +53,7 @@ EXTRA_PLUGINS = getenv(
 
 EXTRA_PLUGINS_REPO = getenv(
     "EXTRA_PLUGINS_REPO",
-    "https://github.com/TheTeamVivek/Extra-Plugin",
+    "https://github.com/hakutakaid/Extra-Plugin",
 )
 # Fill here the external plugins repo where plugins that you want to load
 
@@ -88,7 +88,7 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 # For customized or modified Repository
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/TheTeamVivek/MusicIndo",
+    "https://github.com/hakutakaid/MusicIndo",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 
@@ -101,8 +101,8 @@ GIT_TOKEN = getenv(
 
 # Only  Links formats are  accepted for this Var value.
 SUPPORT_CHANNEL = getenv(
-    "SUPPORT_CHANNEL", "https://t.me/TheTeamVivek"
-)  # Example:- https://t.me/TheTeamVivek
+    "SUPPORT_CHANNEL", "https://t.me/hakutakaid"
+)  # Example:- https://t.me/hakutakaid
 SUPPORT_GROUP = getenv(
     "SUPPORT_GROUP", "https://t.me/TheTeamVk"
 )  # Example:- https://t.me/TheTeamVk
@@ -129,7 +129,7 @@ TELEGRAM_DOWNLOAD_EDIT_SLEEP = int(getenv("TELEGRAM_EDIT_SLEEP", "5"))
 
 
 # Your Github Repo.. Will be shown on /start Command
-GITHUB_REPO = getenv("GITHUB_REPO", "https://github.com/TheTeamVivek/MusicIndo")
+GITHUB_REPO = getenv("GITHUB_REPO", "https://github.com/hakutakaid/MusicIndo")
 
 
 # Spotify Client.. Get it from https://developer.spotify.com/dashboard

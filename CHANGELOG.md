@@ -15,7 +15,7 @@ All notable changes to MusicIndo will be documented in this file.
 ### Fixed
 - Various bug fixes and performance improvements.
 
-**Full Changelog:** [`v1.2...v1.3`](https://github.com/TheTeamVivek/MusicIndo/compare/v1.2...v1.3)
+**Full Changelog:** [`v1.2...v1.3`](https://github.com/hakutakaid/MusicIndo/compare/v1.2...v1.3)
 
 ## [v1.2] - 2024-11-03
 
@@ -26,12 +26,12 @@ All notable changes to MusicIndo will be documented in this file.
 - User can Request her data and can Delete [ Except: Chat, Banned Users, Blacklist Chats]
 - PRIVACY.md For MusicIndo
 ### Changed
-- `Apple`, `Carbon`, `Saavn`, `Resso`, `SoundCloud`, `Spotify`, `Telegram`, `YouTube` are centralized to a class [PlaTForms](https://github.com/TheTeamVivek/MusicIndo/blob/master/MusicIndo%2Fplatforms%2F__init__.py)
+- `Apple`, `Carbon`, `Saavn`, `Resso`, `SoundCloud`, `Spotify`, `Telegram`, `YouTube` are centralized to a class [PlaTForms](https://github.com/hakutakaid/MusicIndo/blob/master/MusicIndo%2Fplatforms%2F__init__.py)
 - Explained Privacy policy in `/privacy` command
 - Now Assistsant will joinchat when chat is private
 - Now User Friendly README.md
 
-**Full Changelog:** [`v1.1...v1.2`](https://github.com/TheTeamVivek/MusicIndo/compare/v1.1...v1.2)
+**Full Changelog:** [`v1.1...v1.2`](https://github.com/hakutakaid/MusicIndo/compare/v1.1...v1.2)
 
 ## [v1.1] - 2024-10-14
 
@@ -60,7 +60,7 @@ All notable changes to MusicIndo will be documented in this file.
 -  Assets folder due to lack of use.
 - Unused dependencies from requirements.txt
 
-**Full Changelog:** [`v1.0...v1.1`](https://github.com/TheTeamVivek/MusicIndo/compare/v1.0...v1.1)
+**Full Changelog:** [`v1.0...v1.1`](https://github.com/hakutakaid/MusicIndo/compare/v1.0...v1.1)
 
 ## [v1.0] - 2024-10-05
 
