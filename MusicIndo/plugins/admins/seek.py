@@ -4,7 +4,7 @@ from pyrogram.types import Message
 from config import BANNED_USERS
 from strings import get_command
 from MusicIndo import YouTube, app
-from MusicIndo.core.call import Ryn
+from MusicIndo.core.call import Cey
 from MusicIndo.misc import db
 from MusicIndo.utils import AdminRightsCheck, seconds_to_min
 
@@ -50,7 +50,7 @@ async def seek_comm(cli, message: Message, _, chat_id):
         if n == 0:
             return await message.reply_text(_["admin_30"])
     try:
-        await Ryn.seek_stream(
+        await Cey.seek_stream(
             chat_id,
             file_path,
             seconds_to_min(to_seek),

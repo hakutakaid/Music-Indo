@@ -8,7 +8,7 @@ from pyrogram.types import CallbackQuery, Message
 from config import BANNED_USERS, adminlist, lyrical
 from strings import get_command
 from MusicIndo import app
-from MusicIndo.core.call import Ryn
+from MusicIndo.core.call import Cey
 from MusicIndo.misc import db
 from MusicIndo.utils.database import get_authuser_names, get_cmode
 from MusicIndo.utils.decorators import ActualAdminCB, AdminActual, language
@@ -49,7 +49,7 @@ async def restartbot(client, message: Message, _):
     await asyncio.sleep(1)
     try:
         db[message.chat.id] = []
-        await Ryn.stop_stream(message.chat.id)
+        await Cey.stop_stream(message.chat.id)
     except:
         pass
     chat_id = await get_cmode(message.chat.id)
@@ -60,7 +60,7 @@ async def restartbot(client, message: Message, _):
             pass
         try:
             db[chat_id] = []
-            await Ryn.stop_stream(chat_id)
+            await Cey.stop_stream(chat_id)
         except:
             pass
     return await mystic.edit_text("sᴜᴄᴇssғᴜʟʟʏ ʀᴇsᴛᴀʀᴛᴇᴅ. \nTʀʏ ᴘʟᴀʏɪɴɢ ɴᴏᴡ..")

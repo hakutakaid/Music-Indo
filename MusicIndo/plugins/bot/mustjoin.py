@@ -5,7 +5,7 @@ from MusicIndo import app
 
 #--------------------------
 
-MUST_JOIN = "KawanOnline_Id"
+MUST_JOIN = "hakutakaid_gh"
 #------------------------
 @app.on_message(filters.incoming & filters.private, group=-1)
 async def must_join_channel(app: Client, msg: Message):
@@ -26,7 +26,7 @@ async def must_join_channel(app: Client, msg: Message):
                     reply_markup=InlineKeyboardMarkup(
                         [
                             [
-                                InlineKeyboardButton("🎵 JOIN DULU", url="https://t.me/KawanOnline_Id"),
+                                InlineKeyboardButton("🎵 JOIN DULU", url="https://t.me/hakutakaid_gh"),
                             ]
                         ]
                     )

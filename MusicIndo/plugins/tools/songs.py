@@ -21,7 +21,7 @@ from MusicIndo.utils.inline.song import song_markup
 
 # Command
 
-mycookies = "ryn_new.txt"
+mycookies = "jembut.txt"
 
 SONG_COMMAND = get_command("SONG_COMMAND")
 

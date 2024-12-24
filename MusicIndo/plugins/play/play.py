@@ -8,7 +8,7 @@ from pytgcalls.exceptions import NoActiveGroupCall
 import config
 from config import BANNED_USERS, lyrical
 from MusicIndo import Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app
-from MusicIndo.core.call import Ryn
+from MusicIndo.core.call import Cey
 from MusicIndo.utils import seconds_to_min, time_to_seconds
 from MusicIndo.utils.channelplay import get_channeplayCB
 from MusicIndo.utils.database import is_video_allowed
@@ -306,7 +306,7 @@ async def play_commnd(
             return await mystic.delete()
         else:
             try:
-                await Ryn.stream_call(url)
+                await Cey.stream_call(url)
             except NoActiveGroupCall:
                 await mystic.edit_text(
                     "ᴛʜᴇʀᴇ's ᴀɴ ᴇʀʀᴏʀ ɪɴ ᴛʜᴇ ʙᴏᴛ, ᴩʟᴇᴀsᴇ ʀᴇᴩᴏʀᴛ ɪᴛ ᴛᴏ sᴜᴩᴩᴏʀᴛ ᴄʜᴀᴛ ᴀs sᴏᴏɴ ᴀs ᴩᴏssɪʙʟᴇ."
@@ -535,7 +535,7 @@ async def anonymous_check(client, CallbackQuery):
         return
 
 
-@app.on_callback_query(filters.regex("RynPlaylists") & ~BANNED_USERS)
+@app.on_callback_query(filters.regex("CeyPlaylists") & ~BANNED_USERS)
 @languageCB
 async def play_playlists_command(client, CallbackQuery, _):
     callb

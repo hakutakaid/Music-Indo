@@ -4,7 +4,7 @@ from pyrogram import idle
 import config
 from config import BANNED_USERS
 from MusicIndo import HELPABLE, LOGGER, app, userbot
-from MusicIndo.core.call import Ryn
+from MusicIndo.core.call import Cey
 from MusicIndo.plugins import ALL_MODULES
 from MusicIndo.utils.database import get_banned_users, get_gbanned
 
@@ -44,12 +44,12 @@ async def init():
 
     LOGGER("MusicIndo.plugins").info("Successfully Imported All Modules ")
     await userbot.start()
-    await Ryn.start()
-    await Ryn.decorators()
-    LOGGER("MusicIndo").info("Ryn Music Bot Started Successfully")
+    await Cey.start()
+    await Cey.decorators()
+    LOGGER("MusicIndo").info("Cey Music Bot Started Successfully")
     await idle()
 
 
 if __name__ == "__main__":
     asyncio.get_event_loop_policy().get_event_loop().run_until_complete(init())
-    LOGGER("MusicIndo").info("Stopping Ryn Music Bot! GoodBye")
+    LOGGER("MusicIndo").info("Stopping Cey Music Bot! GoodBye")

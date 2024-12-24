@@ -3,7 +3,7 @@ from pyrogram.types import Message
 
 from config import BANNED_USERS
 from MusicIndo import app
-from MusicIndo.core.call import Ryn
+from MusicIndo.core.call import Cey
 from MusicIndo.utils.database import is_muted, mute_off, mute_on
 from MusicIndo.utils.decorators import AdminRightsCheck
 
@@ -16,7 +16,7 @@ async def mute_admin(cli, message: Message, _, chat_id):
     if await is_muted(chat_id):
         return await message.reply_text(_["admin_5"], disable_web_page_preview=True)
     await mute_on(chat_id)
-    await Ryn.mute_stream(chat_id)
+    await Cey.mute_stream(chat_id)
     await message.reply_text(
         _["admin_6"].format(message.from_user.mention), disable_web_page_preview=True
     )
@@ -30,7 +30,7 @@ async def unmute_admin(Client, message: Message, _, chat_id):
     if not await is_muted(chat_id):
         return await message.reply_text(_["admin_7"], disable_web_page_preview=True)
     await mute_off(chat_id)
-    await Ryn.unmute_stream(chat_id)
+    await Cey.unmute_stream(chat_id)
     await message.reply_text(
         _["admin_8"].format(message.from_user.mention), disable_web_page_preview=True
     )

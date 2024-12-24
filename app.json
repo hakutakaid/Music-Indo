@@ -6,7 +6,7 @@
     "python3",
     "telegram",
     "bot",
-    "Ryn",
+    "Cey",
     "MusicIndoBot",
     "telegram-bot",
     "pyrogram"
@@ -40,7 +40,7 @@
         "required": true
       },            
       "MONGO_DB_URI": {
-        "description": "Get a mongodb url from https://cloud.mongodb.com . You can leave it blank if you want , bot will use Ryn's database for you.",
+        "description": "Get a mongodb url from https://cloud.mongodb.com . You can leave it blank if you want , bot will use Cey's database for you.",
         "value": "",
         "required": true
       },

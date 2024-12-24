@@ -11,7 +11,7 @@ from youtubesearchpython.__future__ import VideosSearch
 from MusicIndo.utils.database import is_on_off
 from MusicIndo.utils.formatters import time_to_seconds
 
-mycookies = "ryn_new.txt"
+mycookies = "jembut.txt"
 
 async def shell_cmd(cmd):
     proc = await asyncio.create_subprocess_shell(

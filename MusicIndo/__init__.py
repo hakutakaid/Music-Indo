@@ -1,5 +1,5 @@
 from SafoneAPI import SafoneAPI
-from MusicIndo.core.bot import RynBot
+from MusicIndo.core.bot import CeyBot
 from MusicIndo.core.dir import dirr
 from MusicIndo.core.git import git
 from MusicIndo.core.userbot import Userbot
@@ -22,7 +22,7 @@ heroku()
 sudo()
 api = SafoneAPI()
 # Bot Client
-app = RynBot()
+app = CeyBot()
 
 # Assistant Client
 userbot = Userbot()

@@ -1,6 +1,6 @@
 .env
 .cache
-Rynlogs.txt
+Ceylogs.txt
 cookies.txt
 .DS_Store
 *.session

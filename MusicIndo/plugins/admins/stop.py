@@ -5,7 +5,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from config import BANNED_USERS
 from MusicIndo import app
-from MusicIndo.core.call import Ryn
+from MusicIndo.core.call import Cey
 from MusicIndo.utils.database import (
     set_loop,
     delete_filter,
@@ -87,6 +87,6 @@ async def stop_music(cli, message: Message):
                 else:
                     if message.from_user.id not in admins:
                         return await message.reply_text(_["admin_19"])
-    await Ryn.stop_stream(chat_id)
+    await Cey.stop_stream(chat_id)
     await set_loop(chat_id, 0)
     await message.reply_text(_["admin_9"].format(message.from_user.mention))

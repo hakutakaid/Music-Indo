@@ -5,14 +5,14 @@ from pyrogram.enums import ChatType
 
 import config
 from MusicIndo import app
-from MusicIndo.core.call import Ryn, autoend
+from MusicIndo.core.call import Cey, autoend
 from MusicIndo.utils.database import get_client, is_active_chat, is_autoend
 
 
 async def auto_leave():
     if config.AUTO_LEAVING_ASSISTANT:
         while not await asyncio.sleep(config.AUTO_LEAVE_ASSISTANT_TIME):
-            from RynMusic.core.userbot import assistants
+            from CeyMusic.core.userbot import assistants
 
             for num in assistants:
                 client = await get_client(num)
@@ -56,7 +56,7 @@ async def auto_end():
                     continue
                 autoend[chat_id] = {}
                 try:
-                    await Ryn.stop_stream(chat_id)
+                    await Cey.stop_stream(chat_id)
                 except:
                     continue
                 try:
