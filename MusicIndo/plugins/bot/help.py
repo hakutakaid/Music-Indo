@@ -68,7 +68,7 @@ async def help_parser(name, keyboard=None):
         keyboard = InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help"))
     return (
         f"""<blockquote><b>Hi {name},
-ᴋʟɪᴋ ᴛᴏᴍʙᴏʟ ᴅɪ ʙᴀᴡᴀʜ ɪɴɪ ᴜɴᴛᴜᴋ ᴍᴇɴɢᴇᴛᴀʜᴜɪ ɪɴғᴏʀᴍᴀsɪ ʟᴇʙɪʜ ʟᴀɴᴊᴜᴛ.\nsᴇᴍᴜᴀ ᴘᴇʀɪɴᴛᴀʜ ᴅᴀᴘᴀᴛ ᴅɪɢᴜɴᴀᴋᴀɴ ᴅᴇɴɢᴀɴ: /\n\nᴅᴇᴠ @Usern4meDoestExist404</b></blockquote>
+ᴋʟɪᴋ ᴛᴏᴍʙᴏʟ ᴅɪ ʙᴀᴡᴀʜ ɪɴɪ ᴜɴᴛᴜᴋ ᴍᴇɴɢᴇᴛᴀʜᴜɪ ɪɴғᴏʀᴍᴀsɪ ʟᴇʙɪʜ ʟᴀɴᴊᴜᴛ.\nsᴇᴍᴜᴀ ᴘᴇʀɪɴᴛᴀʜ ᴅᴀᴘᴀᴛ ᴅɪɢᴜɴᴀᴋᴀɴ ᴅᴇɴɢᴀɴ: /\n</b></blockquote>
 """,
         keyboard,
     )
@@ -85,7 +85,7 @@ async def help_button(client, query):
 
     top_text = f"""<blockquote><b>Hai {query.from_user.mention},
 
-ᴋʟɪᴋ ᴛᴏᴍʙᴏʟ ᴅɪ ʙᴀᴡᴀʜ ɪɴɪ ᴜɴᴛᴜᴋ ᴍᴇɴɢᴇᴛᴀʜᴜɪ ɪɴғᴏʀᴍᴀsɪ ʟᴇʙɪʜ ʟᴀɴᴊᴜᴛ.\nsᴇᴍᴜᴀ ᴘᴇʀɪɴᴛᴀʜ ᴅᴀᴘᴀᴛ ᴅɪɢᴜɴᴀᴋᴀɴ ᴅᴇɴɢᴀɴ: /\n\nᴅᴇᴠ @Usern4meDoestExist404</b></blockquote>
+ᴋʟɪᴋ ᴛᴏᴍʙᴏʟ ᴅɪ ʙᴀᴡᴀʜ ɪɴɪ ᴜɴᴛᴜᴋ ᴍᴇɴɢᴇᴛᴀʜᴜɪ ɪɴғᴏʀᴍᴀsɪ ʟᴇʙɪʜ ʟᴀɴᴊᴜᴛ.\nsᴇᴍᴜᴀ ᴘᴇʀɪɴᴛᴀʜ ᴅᴀᴘᴀᴛ ᴅɪɢᴜɴᴀᴋᴀɴ ᴅᴇɴɢᴀɴ: /\n</b></blockquote>
 """
 
     if mod_match:
