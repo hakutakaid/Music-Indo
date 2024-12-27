@@ -74,7 +74,7 @@ admin_34 : "❌➻ Failed to seek the current stream."
 # Bot 
 
 # Start
-start_1 : "Hey, I am {0} 🥀.\n\n➻ I'm a Telegram streaming bot with some useful features.\n\nSupporting platforms: YouTube, Spotify, SoundCloud etc.\n\nFeel free to add me to your groups."
+start_1 : "Hey, I am {0} .\n\n➻ I'm a Telegram streaming bot with some useful features.\n\nSupporting platforms: YouTube, Spotify, SoundCloud etc.\n\nFeel free to add me to your groups."
 start_2 : "Hey,\n this is {0}\n\nA fast and powerful music player bot with some awesome features.\n\nAssistant username: @{1}\nAssistant ID: {2}"
 start_3 : "The owner of {0}, {1} just joined your chat."
 start_4 : "The sudo user of {0}, {1} just joined your chat."
@@ -235,7 +235,7 @@ song_11: "📤 Uploading started\nPlease hold on..."
 queue_1: "⏳ » Please wait..."
 queue_2: "🚫 Queued List is empty. No tracks found."
 queue_3: "<u>**Queued Tracks:</u>**  [Checkout More Queued Tracks From Here]({0})"
-queue_4: "**💫 Added to queue at #{0}**\n\n**🥀Title:** {1}\n**⏱ Duration:** {2}\n**🥀Added by:** {3} ❄️"
+queue_4: "**💫 Added to queue at #{0}**\n\n**Title:** {1}\n**⏱ Duration:** {2}\n**Added by:** {3} ❄️"
 queue_5: "🚫 Only one track is in queue; add some more tracks in the queue to check the whole queue."
 
 # All Streaming Lines
