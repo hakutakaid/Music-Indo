@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2024 by TheTeamVivek@Github, < https://github.com/TheTeamVivek >.
-#
-# This file is part of < https://github.com/TheTeamVivek/YukkiMusic > project,
-# and is released under the MIT License.
-# Please see < https://github.com/TheTeamVivek/YukkiMusic/blob/master/LICENSE >
-#
-# All rights reserved.
-#
 import os
 import re
 import glob
@@ -20,9 +11,9 @@ from pyrogram.types import Message
 from youtubesearchpython.__future__ import VideosSearch
 
 import config
-from YukkiMusic.utils.database import is_on_off
-from YukkiMusic.utils.decorators import asyncify
-from YukkiMusic.utils.formatters import seconds_to_min, time_to_seconds
+from ChiefMusic.utils.database import is_on_off
+from ChiefMusic.utils.decorators import asyncify
+from ChiefMusic.utils.formatters import seconds_to_min, time_to_seconds
 
 
 def cookies():
