@@ -13,10 +13,10 @@ from pyrogram.types import Message
 from pyrogram import Client
 from pyrogram.enums import ChatType
 
-from YukkiMusic.misc import SUDOERS
+from ChiefMusic.misc import SUDOERS
 
 
-from YukkiMusic.utils.database import get_lang, is_maintenance
+from ChiefMusic.utils.database import get_lang, is_maintenance
 
 languages = {}
 commands = {}
