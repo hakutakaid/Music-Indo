@@ -6,7 +6,7 @@
 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from pyrogram.errors import ChannelPrivate
+from pyrogram.errors import ChannelPrivate, UserNotParticipant
 
 from config import PLAYLIST_IMG_URL, PRIVATE_BOT_MODE
 from config import adminlist, JOIN_DULU
