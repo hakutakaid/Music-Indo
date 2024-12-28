@@ -9,7 +9,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import ChannelPrivate
 
 from config import PLAYLIST_IMG_URL, PRIVATE_BOT_MODE
-from config import adminlist
+from config import adminlist, JOIN_DULU
 from strings import get_string
 from ChiefMusic import Platform, app
 from ChiefMusic.core.call import Yukki
@@ -47,6 +47,18 @@ def PlayWrapper(command):
             )
             return await message.reply_text(_["general_4"], reply_markup=upl)
 
+        if JOIN_DULU:
+            try:
+                await app.get_chat_member(JOIN_DULU, message.from_user.id)
+            except UserNotParticipant:
+                sub = await app.export_chat_invite_link(JOIN_DULU)
+                kontol = InlineKeyboardMarkup(
+                    [
+                        [InlineKeyboardButton("📑 Join First", url=sub)]
+                    ]
+                )
+                return await message.reply_text(f"<blockquote><b>please {} join first before use this bot</b></blockquote>".format(message.from_user.mention), reply_markup=kontol)
+             
         if await is_maintenance() is False:
             if message.from_user.id not in SUDOERS:
                 return
