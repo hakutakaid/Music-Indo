@@ -57,7 +57,7 @@ def PlayWrapper(command):
                         [InlineKeyboardButton("📑 Join First", url=sub)]
                     ]
                 )
-                return await message.reply_text(f"<blockquote><b>please {} join first before use this bot</b></blockquote>".format(message.from_user.mention), reply_markup=kontol)
+                return await message.reply_text("<blockquote><b>please {} join first before use this bot</b></blockquote>".format(message.from_user.mention), reply_markup=kontol)
              
         if await is_maintenance() is False:
             if message.from_user.id not in SUDOERS:
