@@ -18,7 +18,7 @@ We are always looking for contributors to help us translate ChiefMusic into more
    You can start by editing the [`en.yml`](https://github.com/hakutakaid/Music-Indo/blob/master/strings%2Flangs%2Fen.yml) file, which contains the English language strings, and translate it into your language.
 
 2. **Submit Your Translation:**  
-   Once you've completed your translation, send the edited file to us at [@ZeebSupport](https://t.me/ZeebSupport) or open a pull request in our GitHub repository.
+   Once you've completed your translation, send the edited file to us at [@DemusIndonesia](https://t.me/DemusIndonesia) or open a pull request in our GitHub repository.
 
 ### Points to Remember While Editing:
 

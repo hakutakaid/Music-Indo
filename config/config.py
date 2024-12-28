@@ -71,7 +71,7 @@ LOG_GROUP_ID = getenv("LOG_GROUP_ID", "")
 
 # Your User ID.
 OWNER_ID = list(
-    map(int, getenv("OWNER_ID", "6815918609").split())
+    map(int, getenv("OWNER_ID", "7908427593").split())
 )  # Input type must be interger
 
 # Get it from http://dashboard.heroku.com/account
@@ -97,11 +97,11 @@ GIT_TOKEN = getenv(
 
 # Only  Links formats are  accepted for this Var value.
 SUPPORT_CHANNEL = getenv(
-    "SUPPORT_CHANNEL", "https://t.me/HakutakaID_GH"
-)  # Example:- https://t.me/HakutakaID_GH
+    "SUPPORT_CHANNEL", "https://t.me/MusicIndoListening"
+)  # Example:- https://t.me/MusicIndoListening
 SUPPORT_GROUP = getenv(
-    "SUPPORT_GROUP", "https://t.me/ZeebSupport"
-)  # Example:- https://t.me/ZeebSupport
+    "SUPPORT_GROUP", "https://t.me/DemusIndonesia"
+)  # Example:- https://t.me/DemusIndonesia
 
 
 # Set it in True if you want to leave your assistant after a certain amount of time. [Set time via AUTO_LEAVE_ASSISTANT_TIME]

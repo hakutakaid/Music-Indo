@@ -35,7 +35,7 @@ async def on_bot_added(_, message):
                     f"**Added By:** {message.from_user.mention}"
                 )
                 await app.send_message(
-                    int(LOG_GROUP_ID),
+                    LOG_GROUP_ID,
                     text=msg,
                     reply_markup=InlineKeyboardMarkup(
                         [
@@ -80,7 +80,7 @@ async def on_bot_kicked(_, message: Message):
             )
 
             await app.send_message(
-                int(LOG_GROUP_ID),
+                LOG_GROUP_ID,
                 text=left,
                 reply_markup=InlineKeyboardMarkup(
                     [

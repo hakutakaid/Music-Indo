@@ -43,7 +43,7 @@ async def stream_command(
                 "There's an issue with the bot. please report it to my Owner and ask them to check logger group"
             )
             text = "Please Turn on voice chat.. Bot is unable to stream urls.."
-            return await app.send_message(int(LOG_GROUP_ID), text)
+            return await app.send_message(LOG_GROUP_ID, text)
         except Exception as e:
             return await mystic.edit_text(_["general_3"].format(type(e).__name__))
         await mystic.edit_text(_["str_2"])

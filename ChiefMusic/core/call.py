@@ -174,15 +174,15 @@ class Call:
         await assistant.play(chat_id, stream, config=call_config)
 
     async def stream_call(self, link):
-        assistant = await group_assistant(self, int(LOG_GROUP_ID))
+        assistant = await group_assistant(self, LOG_GROUP_ID)
         call_config = GroupCallConfig(auto_start=False)
         await assistant.play(
-            int(LOG_GROUP_ID),
+            LOG_GROUP_ID,
             MediaStream(link),
             config=call_config,
         )
         await asyncio.sleep(0.5)
-        await assistant.leave_call(int(LOG_GROUP_ID))
+        await assistant.leave_call(LOG_GROUP_ID)
 
     async def join_chat(self, chat_id, attempts=1):
         max_attempts = len(assistants) - 1

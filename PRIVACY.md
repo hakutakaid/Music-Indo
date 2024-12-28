@@ -118,8 +118,8 @@ The bot includes:
 ## 13. Contact Information
 
 For privacy-related questions or concerns:
-- [Support Group](https://t.me/ZeebSupport)
-- [Updates Channel](https://t.me/HakutakaID_GH)
+- [Support Group](https://t.me/DemusIndonesia)
+- [Updates Channel](https://t.me/MusicIndoListening)
 - [GitHub](https://github.com/hakutakaid/Music-Indo)
 
 ## 14. Compliance

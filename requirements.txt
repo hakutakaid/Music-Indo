@@ -10,7 +10,8 @@ lyricsgenius
 motor
 psutil
 pytube
-py-tgcalls
+py-tgcalls==2.0.6
+ntgcalls==1.2.3
 python-dotenv
 pyyaml
 requests
@@ -23,5 +24,5 @@ flask
 gunicorn
 youtube-search-python
 yt-dlp
-git+https://github.com/KurimuzonAkuma/pyrogram
+git+https://github.com/KurimuzonAkuma/pyrogram@7d969bc273c09878ad6047d2a193dc339a2cc8e2
 git+https://github.com/Vivekkumar-IN/pykeyboard

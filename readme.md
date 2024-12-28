@@ -56,9 +56,9 @@ We're here to support you through multiple channels:
 
 - [**📝 Open a GitHub Issue**](https://github.com/hakutakaid/Music-Indo/issues/new?assignees=&labels=question&title=support%3A+&body=%23+Support+Question)
 
-- [**💬 Contact Us**](https://t.me/ZeebSupport)
+- [**💬 Contact Us**](https://t.me/DemusIndonesia)
 
-- [**👥 Join Support Group**](https://t.me/ZeebSupport)
+- [**👥 Join Support Group**](https://t.me/DemusIndonesia)
 
 
 ## ❣️ Show Your Support

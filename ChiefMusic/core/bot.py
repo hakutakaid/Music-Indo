@@ -95,7 +95,7 @@ class YukkiBot(Client):
 
         try:
             await self.send_message(
-                int(LOG_GROUP_ID),
+                LOG_GROUP_ID,
                 text=(
                     f"<u><b>{self.mention} Bot Started :</b></u>\n\n"
                     f"Id : <code>{self.id}</code>\n"
@@ -170,10 +170,10 @@ class YukkiBot(Client):
         )
 
         LOG_GROUP_ID = (
-            f"@{int(LOG_GROUP_ID)}"
-            if isinstance(int(LOG_GROUP_ID), str)
+            f"@{LOG_GROUP_ID}"
+            if isinstance(LOG_GROUP_ID, str)
             and not LOG_GROUP_ID.startswith("@")
-            else int(LOG_GROUP_ID)
+            else LOG_GROUP_ID
         )
 
         for owner_id in config.OWNER_ID:
@@ -193,7 +193,7 @@ class YukkiBot(Client):
         else:
             pass
         try:
-            a = await self.get_chat_member(int(LOG_GROUP_ID), self.id)
+            a = await self.get_chat_member(LOG_GROUP_ID, self.id)
             if a.status != ChatMemberStatus.ADMINISTRATOR:
                 LOGGER(__name__).error("Please promote bot as admin in logger group")
                 sys.exit()

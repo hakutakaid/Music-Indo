@@ -103,7 +103,7 @@ async def braodcast_message(client, message, _):
         for chat in schats:
             chats.append(int(chat["chat_id"]))
         for i in chats:
-            if i == int(LOG_GROUP_ID):
+            if i == LOG_GROUP_ID:
                 continue
             try:
                 m = (
@@ -187,7 +187,7 @@ async def braodcast_message(client, message, _):
             client = await get_client(num)
             contacts = [user.id for user in await client.get_contacts()]
             async for dialog in client.get_dialogs():
-                if dialog.chat.id == int(LOG_GROUP_ID):
+                if dialog.chat.id == LOG_GROUP_ID:
                     continue
                 if dialog.chat.id in contacts:
                     continue
@@ -251,7 +251,7 @@ async def auto_clean():
             continue
         try:
             for chat_id in clean:
-                if chat_id == int(LOG_GROUP_ID):
+                if chat_id == LOG_GROUP_ID:
                     continue
                 for x in clean[chat_id]:
                     if datetime.now() > x["timer_after"]:
