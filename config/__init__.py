@@ -1,6 +1,0 @@
-#
-#Hakutakaid
-#
-#
-
-from .config import *
