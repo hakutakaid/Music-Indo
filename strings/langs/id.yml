@@ -72,7 +72,7 @@ admin_34: "❌➻ Gagal melakukan seek pada siaran saat ini."
 # Bot 
 
 # Start
-start_1: "Hai, aku {0} 🥀.\n\n➻ Aku adalah bot streaming Telegram dengan beberapa fitur berguna.\n\nPlatform yang didukung: YouTube, Spotify, SoundCloud, dll.\n\nJangan ragu untuk menambahkan aku ke grupmu."
+start_1: "Hai, aku {0} .\n\n➻ Aku adalah bot streaming Telegram dengan beberapa fitur berguna.\n\nPlatform yang didukung: YouTube, Spotify, SoundCloud, dll.\n\nJangan ragu untuk menambahkan aku ke grupmu."
 start_2: "Hai,\n ini adalah {0}\n\nBot pemutar musik yang cepat dan kuat dengan fitur-fitur keren.\n\nUsername asisten: @{1}\nID Asisten: {2}"
 start_3: "Pemilik dari {0}, yaitu {1}, baru saja bergabung ke chat Anda."
 start_4: "Pengguna sudo dari {0}, yaitu {1}, baru saja bergabung ke chat Anda."
@@ -226,7 +226,7 @@ song_11: "📤 Pengunggahan dimulai\nMohon tunggu..."
 queue_1: "⏳ » Mohon tunggu..."
 queue_2: "🚫 Daftar antrian kosong. Tidak ada lagu yang ditemukan."
 queue_3: "<u>**Lagu dalam Antrian:</u>**  [Lihat Antrian Lengkap di Sini]({0})"
-queue_4: "**💫 Ditambahkan ke antrian di #{0}**\n\n**🥀Judul:** {1}\n**⏱ Durasi:** {2}\n**🥀Ditambahkan oleh:** {3} ❄️"
+queue_4: "**💫 Ditambahkan ke antrian di #{0}**\n\n**Judul:** {1}\n**⏱ Durasi:** {2}\n**Ditambahkan oleh:** {3} ❄️"
 queue_5: "🚫 Hanya ada satu lagu dalam antrian; tambahkan beberapa lagu lagi untuk melihat seluruh antrian."
 
 stream_1: "**✮ Streaming Dimulai**\n\n**✯ Judul:** [{0}]({1})\n**✬ Durasi:** {2} menit\n**✭ Oleh:** {3}"
