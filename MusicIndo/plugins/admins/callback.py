@@ -1,5 +1,3 @@
-#
-#
 import random
 
 from pyrogram import filters
@@ -636,18 +634,21 @@ async def slider_queries(client, query, _):
     (
         what,
         rtype,
-        query,
+        search_query,
         user_id,
         cplay,
         fplay,
     ) = callback_request.split("|")
+
     if query.from_user.id != int(user_id):
         try:
             return await query.answer(_["playcb_1"], show_alert=True)
         except Exception:
             return
+
     what = str(what)
     rtype = int(rtype)
+
     if what == "F":
         if rtype == 9:
             query_type = 0
@@ -657,8 +658,8 @@ async def slider_queries(client, query, _):
             await query.answer(_["playcb_2"])
         except Exception:
             pass
-        title, duration_min, thumbnail, vidid = await youtube.slider(query, query_type)
-        buttons = slider_markup(_, vidid, user_id, query, query_type, cplay, fplay)
+        title, duration_min, thumbnail, vidid = await youtube.slider(search_query, query_type)
+        buttons = slider_markup(_, vidid, user_id, search_query, query_type, cplay, fplay)
         med = InputMediaPhoto(
             media=thumbnail,
             caption=_["play_11"].format(
@@ -669,6 +670,7 @@ async def slider_queries(client, query, _):
         return await query.edit_message_media(
             media=med, reply_markup=InlineKeyboardMarkup(buttons)
         )
+
     if what == "B":
         if rtype == 0:
             query_type = 9
@@ -678,8 +680,8 @@ async def slider_queries(client, query, _):
             await query.answer(_["playcb_2"])
         except Exception:
             pass
-        title, duration_min, thumbnail, vidid = await youtube.slider(query, query_type)
-        buttons = slider_markup(_, vidid, user_id, query, query_type, cplay, fplay)
+        title, duration_min, thumbnail, vidid = await youtube.slider(search_query, query_type)
+        buttons = slider_markup(_, vidid, user_id, search_query, query_type, cplay, fplay)
         med = InputMediaPhoto(
             media=thumbnail,
             caption=_["play_11"].format(
