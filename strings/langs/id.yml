@@ -1,0 +1,531 @@
+name : "🇮🇩 Indonesia"
+
+# General Strings
+general_1: "🔄 Balas pesan pengguna atau berikan nama pengguna/user_id."
+general_2: "❌ Kesalahan! Penggunaan perintah yang salah."
+general_3: "⚠️ Terjadi **pengecualian** saat memproses permintaan Anda.\n\nJenis pengecualian: {0}"
+general_4: "👤 Anda adalah admin anonim di grup chat ini!\nKembali ke akun pengguna untuk mendapatkan hak admin."
+general_5: "🔑 Anda harus menjadi admin dengan hak **mengelola obrolan video** untuk melakukan tindakan ini."
+general_6: "📺 Bot tidak sedang melakukan siaran di obrolan video."
+# Classes - Telegram.py
+tg_1: "⚠️ Bot sedang **terlalu banyak beban** unduhan saat ini.\n\n**Coba lagi setelah:** {0} (__perkiraan waktu__)"
+tg_2: "❌ Gagal mengunduh media dari Telegram."
+
+# Core - Call.py
+call_1: "🤖 Bot memerlukan izin **admin** untuk mengundang akun asisten ke saluran Anda."
+call_2: "🚫 Asisten diblokir di grup atau saluran Anda.\nSilakan buka blokir dan putar lagu lagi\n\n**Username asisten:** @{0}\n**ID Asisten:** {1}"
+call_3: "❗ Terjadi pengecualian saat mengundang akun asisten.\n\n**Alasan**: {0}"
+call_4: "🔗 Bot memerlukan izin **mengundang pengguna via tautan** untuk mengundang akun asisten ke grup obrolan Anda."
+call_5: "⏳ Akun asisten akan bergabung dalam 5 detik, harap tunggu..."
+call_6: "✅ Akun asisten dari {0} berhasil bergabung.\n\nMemulai musik sekarang."
+call_7: "❌ **Gagal mengganti siaran**\nSilakan gunakan /skip untuk mengganti lagu lagi."
+call_8: "📥 Mengunduh lagu berikutnya dari daftar putar...."
+call_9: "📉 Asisten telah bergabung terlalu banyak obrolan, sehingga tidak bisa bergabung di sini\nHubungi [Grup Dukungan]({0}) untuk memperbaiki dan melaporkan masalah ini."
+call_10: "⏳ Asisten terkena FloodWait karena sering join/leave, harap tunggu {0} detik."
+
+# PLUGINS - Auth.py
+auth_1: "🔒 Anda hanya dapat memiliki 20 pengguna di daftar pengguna berizin (aul) grup Anda."
+auth_2: "✅ Ditambahkan ke daftar pengguna berizin grup Anda."
+auth_3: "⚠️ Sudah ada dalam daftar pengguna berizin."
+auth_4: "❌ Dihapus dari daftar pengguna berizin grup ini."
+auth_5: "🚫 Pengguna yang dituju bukan pengguna berizin."
+auth_6: "🔄 Mengambil data pengguna berizin...harap tunggu!"
+auth_7: "**Daftar pengguna berizin [aul]:**\n\n"
+auth_8: "┗ Ditambahkan oleh:-"
+
+# PLUGINS - Admins
+admin_1: "🎶➻ Musik sudah dijeda!"
+admin_2: "🎶➻ Musik dijeda oleh {}!"
+admin_3: "🎶➻ Musik sudah dilanjutkan."
+admin_4: "🎶➻ Musik dilanjutkan oleh {}"
+admin_5: "🔇➻ Musik sudah dibisukan"
+admin_6: "🔇➻ Musik dibisukan oleh {}!"
+admin_7: "🔊➻ Musik sudah tidak dibisukan"
+admin_8: "🔊➻ Musik dinyalakan kembali oleh {}!"
+admin_9: "⏹️➻ Musik dihentikan/diberhentikan oleh {}!"
+admin_10: "⏭️➻ Musik dilewati oleh {}! Tidak ada musik lagi dalam antrean"
+admin_11: "❌ Terjadi kesalahan saat mengganti siaran ke **{0}**\n\nSilakan gunakan /skip lagi."
+admin_12: "🚫 Tidak dapat melewati ke lagu tertentu karena mode loop sedang aktif. Nonaktifkan loop dengan `/loop disable` untuk menggunakan fitur ini."
+admin_13: "🔢 Harap gunakan angka untuk memilih lagu tertentu, seperti 1, 2, atau 4, dll."
+admin_14: "⚠️ Setidaknya dibutuhkan 2 lagu dalam antrean untuk bisa melewati ke nomor tertentu. Periksa antrean dengan /queue"
+admin_15: "❗ Tidak cukup lagu dalam antrean sesuai angka yang Anda berikan. Harap pilih angka antara 1 sampai {0}"
+admin_16: "🚫 Gagal melewati ke lagu tertentu.\n\nPeriksa antrean tersisa dengan /queue"
+admin_17: "{0}.. ⏳ Harap Tunggu"
+admin_18: "❌ Daftar Admin Tidak Ditemukan\n\nSilakan muat ulang daftar admin melalui /admincache atau /reload"
+admin_19: "🔑 Anda perlu menjadi admin dengan hak kelola obrolan suara untuk melakukan ini.\nJika Anda sudah menjadi admin, muat ulang cache admin dengan /admincache"
+admin_20: "✅ Cache admin berhasil dimuat ulang."
+admin_21: "❌ Tidak ada antrean untuk diacak"
+admin_22: "🚫 Gagal mengacak.\n\nPeriksa antrean: /queue"
+admin_23: "**Antrean Diacak oleh {0}**\n\nPeriksa antrean yang sudah diacak: /queue"
+admin_24: "**Penggunaan:**\n/loop [enable/disable] atau [Angka antara 1-10]\n\nContoh: `/loop 5`"
+admin_25: "🔁 Loop diaktifkan oleh **{0}** sebanyak **{1}** kali. Bot akan mengulang lagu yang sedang diputar di obrolan suara sebanyak **{1}** kali"
+admin_26: "⚠️ Harap gunakan angka antara 1-10 untuk mode loop"
+admin_27: "🔁 Mode Loop telah dinonaktifkan"
+admin_28: "📏 Penggunaan:\n/seek atau /seekback [Durasi dalam detik]"
+admin_29: "🔢 Harap gunakan angka dalam detik seperti 10-20-30 detik untuk seek"
+admin_30: "❌ Maaf, Anda tidak dapat melakukan seek pada siaran yang sedang diputar. Hanya bisa dilewati atau dihentikan."
+admin_31: "🚫 Bot tidak bisa melakukan seek karena durasi terlalu panjang. Anda harus seek ke durasi yang lebih pendek dan ingat bahwa setidaknya 10 detik harus tersisa setelah seek.\n\nDurasi yang sedang diputar **{0}** menit..."
+admin_32: "⏳➻ Harap Tunggu... Sedang melakukan seek."
+admin_33: "✅➻ Berhasil melakukan seek ke {0} Menit"
+admin_34: "❌➻ Gagal melakukan seek pada siaran saat ini."
+
+# Bot 
+
+# Start
+start_1: "Hai, aku {0} 🥀.\n\n➻ Aku adalah bot streaming Telegram dengan beberapa fitur berguna.\n\nPlatform yang didukung: YouTube, Spotify, SoundCloud, dll.\n\nJangan ragu untuk menambahkan aku ke grupmu."
+start_2: "Hai,\n ini adalah {0}\n\nBot pemutar musik yang cepat dan kuat dengan fitur-fitur keren.\n\nUsername asisten: @{1}\nID Asisten: {2}"
+start_3: "Pemilik dari {0}, yaitu {1}, baru saja bergabung ke chat Anda."
+start_4: "Pengguna sudo dari {0}, yaitu {1}, baru saja bergabung ke chat Anda."
+start_5: "🦸 **Diperlukan Supergroup** 🦸\n\nSilakan ubah **grup** Anda menjadi **supergroup** lalu tambahkan aku kembali.\n\n**Cara membuat supergroup?**\n🥱 Jadikan riwayat chat grup Anda **terlihat** sekali saja."
+start_6: "**Chat masuk daftar hitam**\n\nChat ini masuk daftar hitam untuk penggunaan bot. Minta pengguna sudo untuk mengizinkan chat Anda, pengguna sudo [daftar]({0})."
+start_7: "Hai :) Aku masih aktif sejak **{0}**"
+
+# Help Messages
+help_1: "Klik tombol di bawah ini untuk informasi lebih lanjut. Jika Anda mengalami masalah, silakan bertanya di obrolan dukungan.\n\nSemua perintah bisa digunakan dengan: /"
+help_2: "Hubungi saya lewat PM untuk bantuan."
+
+# Pesan Pengaturan
+setting_1: "⚙️ **Pengaturan Bot Musik**\n\n🖇**Grup:** {0}\n🔖**ID Grup:** `{1}`\n\n💡**Pilih tombol fungsi di bawah ini yang ingin Anda ubah atau edit.**"
+setting_3: "⁉️ Apa Ini?\n\n1) Langsung: Memutar hasil pencarian secara langsung. Gunakan -v untuk memutar video dalam mode langsung.\n\n2) Inline: Menampilkan tombol markup inline untuk memilih antara video & audio."
+setting_4: "⁉️ Apa Ini?\n\n👥 Semua Orang: Siapa pun bisa menggunakan perintah admin (skip, pause, resume, dll) yang tersedia di grup ini.\n\n🙍 Hanya Admin: Hanya admin dan pengguna yang diizinkan yang dapat menggunakan perintah admin."
+setting_5: "Tidak Ada Pengguna Berizin Ditemukan\n\nAnda dapat memberikan izin ke pengguna non-admin untuk menggunakan perintah admin saya dengan /auth dan menghapusnya dengan /unauth."
+setting_9: "⁉️ Apa Ini?\n\nJika diaktifkan, Bot akan menghapus pesannya setelah {0} untuk menjaga chat Anda tetap bersih dan rapi."
+setting_10: "⁉️ Apa Ini?\n\n1) Grup: Memutar musik di grup tempat perintah diberikan.\n\n2) Channel: Memutar musik di saluran yang Anda inginkan. Atur ID saluran melalui /channelplay."
+setting_11: "⁉️ Apa Ini?\n\n1) Semua Orang: Siapa pun di grup ini dapat memutar musik di sini.\n\n2) Hanya Admin: Hanya admin yang dapat memutar musik di grup ini."
+setting_12: "❌ Anda belum menetapkan ID saluran untuk mode saluran. Silakan tetapkan dengan /channelplay."
+setting_13: "Tidak dapat mengubah mode pemutaran saat panggilan grup sedang aktif. Silakan hentikan obrolan suara terlebih dahulu dengan /stop."
+setting_14: "⁉️ Apa Ini?\n\nJika diaktifkan, Bot akan langsung menghapus perintah yang dijalankan (/play, /pause, /shuffle, /stop, dll).\n\nBot memerlukan hak admin untuk menghapus pesan agar fitur ini berfungsi dengan baik."
+setting_15: "Gagal menyelesaikan peer. Pastikan Anda telah menambahkan bot ke saluran Anda dan memberikannya hak admin.\n\nCoba atur kembali dengan /channelplay."
+setting_16: "⁉️ Apa Ini?\n\nJika diaktifkan, Bot akan menyarankan Anda..."
+# Setting Callbacks
+set_cb_1: "🎵 Membuka panel kualitas audio..."
+set_cb_2: "📺 Membuka panel kualitas video..."
+set_cb_3: "🔒 Membuka panel pengguna berizin..."
+set_cb_4: "🎮 Membuka panel mode pemutaran..."
+set_cb_5: "🧹 Membuka panel mode bersih..."
+set_cb_6: "⚙️ Menyimpan perubahan."
+set_cb_7: "🔄 Mengambil daftar pengguna berizin... mohon tunggu."
+set_cb_8: "🔙 Kembali..."
+
+
+# Statistik Pengguna
+ustats_1: "🚫 Tidak ditemukan statistik pengguna."
+ustats_2: "🎶 Kamu telah memutar **{0}** lagu sejauh ini dengan total jumlah pemutaran sebanyak **{1}** kali.\n\nTop **{2}** lagu yang paling sering kamu putar:\n\n"
+
+# Statistik Global
+gstats_1: "📊 Mengambil statistik global, ini mungkin memerlukan waktu..."
+gstats_2: "🚫 Tidak ditemukan statistik global."
+gstats_3: "📊 Mengambil 10 teratas {0} global dari bot, ini mungkin memerlukan waktu..."
+gstats_4: "**Total permintaan pada bot:** {0}\n\n{1} telah memutar **{2}** lagu sejauh ini dengan total pemutaran sebanyak **{3}** kali.\n\n**Top {4} lagu:**\n"
+gstats_5: "**Top {0} grup dari {1}:**\n\n"
+gstats_6: "**Top {0} pengguna dari {1}:**\n\n"
+gstats_7: "🎶 Grup ini telah memutar **{0}** lagu sejauh ini dengan total pemutaran sebanyak **{1}** kali.\n\nTop {2} lagu yang paling sering diputar di grup ini:\n\n"
+gstats_8: "📊 Mengambil statistik umum dan informasi dari bot... ini mungkin memerlukan waktu..."
+gstats_9: "**Statistik global top 10 dari bot**\n\nPilih tombol di bawah untuk melihat statistik global dari server bot."
+gstats_10: "**Statistik global dari {0}**\n\nPilih tombol di bawah untuk melihat statistik global dari server bot."
+gstats_11: "**Statistik umum dari {0}**\nPilih tombol di bawah untuk melihat statistik global dari server bot.\n\nGunakan /gstats untuk melihat lagu, grup, pengguna teratas, dan lainnya."
+# Play 
+# Play Callback Messages
+# Callback Play
+playcb_1: "🚫 Ini bukan untukmu! Silakan cari sendiri."
+playcb_2: "🔄 Mengambil hasil berikutnya..."
+
+# Pesan Pemutaran di Channel
+cplay_1: "🎶 Kamu bisa memutar musik di channel dari obrolan ini [{0}] ke channel mana pun atau channel yang ditautkan dengan obrolanmu.\n\n**Untuk channel yang ditautkan:**\n/{1} linked\n\n**Untuk channel lain:**\n/{1} [ID channel]"
+cplay_2: "🚫 Obrolan ini tidak memiliki channel yang ditautkan."
+cplay_3: "✅ Channel telah diatur ke {0}\n\nID Channel: {1}"
+cplay_4: "❌ Gagal mengambil channel.\n\nPastikan kamu telah menambahkan bot ke channel dan mempromosikannya sebagai admin.\nUbah channel melalui /channelplay atau nonaktifkan mode channel play melalui /playmode."
+cplay_5: "🚫 Hanya channel yang didukung."
+cplay_6: "🔑 Kamu harus menjadi **pemilik** dari channel [{0}] untuk menghubungkannya dengan grup ini.\n**Pemilik channel:** @{1}\n\nSebagai alternatif, kamu bisa menautkan grupmu ke channel tersebut lalu coba sambungkan dengan perintah `/channelplay linked`."
+# Play Messages
+play_1: "🔄 **Memproses...**"
+play_2: "📺 **Mode pemutaran channel**\nMemproses permintaan... mohon tunggu!\n\n**Channel yang ditautkan:** {0}"
+play_3: "❌ Gagal memproses permintaan!"
+play_4: "🔒 **Hanya admin yang bisa memutar**\nHanya admin dan pengguna terotorisasi yang bisa memutar musik di grup ini.\n\nUbah mode melalui /playmode dan jika kamu sudah admin, muat ulang cache admin via /admincache atau /reload."
+play_5: "❌ Gagal memproses file audio.\n\nUkuran file audio harus kurang dari 100 MB."
+play_6: "⏳ **Durasi melebihi batas**\n\n**Durasi diizinkan:** {0} menit\n**Durasi yang diterima:** {1} menit"
+play_7: "🚫 Maaf! Bot hanya mengizinkan jumlah terbatas panggilan video karena masalah beban CPU. Banyak obrolan lain yang sedang menggunakan panggilan video. Coba beralih ke audio atau coba lagi nanti."
+play_8: "❌ Ekstensi file video tidak valid!\n\n**Format yang didukung:** {0}"
+play_9: "❌ Ukuran file video harus kurang dari 1 GB."
+play_10: "📋 **Fitur playlist YouTube**\n\nPilih mode di mana kamu ingin memutar seluruh playlist YouTube."
+play_11: "**Judul:** {0}\n\n🕕**Durasi:** {1} menit"
+play_12: "🎵 **Playlist Spotify**\n\nDiminta oleh: {0}"
+play_13: "🍏 **Playlist Apple Music**\n\nDiminta oleh: {0}"
+play_14: "❌ **Tidak dapat memverifikasi URL.**\nBot tidak yakin apakah URL ini berasal dari platform seperti: YouTube, Apple Music, Spotify, Resso, atau SoundCloud.\n\nKamu bisa gunakan /stream untuk m3u8 atau tautan langsung."
+play_15: "🔴 **Live stream terdeteksi**\n\nSistem mendeteksi bahwa tautan lagumu adalah siaran langsung. Ingin memutarnya?"
+play_16: "❌ Gagal mengambil detail lagu; mungkin lagu tersebut dibatasi usia di YouTube. Coba putar lagu lain."
+play_17: "🚫 Tidak dapat memutar jenis permintaan Spotify ini!\n\nSaya hanya bisa memutar track, album, artis, dan playlist dari Spotify."
+play_18: "🔊 **Tidak ada panggilan suara aktif**\n\nUntuk menggunakan force play, harus ada panggilan suara yang sedang aktif."
+play_19: "Sepertinya ini bukan URL yang bisa diputar. Jika kamu yakin URL ini bisa diputar, silakan gunakan /stream <url>."
+
+# Playlist
+playlist_1: "📋 **Penggunaan:** /play [nama lagu atau tautan YouTube atau balas audio]\n\nJika kamu ingin memutar playlist dari server bot! Tekan tombol di bawah ini."
+playlist_2: "🔄 Mengambil playlist-mu... mohon tunggu!"
+playlist_3: "🚫 Kamu belum memiliki playlist di server bot."
+playlist_4: "📃 Playlist ditemukan:\n\n"
+playlist_5: "⏳ Durasi - {0} Menit"
+playlist_6: "📩 Hubungi saya melalui PM untuk menghapus playlist."
+playlist_7: "🎵 Lagu dalam playlist: {0}\n\nTekan tombol untuk menghapus lagu tertentu dari playlist-mu.\n\nUntuk menghapus seluruh playlist: tekan tombol hapus seluruh playlist."
+playlist_8: "🚫 Sudah ada\n\nLagu ini sudah ada di playlist-mu."
+playlist_9: "🚫 Maaf! Kamu hanya bisa memiliki {0} lagu dalam satu playlist."
+playlist_10: "➕ Penambahan ke playlist\n\n{0}\nTelah ditambahkan ke playlist-mu."
+playlist_11: "✅ Lagu berhasil dihapus dari playlist-mu."
+playlist_12: "❌ Gagal menghapus lagu dari playlist-mu."
+playlist_13: "🗑️ Seluruh playlist kamu telah dihapus dari server."
+playlist_14: "⚠️ **Apakah kamu yakin ingin menghapus seluruh playlist-mu?**\n\nKamu akan kehilangan playlist-mu dan ini tidak dapat dipulihkan nanti."
+playlist_15: "[🎶 Lihat seluruh playlist]({0})"
+playlist_16: "🔄 Playlist dalam antrean:"
+playlist_17: "📍 Posisi antrean -"
+playlist_18: "[🎶 Lihat seluruh playlist yang diantrekan]({0})\n\nPosisi antre terakhir: **{1}**"
+playlist_19: "🚫 Grup ini tidak memiliki playlist di server bot."
+playlist_20: "🎵 Lagu telah ditambahkan ke playlist-mu!"
+playlist_21: "⏳ Menambahkan lagu ke playlist-mu...."
+playlist_22: "🔗 Harap berikan URL lagu/playlist YouTube atau nama lagu untuk ditambahkan ke playlist-mu."
+playlist_23: "🗑️ Semua lagu telah dihapus dari playlist-mu."
+playlist_24: "🪄 Lagu telah dihapus dari playlist-mu."
+playlist_25: "⏱️ Mohon tunggu\n🗑️ Menghapus playlist-mu...."
+
+saavn_1: "😞 Maaf! Saat ini bot tidak dapat memutar URL Podcast dari Saavn."
+
+# Playmode
+playmode_1: "🎮 Pilih mode pemutaran untuk permintaan lagu di grup Anda [{0}]."
+playmode_2: "✅ Pengaturan berhasil diubah dan disimpan oleh {0}."
+# Stream 
+str_1: "🔗 Silakan berikan tautan m3u8 atau tautan indeks."
+str_2: "✅ Tautan streaming valid terverifikasi\n\nMohon tunggu, sedang memproses tautan..."
+str_3: "❌ Tidak dapat memutar siaran langsung YouTube. Format siaran langsung tidak ditemukan."
+# TopPlay
+tracks_1: "**🔄 Memproses playlist 10 teratas {0}**\n\n**Diminta oleh:** {1}\n\nCek 10 lagu teratas dengan perintah /gstats."
+tracks_2: "❌ **Kesalahan**\n\nTidak ada playlist **10 teratas {0}** di server bot. Silakan coba playlist lain."
+# TOOLS
+
+# Lyrics
+lyrics_1: "**PENGGUNAAN:**\n\n/lyrics [nama lagu]"
+lyrics_2: "🔍 sedang mencari lirik..."
+lyrics_3: "❌ Gagal mengambil lirik 🥲.\n\n**Coba mencari untuk:** {0}"
+lyrics_4: "Klik tombol di bawah untuk mendapatkan lirik tanpa perlu mengirim pencarian panjang."
+# Logger
+logger_text: "**Log Pemutaran {bot_mention}**\n\n**ID Obrolan:** `{chat_id}`\n**Nama Obrolan:** {title}\n**Username Obrolan:** {chatusername}\n\n**ID Pengguna:** `{sender_id}`\n**Nama:** {user_mention}\n**Username:** {username}\n\n**Permintaan:** {query}\n**Tipe Stream:** {streamtype}"
+
+# Ping
+ping_1: "» {0} sedang melakukan ping..."
+ping_2: "**» PONG**: `{0}`ms \n\n<b><u>Statistik sistem {1} :</u></b>\n\n🌋 Waktu aktif : {2}\n🌋 RAM : {3} \n🌋 CPU : {4} \n🌋 Disk : {5} \n🌋 Py-tgcalls : `{6} ms`"
+# Song
+song_1: "🚫 Anda hanya dapat mengunduh musik atau video dari YouTube di chat pribadi. Silakan mulai percakapan dengan saya di chat pribadi."
+song_2: "**PENGGUNAAN:**\n\n/song [nama lagu] atau [tautan YouTube]"
+song_3: "❌ Tautan live terdeteksi. Saya tidak dapat mengunduh video YouTube yang sedang siaran langsung."
+song_4: "**JUDUL**: {0}\n\nPilih tipe file yang ingin Anda unduh."
+song_5: "❌ Tautan YouTube tidak valid."
+song_6: "🔄 Mengambil format...\n\nMohon tunggu sebentar..."
+song_7: "❌ Gagal mengambil format yang tersedia untuk video ini. Silakan coba lagu lain."
+song_8: "📥 Pengunduhan dimulai\n\nMohon tunggu beberapa detik..."
+song_9: "❌ Gagal mengunduh lagu menggunakan yt-dl\n\n**Alasan:** {0}"
+song_10: "❌ Gagal mengunggah ke server Telegram."
+song_11: "📤 Pengunggahan dimulai\nMohon tunggu..."
+# Tools - Queue
+queue_1: "⏳ » Mohon tunggu..."
+queue_2: "🚫 Daftar antrian kosong. Tidak ada lagu yang ditemukan."
+queue_3: "<u>**Lagu dalam Antrian:</u>**  [Lihat Antrian Lengkap di Sini]({0})"
+queue_4: "**💫 Ditambahkan ke antrian di #{0}**\n\n**🥀Judul:** {1}\n**⏱ Durasi:** {2}\n**🥀Ditambahkan oleh:** {3} ❄️"
+queue_5: "🚫 Hanya ada satu lagu dalam antrian; tambahkan beberapa lagu lagi untuk melihat seluruh antrian."
+
+stream_1: "**✮ Streaming Dimulai**\n\n**✯ Judul:** [{0}]({1})\n**✬ Durasi:** {2} menit\n**✭ Oleh:** {3}"
+stream_2: "➲ **Streaming Dimulai |**\n\n**‣ Tipe Stream:** siaran langsung [url]\n**‣ Oleh:** {0}"
+
+V_C_1: "🔄 Mengambil daftar peserta...."
+V_C_2: "**Nama:** {0}\n    **ID:** {1}\n    **Username:** {2}\n    **Berbagi video:** {3}\n    **Berbagi layar:** {4}\n    **Angkat tangan:** {5}\n    **Dimatikan suaranya:** {6}\n    **Berbicara:** {7}\n    **Keluar dari grup:** {8}"
+V_C_3: "🚫 Tidak ada peserta dalam obrolan suara."
+V_C_4: "[🔗 Anda dapat melihat semua detail peserta obrolan suara dari sini]({0})"
+V_C_5: "❌ Tidak ada panggilan aktif di chat ini."
+
+# misc
+misc_1: "🤖 Bot secara otomatis menghapus antrian dan keluar dari obrolan suara karena tidak ada yang mendengarkan lagu di sana."
+
+# Inline Buttons
+
+# General Buttons
+CLOSE_BUTTON: "Close"
+CLOSEMENU_BUTTON: "Close"
+BACK_BUTTON: "🔙 Back"
+UNBAN_BUTTON: "🆓 Unban assistant"
+
+# Lyrics
+L_B_1: "🎶 Check out lyrics now"
+
+# Start
+S_B_1 : "🗒 Command"
+S_B_2 : "🔧 Setting"
+S_B_3 : "💬 Get Help!"
+S_B_4 : "🔔 Updates"
+S_B_5 : "✚ Add Me, Let’s Play! ✚"
+S_B_6 : "🚀 GitHub Repo"
+S_B_7 : "👑 The Creator"
+S_B_8 : "🔎 How to use? Command Menu"
+
+#PlayMode
+PM_B_1 : "Direct play"
+PM_B_2 : "Inlinemakrup"
+PM_B_3 : "Channelplay"
+
+#Play
+P_B_1 : "🎵 Play audio"
+P_B_2 : "🎥 Play video"
+P_B_3 : "🏮 Start livestream"
+P_B_4 : "🎵 Play playlist"
+
+P_B_5 : "Mute"
+P_B_6 : "Unmute"
+P_B_7 : "✚ Playlist"
+
+#Playlist
+PL_B_1 : "🚀 Play playlist"
+PL_B_2 : "Playlist"
+PL_B_3 : "✚ Cpanel"
+
+# Play Buttons
+PL_B_4 : "📡 Play Mode"
+PL_B_5 : "🔄 Del Whole Playlist"
+PL_B_6 : "↗️ Delete Playlist"
+PL_B_7 : "❗️ Yes, I'm Sure. Delete It"
+PL_B_8 : "🔢 Play Top 10"
+PL_B_9 : "🤖 Play Global Top 10 Tracks"
+PL_B_10 : "🏘 Play Group's Top 10 Tracks"
+PL_B_11 : "👤 Play Personal Top 10 Tracks"
+PL_B_12 : "🏘 Play Group's Playlist"
+
+# Settings
+ST_B_1 : "🔊 Audio Quality"
+ST_B_2 : "🎥 Video Quality"
+ST_B_3 : "🎩 Auth User's"
+ST_B_4 : "📱 Dashboard"
+ST_B_5 : "▶️ Play Mode"
+ST_B_6 : "🏳️‍🌈 Language"
+ST_B_7 : "🔄 Clean Mode"
+ST_B_8 : "{0} Low Quality"
+ST_B_9 : "{0} Medium Quality"
+ST_B_10 : "{0} High Quality"
+ST_B_11 : "{0} Studio Quality"
+ST_B_12 : "{0} SD-360p Quality"
+ST_B_13 : "{0} SD-480p Quality"
+ST_B_14 : "{0} HD-720p Quality"
+ST_B_15 : "{0} FHD-1080p Quality"
+ST_B_16 : "{0} QHD-2k Quality"
+ST_B_17 : "{0} QHD-4k Quality"
+ST_B_18 : "✅ Enabled"
+ST_B_19 : "❌ Disabled"
+ST_B_20 : "👤 Admins"
+ST_B_21 : "👥 Everyone"
+ST_B_22 : "📋 Authorized User List"
+ST_B_23 : "🔎 Search Mode"
+ST_B_24 : "✅ Direct"
+ST_B_25 : "✅ Inline"
+ST_B_26 : "👨‍⚖️ Admin Commands"
+ST_B_27 : "🏘 Group"
+ST_B_28 : "🏷 Channel"
+ST_B_29 : "🫂 Play Type"
+ST_B_30 : "🗑 Command Clean"
+ST_B_31 : "🧑‍🚀 Suggestion Mode"
+
+# Song Buttons
+SG_B_1 : "↗️ Open In Private"
+SG_B_2 : "🔊 Audio"
+SG_B_3 : "🎥 Video"
+
+# Stats
+SA_B_1 : "📢 Top 10 Chat"
+SA_B_2 : "🔢 Top 10 Tracks"
+SA_B_3 : "🧛 Top 10 Users"
+SA_B_4 : "🏷 Top 10 Here"
+SA_B_5 : "💡 Overall Stats"
+SA_B_6 : "👤 User Stats"
+SA_B_7 : "🔢 Global Top 10 Stats"
+SA_B_8 : "🤖 Bot Stats"
+
+
+# Queue
+QU_B_1: "📋 Queued list"
+QU_B_2: "▶️ Played {0} out of {1} mins"
+
+# Sudo Users [ If you are translating this to some other language .. you can leave all these strings in English language]
+
+# Sudo
+sudo_1: "{0} sudah menjadi pengguna sudo."
+sudo_2: "✅ Menambahkan **{0}** ke daftar pengguna sudo."
+sudo_3: "❌ Bukan bagian dari pengguna sudo bot."
+sudo_4: "🚫 Dihapus dari daftar pengguna sudo bot."
+sudo_5: "🔥 <u>**Pemilik:**</u>\n"
+sudo_6: "\n🔥 <u>**Pengguna Sudo:**</u>\n"
+sudo_7: "🔍 Tidak ada pengguna sudo ditemukan."
+
+block_1: "{0} sudah diblokir dari bot."
+block_2: "🚫 Menambahkan **{0}** ke daftar blokir bot. Pengguna tidak dapat menggunakan bot dalam kondisi apa pun.\n\nLihat pengguna yang diblokir: /blockedusers"
+block_3: "🆓 Pengguna sudah tidak diblokir."
+block_4: "✅ Pengguna telah dihapus dari daftar blokir. Sekarang pengguna dapat menggunakan bot."
+block_5: "🔍 Tidak ada pengguna yang diblokir ditemukan."
+block_6: "⏳ Mengambil daftar pengguna yang diblokir... mohon tunggu!"
+block_7: "**Pengguna yang diblokir:**\n\n"
+
+black_1: "**Penggunaan:**\n/blacklistchat [CHAT_ID]"
+black_2: "🚫 Obrolan sudah ada di daftar hitam."
+black_3: "✅ Obrolan berhasil dimasukkan ke daftar hitam."
+black_4: "**Penggunaan:**\n/whitelistchat [CHAT_ID]"
+black_5: "✅ Obrolan sudah ada dalam daftar putih."
+black_6: "✅ Obrolan berhasil dihapus dari daftar hitam."
+black_7: "**Obrolan dalam daftar hitam:**\n\n"
+black_8: "🔍 Tidak ada obrolan dalam daftar hitam."
+
+vid_1: "**Penggunaan:**\n/set_video_limit [jumlah obrolan] atau [disable]"
+vid_2: "🔢 Harap gunakan angka untuk menetapkan batas."
+vid_3: "📊 Batas maksimum panggilan video ditetapkan ke {0} obrolan."
+vid_4: "🚫 Panggilan video dinonaktifkan."
+
+maint_1: "**Penggunaan:**\n/maintenance [enable|disable]"
+maint_2: "🔧 Mode pemeliharaan diaktifkan."
+maint_3: "🔧 Mode pemeliharaan dinonaktifkan."
+maint_4: "🛠️ Bot sedang dalam mode pemeliharaan. Kunjungi dukungan untuk mengetahui alasannya."
+maint_5: "Mode Pemeliharaan sudah dinonaktifkan."
+maint_6: "Mode Pemeliharaan sudah diaktifkan."
+
+log_1: "**Penggunaan:**\n/logger [enable|disable]"
+log_2: "✅ Logging diaktifkan."
+log_3: "❌ Logging dinonaktifkan."
+
+vidmode_1: "**Penggunaan:**\n/videomode [download|m3u8]"
+vidmode_2: "📥 Mode pemutaran video diatur ke unduhan. Bot akan mengunduh trek sekarang."
+vidmode_3: "🔗 Mode pemutaran video diatur ke m3u8. Bot akan memutar secara langsung sekarang."
+
+broad_1: "**📢 Pesan disiarkan di {0} obrolan dengan {1} pin dari bot.**"
+broad_2: "🔊 Memulai siaran asisten..."
+broad_3: "**Siaran Asisten:\n\n"
+broad_4: "🗣️ Asisten {0} menyiarkan ke {1} obrolan\n"
+broad_5: "**Penggunaan**:\n/broadcast [PESAN] atau [Balas ke sebuah pesan]"
+broad_6: "❗ Harap berikan teks untuk disiarkan."
+broad_7: "**📬 Pesan disiarkan ke {0} pengguna dengan {1} pin dari bot.**"
+
+# Helpers
+
+AUTH_HELPER: |
+  <b>Pengguna Terotorisasi (Auth Users) dapat menggunakan perintah Admin tanpa memiliki hak Admin di grup Anda.</b>
+  
+  <b>✧ {AUTH_COMMAND}</b> [Username] - Tambahkan pengguna ke daftar AUTH grup.
+  
+  <b>✧ {UNAUTH_COMMAND}</b> [Username] - Hapus pengguna dari daftar AUTH grup.
+  
+  <b>✧ {AUTHUSERS_COMMAND}</b> - Periksa daftar AUTH grup.
+
+ADMIN_HELPER: |
+  <b>c stands for channel play</b>
+  
+  <b>✧ {PAUSE_COMMAND}</b> - Pause the playing music.
+  <b>✧ {RESUME_COMMAND}</b> - Resume the paused music.
+  <b>✧ {MUTE_COMMAND}</b> - Mute the playing music.
+  <b>✧ {UNMUTE_COMMAND}</b> - Unmute the muted music.
+  <b>✧ {SKIP_COMMAND}</b> - Skip the current playing music.
+  <b>✧ {STOP_COMMAND}</b> - Stop the playing music.
+  <b>✧ {SHUFFLE_COMMAND}</b> - Randomly shuffle the queued playlist/songs.
+  <b>✧ {SEEK_COMMAND}</b> - Forward seek the music.
+  <b>✧ {SEEK_BACK_COMMAND}</b> - Backward seek the music to your duration.
+  <b>✧ {REBOOT_COMMAND}</b> - Reboot bot for your chat.
+  
+  <b>✧ {SKIP_COMMAND}</b> [Number (Example: 3)] - Skip music to a specific number. Example: <b>/skip 3</b> will skip to the third queued music and will ignore 1 and 2 in the queue.
+  
+  <b>✧ {LOOP_COMMAND}</b> [Enable/Disable] or [Number between 1-10] - When activated, the bot will loop the current music 1-10 times in voice chat. Default loop value is 10 times.
+
+ACTIVE_HELPER: |
+  <b>✧ {ACTIVEVC_COMMAND}</b> - Periksa obrolan suara yang sedang aktif di bot.
+  
+  <b>✧ {ACTIVEVIDEO_COMMAND}</b> - Periksa obrolan suara dan panggilan video yang sedang aktif di bot.
+  
+  <b>✧ {AC_COMMAND}</b> - Periksa panggilan video yang sedang aktif di bot.
+  
+  <b>✧ {STATS_COMMAND}</b> - Periksa statistik bot.
+
+PLAY_HELPER: |
+  <b>✧ {PLAY_COMMAND}</b> - Bot akan mulai memutar permintaan lagu Anda di voice chat atau memutar tautan live stream di voice chat.
+  
+  <b>✧ {PLAYMODE_COMMAND}</b> - Force Play akan menghentikan lagu yang sedang diputar dan langsung memutar lagu yang Anda cari tanpa mengganggu atau menghapus antrean.
+  
+  <b>✧ {CHANNELPLAY_COMMAND}</b> - Hubungkan channel ke grup dan putar musik di voice chat channel langsung dari grup Anda.
+  
+  <b>✧ {STREAM_COMMAND}</b> - Streaming URL yang merupakan link langsung atau m3u8 yang tidak bisa diputar dengan perintah /play.
+
+GCAST_HELPER: |
+  <b>{BROADCAST_COMMAND} [Pesan atau Balas ke pesan apa pun]</b> » Siarkan pesan ke seluruh chat yang dilayani oleh bot
+  <u>Mode Siaran:</u>
+  
+  <b><code>-pin</code></b> » Sematkan pesan yang disiarkan di semua chat yang dilayani
+  
+  <b><code>-pinloud</code></b> » Sematkan pesan yang disiarkan di semua chat yang dilayani dan kirim notifikasi ke anggota
+  
+  <b><code>-user</code></b> » Siarkan pesan ke pengguna yang telah memulai bot Anda [Anda juga bisa menyematkan pesan dengan menambahkan `-pin` atau `-pinloud`]
+  
+  <b><code>-assistant</code></b> » Siarkan pesan Anda melalui semua asisten bot
+  
+  <b><code>-nobot</code></b> » Pastikan **bot utama** tidak menyiarkan pesan [Berguna jika Anda tidak ingin mengirim pesan ke grup]
+  
+  > <b>Contoh:</b> <code>/{BROADCAST_COMMAND} -user -assistant -pin Tes siaran</code>
+
+BOT_HELPER: |
+  <b>★ {GSTATS_COMMAND}</b> - Lihat 10 Lagu Teratas secara Global, 10 Pengguna Teratas, 10 Grup Teratas, 10 Lagu Terbanyak Diputar di suatu grup, dan lainnya.
+  
+  <b>★ {SUDOUSERS_COMMAND}</b> - Cek daftar pengguna sudo dari bot.
+  
+  <b>★ {LYRICS_COMMAND} [Nama Lagu]</b> - Cari lirik lagu tertentu dari web.
+  
+  <b>★ {SONG_COMMAND} [Judul Lagu] atau [Link YT]</b> - Unduh lagu dari YouTube dalam format MP3 atau MP4.
+  
+  <b>★ {QUEUE_COMMAND}</b> - Lihat daftar antrian lagu yang sedang diputar.
+  
+  <u><b>⚡️Bot Pribadi:</b></u>
+  
+  <b>✧ {AUTHORIZE_COMMAND} [CHAT_ID]</b> - Izinkan sebuah grup untuk menggunakan bot Anda.
+  
+  <b>✧ {UNAUTHORIZE_COMMAND} [CHAT_ID]</b> - Cabut izin grup untuk menggunakan bot Anda.
+  
+  <b>✧ {AUTHORIZED_COMMAND}</b> - Periksa semua grup yang diizinkan menggunakan bot Anda.
+
+PLIST_HELPER: |
+  <b>{PLAYLIST_COMMAND}</b> - Periksa seluruh daftar putar Anda di server bot
+  
+  <b>{DELETE_PLAYLIST_COMMAND}</b> - Hapus lagu dari daftar putar yang Anda simpan
+  
+  <b>{PLAY_PLAYLIST_COMMAND}</b> - Mulai memutar daftar putar Anda dalam mode **audio**
+  
+  <b>{PLAY_PLAYLIST_COMMAND}</b> - Mulai memutar daftar putar Anda dalam mode **video**
+
+BLIST_HELPER: |
+  <b>✧ {BLACKLISTCHAT_COMMAND}</b> [chat ID] - Daftarkan chat agar diblokir dari penggunaan Bot Musik.
+  <b>✧ {WHITELISTCHAT_COMMAND}</b> [chat ID] - Izinkan kembali chat yang sebelumnya diblokir untuk menggunakan Bot Musik.
+  <b>✧ {BLACKLISTEDCHAT_COMMAND}</b> - Periksa semua chat yang diblokir.
+
+  <b>✧ {BLOCK_COMMAND}</b> [Username atau balas pesan pengguna] - Mencegah pengguna menggunakan perintah bot.
+  <b>✧ {UNBLOCK_COMMAND}</b> [Username atau balas pesan pengguna] - Hapus pengguna dari daftar blokir bot.
+  <b>✧ {BLOCKED_COMMAND}</b> - Periksa daftar pengguna yang diblokir.
+
+  <b>✧ {GBAN_COMMAND}</b> [Username atau balas pesan pengguna] - Blokir global pengguna dari semua chat yang dilayani dan cegah penggunaan bot.
+  <b>✧ {UNGBAN_COMMAND}</b> [Username atau balas pesan pengguna] - Hapus pengguna dari daftar blokir global (gban) dan izinkan mereka menggunakan bot.
+  <b>✧ {GBANNED_COMMAND}</b> - Periksa daftar pengguna yang diblokir secara global (gban).
+
+DEV_HELPER: |
+  <b><u>Tambah dan hapus sudoers:</u></b>
+  
+  <b>{ADDSUDO_COMMAND} [Username atau balas pesan pengguna] - Tambahkan pengguna sebagai sudo di bot Anda</b>
+  <b>{DELSUDO_COMMAND} [Username atau ID pengguna atau balas pesan pengguna] - Hapus pengguna dari sudo bot</b>
+  <b>{SUDOUSERS_COMMAND} - Dapatkan daftar semua sudoers</b>
+  
+  <b><u>Heroku:</u></b>
+  
+  <b>{USAGE_COMMAND}</b> - Penggunaan Dyno
+  <b>{GETVAR_COMMAND} [Nama Variabel]</b> - Ambil variabel konfigurasi
+  <b>{DELVAR_COMMAND} [Nama Variabel]</b> - Hapus variabel dari konfigurasi
+  <b>{SETVAR_COMMAND} [Nama Variabel] [Nilai]</b> - Tambah atau perbarui variabel. Pisahkan nama dan nilainya dengan spasi
+  
+  <b><u>Perintah Bot:</u></b>
+  
+  <b>{RESTART_COMMAND}</b> - Restart bot (hanya untuk SUDOERS)
+  <b>{UPDATE_COMMAND}</b> - Perbarui bot
+  <b>{SPEEDTEST_COMMAND}</b> - Periksa kecepatan server
+  <b>{MAINTENANCE_COMMAND} [enable / disable]</b> - Aktifkan/nonaktifkan mode pemeliharaan bot
+  <b>{LOGGER_COMMAND} [enable / disable]</b> - Aktifkan/nonaktifkan log pencarian bot ke grup log
+  <b>{GETLOG_COMMAND} [Jumlah baris]</b> - Ambil log dari server
+  <b>{AUTOEND_COMMAND} [enable / disable]</b> - Akhiri pemutaran otomatis setelah 30 detik jika tidak ada yang mendengarkan lagu
