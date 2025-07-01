@@ -48,7 +48,7 @@ dependencies = [
     "gunicorn==23.0.0",
     "yt-dlp==2025.6.9",
     "py-yt-search==0.3",
-    "PyYAML==6.0.2"
+    "PyYAML==6.0.2",
 ]
 
 [tool.setuptools.packages.find]
